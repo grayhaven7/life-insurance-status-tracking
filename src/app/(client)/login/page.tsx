@@ -39,29 +39,43 @@ export default function ClientLoginPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-primary via-primary-light to-primary flex flex-col">
+    <div className="min-h-screen bg-bg-primary flex flex-col relative overflow-hidden">
+      {/* Background gradient */}
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-accent/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+        <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-info/5 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2" />
+      </div>
+
       {/* Header */}
-      <header className="p-6">
-        <div className="max-w-7xl mx-auto">
-          <h1 className="text-2xl font-bold text-white">Financial Planning Group</h1>
-          <p className="text-blue-200 text-sm">Client Portal</p>
+      <header className="relative p-6 border-b border-border-primary bg-bg-primary/50 backdrop-blur-xl">
+        <div className="max-w-7xl mx-auto flex items-center gap-3">
+          <div className="w-8 h-8 rounded-lg bg-accent flex items-center justify-center">
+            <svg className="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+            </svg>
+          </div>
+          <div>
+            <h1 className="text-sm font-semibold text-text-primary">Financial Planning Group</h1>
+            <p className="text-xs text-text-tertiary">Client Portal</p>
+          </div>
         </div>
       </header>
 
       {/* Main content */}
-      <main className="flex-1 flex items-center justify-center p-6">
-        <div className="w-full max-w-md">
-          <div className="bg-white rounded-2xl shadow-2xl p-8">
-            <div className="text-center mb-8">
-              <h2 className="text-2xl font-bold text-primary">Welcome Back</h2>
-              <p className="text-muted mt-2">
-                Sign in to track your life insurance application
-              </p>
-            </div>
+      <main className="relative flex-1 flex items-center justify-center p-6">
+        <div className="w-full max-w-sm">
+          <div className="text-center mb-8">
+            <h2 className="text-2xl font-semibold text-text-primary">Welcome Back</h2>
+            <p className="text-sm text-text-tertiary mt-2">
+              Sign in to track your life insurance application
+            </p>
+          </div>
 
-            <form onSubmit={handleSubmit} className="space-y-6">
+          <div className="rounded-xl border border-border-primary bg-bg-secondary/80 backdrop-blur-xl p-6">
+            <form onSubmit={handleSubmit} className="space-y-5">
               {error && (
-                <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg text-sm">
+                <div className="flex items-center gap-2 px-3 py-2 rounded-lg bg-error-muted border border-error/20 text-sm text-error">
+                  <AlertIcon className="w-4 h-4 flex-shrink-0" />
                   {error}
                 </div>
               )}
@@ -69,7 +83,7 @@ export default function ClientLoginPage() {
               <div>
                 <label
                   htmlFor="email"
-                  className="block text-sm font-medium text-gray-700 mb-2"
+                  className="block text-sm font-medium text-text-secondary mb-2"
                 >
                   Email Address
                 </label>
@@ -79,7 +93,7 @@ export default function ClientLoginPage() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent outline-none transition-all"
+                  className="w-full px-3.5 py-2.5 text-sm bg-bg-tertiary border border-border-primary rounded-lg text-text-primary placeholder:text-text-muted focus:border-accent focus:ring-1 focus:ring-accent/20 outline-none transition-all"
                   placeholder="you@example.com"
                 />
               </div>
@@ -87,7 +101,7 @@ export default function ClientLoginPage() {
               <div>
                 <label
                   htmlFor="password"
-                  className="block text-sm font-medium text-gray-700 mb-2"
+                  className="block text-sm font-medium text-text-secondary mb-2"
                 >
                   Password
                 </label>
@@ -97,7 +111,7 @@ export default function ClientLoginPage() {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   required
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent outline-none transition-all"
+                  className="w-full px-3.5 py-2.5 text-sm bg-bg-tertiary border border-border-primary rounded-lg text-text-primary placeholder:text-text-muted focus:border-accent focus:ring-1 focus:ring-accent/20 outline-none transition-all"
                   placeholder="Enter your password"
                 />
               </div>
@@ -105,45 +119,28 @@ export default function ClientLoginPage() {
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full bg-primary hover:bg-primary-dark text-white font-semibold py-3 px-4 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full flex items-center justify-center gap-2 bg-accent hover:bg-accent-secondary text-white font-medium py-2.5 px-4 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {loading ? (
-                  <span className="flex items-center justify-center gap-2">
-                    <svg className="animate-spin h-5 w-5" viewBox="0 0 24 24">
-                      <circle
-                        className="opacity-25"
-                        cx="12"
-                        cy="12"
-                        r="10"
-                        stroke="currentColor"
-                        strokeWidth="4"
-                        fill="none"
-                      />
-                      <path
-                        className="opacity-75"
-                        fill="currentColor"
-                        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"
-                      />
-                    </svg>
+                  <>
+                    <LoaderIcon className="w-4 h-4 animate-spin" />
                     Signing in...
-                  </span>
+                  </>
                 ) : (
                   "Sign In"
                 )}
               </button>
             </form>
-
-            <div className="mt-6 text-center">
-              <p className="text-sm text-muted">
-                Are you an administrator?{" "}
-                <Link href="/admin/login" className="text-accent hover:underline font-medium">
-                  Admin Login
-                </Link>
-              </p>
-            </div>
           </div>
 
-          <p className="text-center text-blue-200 text-sm mt-6">
+          <p className="mt-6 text-center text-sm text-text-tertiary">
+            Are you an administrator?{" "}
+            <Link href="/admin/login" className="text-accent hover:text-accent-secondary font-medium transition-colors">
+              Admin Login
+            </Link>
+          </p>
+
+          <p className="text-center text-text-muted text-xs mt-8">
             Your credentials were provided by your financial advisor.
             <br />
             Contact us if you need assistance.
@@ -152,9 +149,26 @@ export default function ClientLoginPage() {
       </main>
 
       {/* Footer */}
-      <footer className="p-6 text-center text-blue-200 text-sm">
+      <footer className="relative p-6 text-center text-text-muted text-xs border-t border-border-primary">
         <p>&copy; {new Date().getFullYear()} Financial Planning Group. All rights reserved.</p>
       </footer>
     </div>
+  );
+}
+
+function AlertIcon({ className }: { className?: string }) {
+  return (
+    <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+      <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z" />
+    </svg>
+  );
+}
+
+function LoaderIcon({ className }: { className?: string }) {
+  return (
+    <svg className={className} fill="none" viewBox="0 0 24 24">
+      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+    </svg>
   );
 }

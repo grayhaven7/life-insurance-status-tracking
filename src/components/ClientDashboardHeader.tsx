@@ -27,7 +27,7 @@ export default function ClientDashboardHeader({ clientName }: Props) {
           {/* User & Actions */}
           <div className="flex items-center gap-4">
             <div className="hidden sm:flex items-center gap-3">
-              <div className="w-8 h-8 rounded-full bg-accent/15 flex items-center justify-center">
+              <div className="w-8 h-8 rounded-full bg-accent-muted flex items-center justify-center">
                 <span className="text-xs font-medium text-accent">
                   {clientName.split(" ").map(n => n[0]).join("").toUpperCase().slice(0, 2)}
                 </span>

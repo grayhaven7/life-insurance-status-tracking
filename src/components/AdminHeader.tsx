@@ -45,7 +45,7 @@ export default function AdminHeader({ userName }: Props) {
                   className={`
                     flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition-all
                     ${isActive 
-                      ? "bg-accent/15 text-accent" 
+                      ? "bg-accent-muted text-accent" 
                       : "text-text-secondary hover:text-text-primary hover:bg-bg-hover"
                     }
                   `}

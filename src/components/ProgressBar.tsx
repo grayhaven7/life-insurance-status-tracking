@@ -14,49 +14,54 @@ export default function ProgressBar({ currentStage, showDetails = true }: Progre
   return (
     <div className="w-full">
       {/* Progress percentage header */}
-      <div className="flex justify-between items-center mb-4">
-        <h3 className="text-lg font-semibold text-primary">Application Progress</h3>
-        <span className="text-2xl font-bold text-accent">{progress}%</span>
+      <div className="flex justify-between items-center mb-6">
+        <div>
+          <h3 className="text-lg font-semibold text-text-primary">Application Progress</h3>
+          <p className="text-sm text-text-tertiary mt-0.5">Track your journey to completion</p>
+        </div>
+        <div className="text-right">
+          <span className="text-3xl font-bold text-accent tabular-nums">{progress}%</span>
+          <p className="text-xs text-text-muted">Complete</p>
+        </div>
       </div>
 
       {/* Main progress bar */}
       <div className="relative mb-8">
-        <div className="h-3 bg-gray-200 rounded-full overflow-hidden">
+        <div className="h-2 bg-bg-tertiary rounded-full overflow-hidden">
           <div
-            className="h-full bg-gradient-to-r from-primary to-accent rounded-full transition-all duration-700 ease-out"
+            className="h-full bg-gradient-to-r from-accent to-accent-secondary rounded-full transition-all duration-700 ease-out"
             style={{ width: `${progress}%` }}
           />
-        </div>
-        <div className="flex justify-between mt-1 text-xs text-muted">
-          <span>Start</span>
-          <span>Complete</span>
         </div>
       </div>
 
       {/* Current stage highlight */}
       {currentStageData && showDetails && (
-        <div className="bg-gradient-to-r from-primary to-primary-light rounded-xl p-6 text-white mb-8 shadow-lg">
-          <div className="flex items-center gap-2 mb-2">
-            <span className="bg-accent text-primary-dark text-xs font-bold px-2 py-1 rounded">
-              STEP {currentStage} OF {STAGES.length}
-            </span>
-            {currentStage === STAGES.length && (
-              <span className="bg-green-500 text-white text-xs font-bold px-2 py-1 rounded">
-                COMPLETE
+        <div className="relative overflow-hidden rounded-xl border border-border-primary bg-bg-secondary p-6 mb-8">
+          <div className="absolute top-0 right-0 w-32 h-32 bg-accent/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+          <div className="relative">
+            <div className="flex items-center gap-2 mb-3">
+              <span className="inline-flex items-center px-2 py-0.5 rounded-md text-xs font-medium bg-accent-muted text-accent border border-accent/20">
+                STEP {currentStage} OF {STAGES.length}
               </span>
-            )}
+              {currentStage === STAGES.length && (
+                <span className="inline-flex items-center px-2 py-0.5 rounded-md text-xs font-medium bg-success-muted text-success border border-success/20">
+                  COMPLETE
+                </span>
+              )}
+            </div>
+            <h4 className="text-xl font-semibold text-text-primary mb-2">{currentStageData.name}</h4>
+            <p className="text-sm text-text-secondary">{currentStageData.description}</p>
           </div>
-          <h4 className="text-2xl font-bold mb-2">{currentStageData.name}</h4>
-          <p className="text-blue-100 text-sm">{currentStageData.description}</p>
         </div>
       )}
 
       {/* Stage timeline */}
       <div className="space-y-1">
-        <h4 className="text-sm font-semibold text-muted uppercase tracking-wide mb-4">
+        <h4 className="text-xs font-semibold text-text-muted uppercase tracking-wider mb-4">
           All Stages
         </h4>
-        <div className="grid gap-2">
+        <div className="space-y-1">
           {STAGES.map((stage) => {
             const isCompleted = stage.id < currentStage;
             const isCurrent = stage.id === currentStage;
@@ -66,27 +71,27 @@ export default function ProgressBar({ currentStage, showDetails = true }: Progre
               <div
                 key={stage.id}
                 className={`
-                  flex items-center gap-3 p-3 rounded-lg transition-all
-                  ${isCurrent ? "bg-accent/10 border-2 border-accent" : ""}
-                  ${isCompleted ? "bg-green-50" : ""}
-                  ${isPending ? "bg-gray-50" : ""}
+                  flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all
+                  ${isCurrent ? "bg-accent-muted border border-accent/20" : ""}
+                  ${isCompleted ? "bg-success-muted/50" : ""}
+                  ${isPending ? "opacity-50" : ""}
                 `}
               >
                 {/* Status indicator */}
                 <div
                   className={`
-                    w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0
-                    ${isCompleted ? "bg-green-500 text-white" : ""}
+                    w-6 h-6 rounded-full flex items-center justify-center text-xs font-medium flex-shrink-0
+                    ${isCompleted ? "bg-success text-white" : ""}
                     ${isCurrent ? "bg-accent text-white" : ""}
-                    ${isPending ? "bg-gray-300 text-gray-600" : ""}
+                    ${isPending ? "bg-bg-tertiary text-text-muted border border-border-primary" : ""}
                   `}
                 >
                   {isCompleted ? (
-                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+                    <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
                     </svg>
                   ) : (
-                    stage.id
+                    <span className="text-[10px]">{stage.id}</span>
                   )}
                 </div>
 
@@ -94,10 +99,10 @@ export default function ProgressBar({ currentStage, showDetails = true }: Progre
                 <div className="flex-1 min-w-0">
                   <p
                     className={`
-                      font-medium truncate
-                      ${isCompleted ? "text-green-700" : ""}
-                      ${isCurrent ? "text-primary font-semibold" : ""}
-                      ${isPending ? "text-gray-500" : ""}
+                      text-sm font-medium truncate
+                      ${isCompleted ? "text-success" : ""}
+                      ${isCurrent ? "text-accent" : ""}
+                      ${isPending ? "text-text-muted" : ""}
                     `}
                   >
                     {stage.name}
@@ -107,18 +112,13 @@ export default function ProgressBar({ currentStage, showDetails = true }: Progre
                 {/* Status badge */}
                 <div className="flex-shrink-0">
                   {isCompleted && (
-                    <span className="text-xs font-medium text-green-600 bg-green-100 px-2 py-1 rounded">
+                    <span className="text-[10px] font-medium text-success uppercase tracking-wide">
                       Done
                     </span>
                   )}
                   {isCurrent && (
-                    <span className="text-xs font-medium text-accent bg-accent/20 px-2 py-1 rounded">
+                    <span className="text-[10px] font-medium text-accent uppercase tracking-wide">
                       Current
-                    </span>
-                  )}
-                  {isPending && (
-                    <span className="text-xs font-medium text-gray-400 bg-gray-100 px-2 py-1 rounded">
-                      Pending
                     </span>
                   )}
                 </div>

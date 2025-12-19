@@ -27,59 +27,56 @@ export default async function AdminDashboardPage() {
   });
 
   return (
-    <div className="min-h-screen bg-gray-100">
+    <div className="min-h-screen bg-bg-primary">
       <AdminHeader userName={session.user.name} />
 
-      <main className="max-w-7xl mx-auto px-4 py-8">
+      <main className="max-w-7xl mx-auto px-6 py-8">
         {/* Stats */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-          <div className="bg-white rounded-xl shadow-sm p-6">
-            <p className="text-sm font-medium text-muted">Total Clients</p>
-            <p className="text-3xl font-bold text-primary mt-1">{clients.length}</p>
-          </div>
-          <div className="bg-white rounded-xl shadow-sm p-6">
-            <p className="text-sm font-medium text-muted">In Progress</p>
-            <p className="text-3xl font-bold text-accent mt-1">
-              {clients.filter((c) => c.currentStage > 1 && c.currentStage < 17).length}
-            </p>
-          </div>
-          <div className="bg-white rounded-xl shadow-sm p-6">
-            <p className="text-sm font-medium text-muted">Completed</p>
-            <p className="text-3xl font-bold text-green-600 mt-1">
-              {clients.filter((c) => c.currentStage === 17).length}
-            </p>
-          </div>
-          <div className="bg-white rounded-xl shadow-sm p-6">
-            <p className="text-sm font-medium text-muted">New This Week</p>
-            <p className="text-3xl font-bold text-blue-600 mt-1">
-              {
-                clients.filter(
-                  (c) =>
-                    new Date(c.createdAt) >
-                    new Date(Date.now() - 7 * 24 * 60 * 60 * 1000)
-                ).length
-              }
-            </p>
-          </div>
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+          <StatCard
+            label="Total Clients"
+            value={clients.length}
+            icon={<UsersIcon className="w-5 h-5" />}
+          />
+          <StatCard
+            label="In Progress"
+            value={clients.filter((c) => c.currentStage > 1 && c.currentStage < 17).length}
+            icon={<ClockIcon className="w-5 h-5" />}
+            accent="warning"
+          />
+          <StatCard
+            label="Completed"
+            value={clients.filter((c) => c.currentStage === 17).length}
+            icon={<CheckIcon className="w-5 h-5" />}
+            accent="success"
+          />
+          <StatCard
+            label="New This Week"
+            value={
+              clients.filter(
+                (c) =>
+                  new Date(c.createdAt) >
+                  new Date(Date.now() - 7 * 24 * 60 * 60 * 1000)
+              ).length
+            }
+            icon={<SparklesIcon className="w-5 h-5" />}
+            accent="info"
+          />
         </div>
 
         {/* Client list header */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
-          <h2 className="text-2xl font-bold text-primary">All Clients</h2>
-          <div className="flex gap-4">
+          <div>
+            <h2 className="text-xl font-semibold text-text-primary">All Clients</h2>
+            <p className="text-sm text-text-tertiary mt-0.5">Manage and track client applications</p>
+          </div>
+          <div className="flex gap-3">
             <ClientSearch />
             <Link
               href="/admin/clients/new"
-              className="bg-accent hover:bg-accent-light text-white px-4 py-2 rounded-lg font-medium transition-colors flex items-center gap-2"
+              className="inline-flex items-center gap-2 bg-accent hover:bg-accent-secondary text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors"
             >
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M12 4v16m8-8H4"
-                />
-              </svg>
+              <PlusIcon className="w-4 h-4" />
               Add Client
             </Link>
           </div>
@@ -87,121 +84,109 @@ export default async function AdminDashboardPage() {
 
         {/* Client list */}
         {clients.length === 0 ? (
-          <div className="bg-white rounded-xl shadow-sm p-12 text-center">
-            <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
-              <svg
-                className="w-8 h-8 text-gray-400"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"
-                />
-              </svg>
+          <div className="rounded-xl border border-border-primary bg-bg-secondary p-12 text-center">
+            <div className="w-16 h-16 bg-bg-tertiary rounded-xl flex items-center justify-center mx-auto mb-4">
+              <UsersIcon className="w-8 h-8 text-text-muted" />
             </div>
-            <h3 className="text-lg font-semibold text-gray-900 mb-2">No clients yet</h3>
-            <p className="text-muted mb-6">Get started by adding your first client.</p>
+            <h3 className="text-lg font-semibold text-text-primary mb-2">No clients yet</h3>
+            <p className="text-text-tertiary mb-6 max-w-sm mx-auto">
+              Get started by adding your first client to track their application progress.
+            </p>
             <Link
               href="/admin/clients/new"
-              className="inline-flex items-center gap-2 bg-primary hover:bg-primary-dark text-white px-6 py-3 rounded-lg font-medium transition-colors"
+              className="inline-flex items-center gap-2 bg-accent hover:bg-accent-secondary text-white px-5 py-2.5 rounded-lg font-medium transition-colors"
             >
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M12 4v16m8-8H4"
-                />
-              </svg>
+              <PlusIcon className="w-4 h-4" />
               Add Your First Client
             </Link>
           </div>
         ) : (
-          <div className="bg-white rounded-xl shadow-sm overflow-hidden">
+          <div className="rounded-xl border border-border-primary bg-bg-secondary overflow-hidden">
             <div className="overflow-x-auto">
               <table className="w-full">
-                <thead className="bg-gray-50 border-b border-gray-200">
-                  <tr>
-                    <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                <thead>
+                  <tr className="border-b border-border-primary">
+                    <th className="px-6 py-3 text-left text-xs font-medium text-text-muted uppercase tracking-wider">
                       Client
                     </th>
-                    <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                    <th className="px-6 py-3 text-left text-xs font-medium text-text-muted uppercase tracking-wider hidden md:table-cell">
                       Contact
                     </th>
-                    <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                    <th className="px-6 py-3 text-left text-xs font-medium text-text-muted uppercase tracking-wider">
                       Status
                     </th>
-                    <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                    <th className="px-6 py-3 text-left text-xs font-medium text-text-muted uppercase tracking-wider hidden sm:table-cell">
                       Progress
                     </th>
-                    <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                    <th className="px-6 py-3 text-left text-xs font-medium text-text-muted uppercase tracking-wider hidden lg:table-cell">
                       Last Updated
                     </th>
-                    <th className="px-6 py-4 text-right text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                      Actions
+                    <th className="px-6 py-3 text-right text-xs font-medium text-text-muted uppercase tracking-wider">
+                      
                     </th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-gray-200">
-                  {clients.map((client) => {
+                <tbody>
+                  {clients.map((client, idx) => {
                     const stage = STAGES.find((s) => s.id === client.currentStage);
                     const progress = getProgressPercentage(client.currentStage);
                     const isComplete = client.currentStage === 17;
 
                     return (
-                      <tr key={client.id} className="hover:bg-gray-50 transition-colors">
+                      <tr 
+                        key={client.id} 
+                        className={`hover:bg-bg-hover transition-colors ${idx !== clients.length - 1 ? 'border-b border-border-secondary' : ''}`}
+                      >
                         <td className="px-6 py-4">
                           <div className="flex items-center gap-3">
-                            <div className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center">
-                              <span className="text-primary font-semibold">
+                            <div className="w-9 h-9 rounded-lg bg-accent-muted flex items-center justify-center flex-shrink-0">
+                              <span className="text-xs font-medium text-accent">
                                 {client.name
                                   .split(" ")
                                   .map((n) => n[0])
                                   .join("")
-                                  .toUpperCase()}
+                                  .toUpperCase()
+                                  .slice(0, 2)}
                               </span>
                             </div>
-                            <div>
-                              <p className="font-medium text-gray-900">{client.name}</p>
-                              <p className="text-sm text-muted">{client.email}</p>
+                            <div className="min-w-0">
+                              <p className="text-sm font-medium text-text-primary truncate">{client.name}</p>
+                              <p className="text-xs text-text-tertiary truncate md:hidden">{client.email}</p>
                             </div>
                           </div>
                         </td>
-                        <td className="px-6 py-4">
-                          <p className="text-sm text-gray-900">{client.phone || "-"}</p>
+                        <td className="px-6 py-4 hidden md:table-cell">
+                          <p className="text-sm text-text-secondary">{client.email}</p>
+                          <p className="text-xs text-text-muted">{client.phone || "-"}</p>
                         </td>
                         <td className="px-6 py-4">
                           <span
-                            className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
+                            className={`inline-flex items-center px-2 py-0.5 rounded-md text-xs font-medium border ${
                               isComplete
-                                ? "bg-green-100 text-green-800"
-                                : "bg-blue-100 text-blue-800"
+                                ? "bg-success-muted text-success border-success/20"
+                                : "bg-accent-muted text-accent border-accent/20"
                             }`}
                           >
                             {stage?.shortName || `Stage ${client.currentStage}`}
                           </span>
                         </td>
-                        <td className="px-6 py-4">
+                        <td className="px-6 py-4 hidden sm:table-cell">
                           <div className="flex items-center gap-3">
-                            <div className="w-24 h-2 bg-gray-200 rounded-full overflow-hidden">
+                            <div className="w-20 h-1.5 bg-bg-tertiary rounded-full overflow-hidden">
                               <div
-                                className={`h-full rounded-full ${
-                                  isComplete ? "bg-green-500" : "bg-accent"
+                                className={`h-full rounded-full transition-all ${
+                                  isComplete ? "bg-success" : "bg-accent"
                                 }`}
                                 style={{ width: `${progress}%` }}
                               />
                             </div>
-                            <span className="text-sm font-medium text-gray-600">
+                            <span className="text-xs font-medium text-text-muted tabular-nums w-8">
                               {progress}%
                             </span>
                           </div>
                         </td>
-                        <td className="px-6 py-4">
-                          <p className="text-sm text-gray-600">
+                        <td className="px-6 py-4 hidden lg:table-cell">
+                          <p className="text-sm text-text-tertiary">
                             {new Date(client.updatedAt).toLocaleDateString("en-US", {
                               month: "short",
                               day: "numeric",
@@ -212,22 +197,10 @@ export default async function AdminDashboardPage() {
                         <td className="px-6 py-4 text-right">
                           <Link
                             href={`/admin/clients/${client.id}`}
-                            className="inline-flex items-center gap-1 text-primary hover:text-primary-dark font-medium text-sm"
+                            className="inline-flex items-center gap-1 text-text-secondary hover:text-accent text-sm font-medium transition-colors"
                           >
                             View
-                            <svg
-                              className="w-4 h-4"
-                              fill="none"
-                              stroke="currentColor"
-                              viewBox="0 0 24 24"
-                            >
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth={2}
-                                d="M9 5l7 7-7 7"
-                              />
-                            </svg>
+                            <ChevronRightIcon className="w-4 h-4" />
                           </Link>
                         </td>
                       </tr>
@@ -240,5 +213,83 @@ export default async function AdminDashboardPage() {
         )}
       </main>
     </div>
+  );
+}
+
+function StatCard({ 
+  label, 
+  value, 
+  icon, 
+  accent 
+}: { 
+  label: string; 
+  value: number; 
+  icon: React.ReactNode;
+  accent?: 'success' | 'warning' | 'info';
+}) {
+  const accentClasses = {
+    success: 'text-success bg-success-muted',
+    warning: 'text-warning bg-warning-muted',
+    info: 'text-info bg-info-muted',
+  };
+
+  return (
+    <div className="rounded-xl border border-border-primary bg-bg-secondary p-5">
+      <div className="flex items-center justify-between mb-3">
+        <p className="text-sm font-medium text-text-tertiary">{label}</p>
+        <div className={`w-8 h-8 rounded-lg flex items-center justify-center ${accent ? accentClasses[accent] : 'text-text-muted bg-bg-tertiary'}`}>
+          {icon}
+        </div>
+      </div>
+      <p className="text-2xl font-semibold text-text-primary tabular-nums">{value}</p>
+    </div>
+  );
+}
+
+function UsersIcon({ className }: { className?: string }) {
+  return (
+    <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+      <path strokeLinecap="round" strokeLinejoin="round" d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z" />
+    </svg>
+  );
+}
+
+function ClockIcon({ className }: { className?: string }) {
+  return (
+    <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+      <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+    </svg>
+  );
+}
+
+function CheckIcon({ className }: { className?: string }) {
+  return (
+    <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+      <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+    </svg>
+  );
+}
+
+function SparklesIcon({ className }: { className?: string }) {
+  return (
+    <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+      <path strokeLinecap="round" strokeLinejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 00-2.456 2.456zM16.894 20.567L16.5 21.75l-.394-1.183a2.25 2.25 0 00-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 001.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 001.423 1.423l1.183.394-1.183.394a2.25 2.25 0 00-1.423 1.423z" />
+    </svg>
+  );
+}
+
+function PlusIcon({ className }: { className?: string }) {
+  return (
+    <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+      <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+    </svg>
+  );
+}
+
+function ChevronRightIcon({ className }: { className?: string }) {
+  return (
+    <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+      <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+    </svg>
   );
 }

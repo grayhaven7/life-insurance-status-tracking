@@ -1,0 +1,54 @@
+// Prisma schema for Life Insurance Status Tracking Portal
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// Admin team members
+model User {
+  id            String          @id @default(cuid())
+  email         String          @unique
+  passwordHash  String          @map("password_hash")
+  name          String
+  role          String          @default("admin")
+  createdAt     DateTime        @default(now()) @map("created_at")
+  updatedAt     DateTime        @updatedAt @map("updated_at")
+  statusChanges StatusHistory[]
+
+  @@map("users")
+}
+
+// Insurance applicant clients
+model Client {
+  id            String          @id @default(cuid())
+  email         String          @unique
+  passwordHash  String          @map("password_hash")
+  name          String
+  phone         String?
+  currentStage  Int             @default(1) @map("current_stage")
+  createdAt     DateTime        @default(now()) @map("created_at")
+  updatedAt     DateTime        @updatedAt @map("updated_at")
+  statusHistory StatusHistory[]
+
+  @@map("clients")
+}
+
+// Audit trail for status changes
+model StatusHistory {
+  id        String   @id @default(cuid())
+  clientId  String   @map("client_id")
+  stage     Int
+  changedBy String   @map("changed_by")
+  note      String?
+  createdAt DateTime @default(now()) @map("created_at")
+
+  client Client @relation(fields: [clientId], references: [id], onDelete: Cascade)
+  user   User   @relation(fields: [changedBy], references: [id])
+
+  @@map("status_history")
+}

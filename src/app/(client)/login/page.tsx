@@ -4,6 +4,7 @@ import { useState } from "react";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import ThemeToggle from "@/components/ThemeToggle";
 
 export default function ClientLoginPage() {
   const router = useRouter();
@@ -48,16 +49,19 @@ export default function ClientLoginPage() {
 
       {/* Header */}
       <header className="relative p-6 border-b border-border-primary bg-bg-primary/50 backdrop-blur-xl">
-        <div className="max-w-7xl mx-auto flex items-center gap-3">
-          <div className="w-8 h-8 rounded-lg bg-accent flex items-center justify-center">
-            <svg className="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-            </svg>
+        <div className="max-w-7xl mx-auto flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <div className="w-8 h-8 rounded-lg bg-accent flex items-center justify-center">
+              <svg className="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+              </svg>
+            </div>
+            <div>
+              <h1 className="text-sm font-semibold text-text-primary">Financial Planning Group</h1>
+              <p className="text-xs text-text-tertiary">Client Portal</p>
+            </div>
           </div>
-          <div>
-            <h1 className="text-sm font-semibold text-text-primary">Financial Planning Group</h1>
-            <p className="text-xs text-text-tertiary">Client Portal</p>
-          </div>
+          <ThemeToggle />
         </div>
       </header>
 

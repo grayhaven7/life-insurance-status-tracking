@@ -3,6 +3,7 @@
 import { signOut } from "next-auth/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import ThemeToggle from "./ThemeToggle";
 
 interface Props {
   userName: string;
@@ -58,7 +59,8 @@ export default function AdminHeader({ userName }: Props) {
           </nav>
 
           {/* User & Actions */}
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-3">
+            <ThemeToggle />
             <div className="hidden sm:flex items-center gap-3">
               <div className="w-8 h-8 rounded-full bg-bg-tertiary flex items-center justify-center">
                 <span className="text-xs font-medium text-text-secondary">

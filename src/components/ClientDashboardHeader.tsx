@@ -1,6 +1,7 @@
 "use client";
 
 import { signOut } from "next-auth/react";
+import ThemeToggle from "./ThemeToggle";
 
 interface Props {
   clientName: string;
@@ -25,7 +26,8 @@ export default function ClientDashboardHeader({ clientName }: Props) {
           </div>
 
           {/* User & Actions */}
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-3">
+            <ThemeToggle />
             <div className="hidden sm:flex items-center gap-3">
               <div className="w-8 h-8 rounded-full bg-accent-muted flex items-center justify-center">
                 <span className="text-xs font-medium text-accent">

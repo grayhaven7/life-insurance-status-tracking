@@ -18,15 +18,17 @@ export default function AdminLoginPage() {
     setLoading(true);
 
     try {
-      const result = await signIn("admin-login", {
+      const result = await signIn("credentials", {
         email,
         password,
+        loginType: "admin",
         redirect: false,
+        callbackUrl: "/admin/dashboard",
       });
 
       if (result?.error) {
         setError("Invalid email or password");
-      } else {
+      } else if (result?.ok) {
         router.push("/admin/dashboard");
         router.refresh();
       }

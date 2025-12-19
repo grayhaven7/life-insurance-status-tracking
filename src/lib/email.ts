@@ -48,7 +48,7 @@ export async function sendStatusUpdateEmail({
     ? "Congratulations! Your Tax-Free Pension Is Now In Force"
     : `Application Update: ${stage.name}`;
 
-  const baseUrl = process.env.NEXTAUTH_URL || "http://localhost:3000";
+  const baseUrl = process.env.AUTH_URL || process.env.NEXTAUTH_URL || "http://localhost:3000";
 
   const html = `
     <!DOCTYPE html>
@@ -159,7 +159,7 @@ export async function sendWelcomeEmail({
     return null;
   }
 
-  const baseUrl = process.env.NEXTAUTH_URL || "http://localhost:3000";
+  const baseUrl = process.env.AUTH_URL || process.env.NEXTAUTH_URL || "http://localhost:3000";
 
   const html = `
     <!DOCTYPE html>

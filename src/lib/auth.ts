@@ -1,7 +1,10 @@
 import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import bcrypt from "bcryptjs";
-import prisma from "./db";
+import { PrismaClient } from "@prisma/client";
+
+// Use a separate prisma instance for auth to avoid circular dependency
+const prisma = new PrismaClient();
 
 declare module "next-auth" {
   interface User {
@@ -19,77 +22,72 @@ declare module "next-auth" {
 export const { handlers, signIn, signOut, auth } = NextAuth({
   providers: [
     Credentials({
-      id: "admin-login",
-      name: "Admin Login",
+      id: "credentials",
+      name: "Credentials",
       credentials: {
         email: { label: "Email", type: "email" },
         password: { label: "Password", type: "password" },
+        loginType: { label: "Login Type", type: "text" },
       },
       async authorize(credentials) {
         if (!credentials?.email || !credentials?.password) {
-          throw new Error("Email and password are required");
+          return null;
         }
 
-        const user = await prisma.user.findUnique({
-          where: { email: credentials.email as string },
-        });
+        const email = credentials.email as string;
+        const password = credentials.password as string;
+        const loginType = (credentials.loginType as string) || "client";
 
-        if (!user) {
-          throw new Error("Invalid email or password");
+        try {
+          if (loginType === "admin") {
+            // Try admin login
+            const user = await prisma.user.findUnique({
+              where: { email },
+            });
+
+            if (!user) {
+              return null;
+            }
+
+            const isValid = await bcrypt.compare(password, user.passwordHash);
+
+            if (!isValid) {
+              return null;
+            }
+
+            return {
+              id: user.id,
+              email: user.email,
+              name: user.name,
+              role: "admin" as const,
+            };
+          } else {
+            // Try client login
+            const client = await prisma.client.findUnique({
+              where: { email },
+            });
+
+            if (!client) {
+              return null;
+            }
+
+            const isValid = await bcrypt.compare(password, client.passwordHash);
+
+            if (!isValid) {
+              return null;
+            }
+
+            return {
+              id: client.id,
+              email: client.email,
+              name: client.name,
+              role: "client" as const,
+            };
+          }
+        } catch (error) {
+          console.error("Auth error:", error);
+          return null;
         }
-
-        const isValid = await bcrypt.compare(
-          credentials.password as string,
-          user.passwordHash
-        );
-
-        if (!isValid) {
-          throw new Error("Invalid email or password");
-        }
-
-        return {
-          id: user.id,
-          email: user.email,
-          name: user.name,
-          role: "admin" as const,
-        };
-      },
-    }),
-    Credentials({
-      id: "client-login",
-      name: "Client Login",
-      credentials: {
-        email: { label: "Email", type: "email" },
-        password: { label: "Password", type: "password" },
-      },
-      async authorize(credentials) {
-        if (!credentials?.email || !credentials?.password) {
-          throw new Error("Email and password are required");
-        }
-
-        const client = await prisma.client.findUnique({
-          where: { email: credentials.email as string },
-        });
-
-        if (!client) {
-          throw new Error("Invalid email or password");
-        }
-
-        const isValid = await bcrypt.compare(
-          credentials.password as string,
-          client.passwordHash
-        );
-
-        if (!isValid) {
-          throw new Error("Invalid email or password");
-        }
-
-        return {
-          id: client.id,
-          email: client.email,
-          name: client.name,
-          role: "client" as const,
-        };
       },
     }),
   ],

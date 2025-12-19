@@ -18,15 +18,16 @@ export default function ClientLoginPage() {
     setLoading(true);
 
     try {
-      const result = await signIn("client-login", {
+      const result = await signIn("credentials", {
         email,
         password,
         redirect: false,
+        callbackUrl: "/dashboard",
       });
 
       if (result?.error) {
         setError("Invalid email or password");
-      } else {
+      } else if (result?.ok) {
         router.push("/dashboard");
         router.refresh();
       }

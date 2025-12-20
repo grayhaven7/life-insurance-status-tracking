@@ -4,28 +4,23 @@ This folder contains the demo presentation for the Life Insurance Status Trackin
 
 ---
 
-## 🎬 INTERACTIVE DEMO PRESENTATION
+## 🎬 LIVE INTERACTIVE DEMO
 
-### **Open `demo.html` in your browser to start the presentation!**
+### **Go to `/demo` on your hosted app!**
 
-This is a 15-slide interactive presentation that walks through all features with:
-- Arrow key navigation (← →) or click the buttons
-- Live demo prompts telling you exactly what to show
-- Test credentials displayed on relevant slides
-- Professional, polished design
+The demo is a live, interactive page hosted on Vercel at:
 
----
+```
+https://your-app-url.vercel.app/demo
+```
 
-## 📁 All Files
-
-| File | Description |
-|------|-------------|
-| **`demo.html`** | ⭐ **Interactive slideshow presentation** - Open in browser! |
-| `DEMO_GUIDE.md` | Text version of the demo walkthrough |
-| `CLIENT_HANDOUT.md` | One-page handout to give clients with test login credentials |
-| `OVERVIEW.md` | Complete feature documentation |
-| `QUICK_REFERENCE.md` | One-page quick reference card |
-| `screenshots/` | Folder for screenshot images |
+This demo page includes:
+- ✅ **Overview** - Problem/solution and introduction
+- ✅ **Client Portal** - Interactive preview with draggable progress slider
+- ✅ **Admin Portal** - Mock dashboard showing all features
+- ✅ **17 Stages** - Complete list with descriptions
+- ✅ **Try It Yourself** - Login credentials and step-by-step guide
+- ✅ Direct links to actual login pages to test the real app
 
 ---
 
@@ -43,24 +38,31 @@ This is a 15-slide interactive presentation that walks through all features with
 
 ---
 
-## 💡 How to Run the Demo
+## 📁 Additional Files
 
-1. **Start your app** (if not already running):
-   ```bash
-   npm run dev
-   ```
+| File | Description |
+|------|-------------|
+| `demo.html` | Standalone slideshow version (open locally) |
+| `DEMO_GUIDE.md` | Text version of the demo walkthrough |
+| `CLIENT_HANDOUT.md` | One-page handout to give clients with test login credentials |
+| `OVERVIEW.md` | Complete feature documentation |
+| `QUICK_REFERENCE.md` | One-page quick reference card |
+| `screenshots/` | Folder for screenshot images |
 
-2. **Open the presentation**:
-   - Double-click `demo.html` or open it in Chrome/Safari/Firefox
+---
 
-3. **Have the app open** in another browser window side-by-side
+## 💡 How to Share the Demo
 
-4. **Follow the prompts** on each slide to show live features
+1. **Send them the demo URL**: `https://your-app.vercel.app/demo`
 
-5. **Pro tip**: Use two browser windows side-by-side:
-   - One logged in as admin
-   - One logged in as client
-   - Show how updates appear in real-time!
+2. **They can explore**:
+   - Read about all features
+   - See interactive previews
+   - Click through to try the real login pages
+
+3. **Give them the test credentials** (shown on the demo page):
+   - Admin: `admin@test.com` / `test123`
+   - Client: `client@test.com` / `test123`
 
 ## 📸 Taking Screenshots
 

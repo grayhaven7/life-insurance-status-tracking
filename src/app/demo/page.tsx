@@ -183,7 +183,8 @@ export default function DemoPage() {
                           type="email"
                           value="john.doe@example.com"
                           readOnly
-                          className="w-full px-4 py-2.5 border border-slate-300 rounded-lg bg-white text-slate-900"
+                          className="w-full px-4 py-2.5 rounded-lg"
+                          style={{ backgroundColor: '#ffffff', color: '#1e293b', border: '1px solid #cbd5e1' }}
                         />
                       </div>
                       <div>
@@ -192,7 +193,8 @@ export default function DemoPage() {
                           type="password"
                           value="••••••••"
                           readOnly
-                          className="w-full px-4 py-2.5 border border-slate-300 rounded-lg bg-white text-slate-900"
+                          className="w-full px-4 py-2.5 rounded-lg"
+                          style={{ backgroundColor: '#ffffff', color: '#1e293b', border: '1px solid #cbd5e1' }}
                         />
                       </div>
                       <button className="w-full py-2.5 bg-blue-600 text-white rounded-lg font-medium">
@@ -434,7 +436,8 @@ export default function DemoPage() {
                           type="email"
                           value="neil@financialplanninggroup.com"
                           readOnly
-                          className="w-full px-4 py-2.5 border border-slate-300 rounded-lg bg-white text-slate-900 text-sm"
+                          className="w-full px-4 py-2.5 rounded-lg text-sm"
+                          style={{ backgroundColor: '#ffffff', color: '#1e293b', border: '1px solid #cbd5e1' }}
                         />
                       </div>
                       <div>
@@ -443,7 +446,8 @@ export default function DemoPage() {
                           type="password"
                           value="••••••••"
                           readOnly
-                          className="w-full px-4 py-2.5 border border-slate-300 rounded-lg bg-white text-slate-900"
+                          className="w-full px-4 py-2.5 rounded-lg"
+                          style={{ backgroundColor: '#ffffff', color: '#1e293b', border: '1px solid #cbd5e1' }}
                         />
                       </div>
                       <button className="w-full py-2.5 bg-slate-900 text-white rounded-lg font-medium">
@@ -497,7 +501,8 @@ export default function DemoPage() {
                       <input
                         type="text"
                         placeholder="Search clients..."
-                        className="w-full pl-10 pr-4 py-2.5 border border-slate-300 rounded-lg bg-white text-slate-900"
+                        className="w-full pl-10 pr-4 py-2.5 rounded-lg"
+                        style={{ backgroundColor: '#ffffff', color: '#1e293b', border: '1px solid #cbd5e1' }}
                       />
                     </div>
                     <button className="px-5 py-2.5 bg-blue-600 text-white rounded-lg font-medium text-sm">
@@ -596,7 +601,8 @@ export default function DemoPage() {
                           type="text"
                           value="Sarah Johnson"
                           readOnly
-                          className="w-full px-4 py-2.5 border border-slate-300 rounded-lg bg-white text-slate-900"
+                          className="w-full px-4 py-2.5 rounded-lg"
+                          style={{ backgroundColor: '#ffffff', color: '#1e293b', border: '1px solid #cbd5e1' }}
                         />
                       </div>
 
@@ -608,7 +614,8 @@ export default function DemoPage() {
                           type="email"
                           value="sarah.johnson@example.com"
                           readOnly
-                          className="w-full px-4 py-2.5 border border-slate-300 rounded-lg bg-white text-slate-900"
+                          className="w-full px-4 py-2.5 rounded-lg"
+                          style={{ backgroundColor: '#ffffff', color: '#1e293b', border: '1px solid #cbd5e1' }}
                         />
                       </div>
 
@@ -620,7 +627,8 @@ export default function DemoPage() {
                           type="tel"
                           value="(555) 987-6543"
                           readOnly
-                          className="w-full px-4 py-2.5 border border-slate-300 rounded-lg bg-white text-slate-900"
+                          className="w-full px-4 py-2.5 rounded-lg"
+                          style={{ backgroundColor: '#ffffff', color: '#1e293b', border: '1px solid #cbd5e1' }}
                         />
                       </div>
 
@@ -633,7 +641,8 @@ export default function DemoPage() {
                             type="text"
                             value={generatedPassword || "xK7mNp2qRs4t"}
                             readOnly
-                            className="flex-1 px-4 py-2.5 border border-slate-300 rounded-lg bg-white text-slate-900 font-mono"
+                            className="flex-1 px-4 py-2.5 rounded-lg font-mono"
+                            style={{ backgroundColor: '#ffffff', color: '#1e293b', border: '1px solid #cbd5e1' }}
                           />
                           <button
                             onClick={generatePassword}
@@ -784,7 +793,8 @@ export default function DemoPage() {
                       <div>
                         <label className="block text-sm font-medium text-slate-700 mb-2">New Stage</label>
                         <select 
-                          className="w-full px-4 py-2.5 border border-slate-300 rounded-lg bg-white text-slate-900"
+                          className="w-full px-4 py-2.5 rounded-lg"
+                          style={{ backgroundColor: '#ffffff', color: '#1e293b', border: '1px solid #cbd5e1' }}
                           value={demoStage + 1}
                           onChange={() => {}}
                         >
@@ -797,7 +807,8 @@ export default function DemoPage() {
                           Note <span className="text-slate-400 font-normal">(optional)</span>
                         </label>
                         <textarea
-                          className="w-full px-4 py-2.5 border border-slate-300 rounded-lg bg-white text-slate-900 resize-none"
+                          className="w-full px-4 py-2.5 rounded-lg resize-none"
+                          style={{ backgroundColor: '#ffffff', color: '#1e293b', border: '1px solid #cbd5e1' }}
                           rows={2}
                           placeholder="Add a note for the client..."
                           value={demoNote}

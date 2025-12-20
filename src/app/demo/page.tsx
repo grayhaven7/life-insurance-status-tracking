@@ -74,6 +74,17 @@ export default function DemoPage() {
     setTimeout(() => setShowUpdateSuccess(false), 2000);
   };
 
+  const [generatedPassword, setGeneratedPassword] = useState("");
+
+  const generatePassword = () => {
+    const chars = "ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnpqrstuvwxyz23456789";
+    let password = "";
+    for (let i = 0; i < 12; i++) {
+      password += chars.charAt(Math.floor(Math.random() * chars.length));
+    }
+    setGeneratedPassword(password);
+  };
+
   const steps = [
     { id: "intro", title: "Welcome" },
     { id: "client-login", title: "Client Login" },
@@ -82,6 +93,7 @@ export default function DemoPage() {
     { id: "client-activity", title: "Activity History" },
     { id: "admin-login", title: "Admin Login" },
     { id: "admin-dashboard", title: "Admin Dashboard" },
+    { id: "admin-add-client", title: "Add New Client" },
     { id: "admin-client", title: "Client Management" },
     { id: "admin-update", title: "Status Updates" },
     { id: "try-it", title: "Try It Yourself" },
@@ -557,11 +569,128 @@ export default function DemoPage() {
           </div>
         )}
 
-        {/* Step 7: Client Management */}
+        {/* Step 7: Add New Client */}
         {step === 7 && (
           <div className="animate-fadeIn">
             <StepHeader
               number={7}
+              title="Add New Client"
+              description="Create new client accounts in seconds. They'll receive login credentials automatically."
+            />
+            
+            <div className="mt-8 max-w-xl mx-auto">
+              <BrowserFrame url="yoursite.com/admin/clients/new">
+                <div className="bg-slate-50 p-6">
+                  <div className="mb-4">
+                    <h3 className="text-lg font-semibold text-slate-900">Add New Client</h3>
+                    <p className="text-sm text-slate-500">Create a new client account. They will receive their login credentials via email.</p>
+                  </div>
+
+                  <div className="bg-white rounded-xl border border-slate-200 p-5">
+                    <div className="space-y-4">
+                      <div>
+                        <label className="block text-sm font-medium text-slate-700 mb-1.5">
+                          Full Name <span className="text-red-500">*</span>
+                        </label>
+                        <input
+                          type="text"
+                          value="Sarah Johnson"
+                          readOnly
+                          className="w-full px-4 py-2.5 border border-slate-200 rounded-lg bg-slate-50 text-slate-900"
+                        />
+                      </div>
+
+                      <div>
+                        <label className="block text-sm font-medium text-slate-700 mb-1.5">
+                          Email Address <span className="text-red-500">*</span>
+                        </label>
+                        <input
+                          type="email"
+                          value="sarah.johnson@example.com"
+                          readOnly
+                          className="w-full px-4 py-2.5 border border-slate-200 rounded-lg bg-slate-50 text-slate-900"
+                        />
+                      </div>
+
+                      <div>
+                        <label className="block text-sm font-medium text-slate-700 mb-1.5">
+                          Phone Number <span className="text-slate-400 font-normal">(optional)</span>
+                        </label>
+                        <input
+                          type="tel"
+                          value="(555) 987-6543"
+                          readOnly
+                          className="w-full px-4 py-2.5 border border-slate-200 rounded-lg bg-slate-50 text-slate-900"
+                        />
+                      </div>
+
+                      <div>
+                        <label className="block text-sm font-medium text-slate-700 mb-1.5">
+                          Temporary Password <span className="text-red-500">*</span>
+                        </label>
+                        <div className="flex gap-2">
+                          <input
+                            type="text"
+                            value={generatedPassword || "xK7mNp2qRs4t"}
+                            readOnly
+                            className="flex-1 px-4 py-2.5 border border-slate-200 rounded-lg bg-slate-50 text-slate-900 font-mono"
+                          />
+                          <button
+                            onClick={generatePassword}
+                            className="px-4 py-2.5 bg-slate-100 hover:bg-slate-200 border border-slate-200 text-slate-700 rounded-lg font-medium transition-colors flex items-center gap-2"
+                          >
+                            <DiceIcon className="w-4 h-4" />
+                            Generate
+                          </button>
+                        </div>
+                        <p className="text-xs text-slate-500 mt-1.5">This password will be sent to the client via email.</p>
+                      </div>
+
+                      <div className="flex items-center gap-3 p-3 bg-blue-50 rounded-lg border border-blue-100">
+                        <input
+                          type="checkbox"
+                          checked={true}
+                          readOnly
+                          className="w-4 h-4 rounded border-slate-300 text-blue-600"
+                        />
+                        <label className="text-sm text-slate-700">
+                          Send welcome email with login credentials
+                        </label>
+                      </div>
+
+                      <div className="flex gap-3 pt-2">
+                        <button className="flex-1 px-4 py-2.5 border border-slate-200 text-slate-600 rounded-lg font-medium">
+                          Cancel
+                        </button>
+                        <button className="flex-1 px-4 py-2.5 bg-blue-600 text-white rounded-lg font-medium flex items-center justify-center gap-2">
+                          <PlusIcon className="w-4 h-4" />
+                          Create Client
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </BrowserFrame>
+            </div>
+
+            <p className="text-center text-sm text-slate-500 mt-4">
+              👆 Try clicking &quot;Generate&quot; to create a secure password!
+            </p>
+
+            <FeatureList features={[
+              "Simple form with name, email, phone",
+              "One-click secure password generator",
+              "Automatic welcome email with credentials",
+              "Client can log in immediately",
+            ]} />
+          </div>
+        )}
+
+        {/* Step 8: Client Management */}
+        {step === 8 && (
+          <div className="animate-fadeIn">
+            <StepHeader
+              number={8}
               title="Client Management"
               description="View detailed client information, contact details, and complete history."
             />
@@ -624,11 +753,11 @@ export default function DemoPage() {
           </div>
         )}
 
-        {/* Step 8: Status Updates */}
-        {step === 8 && (
+        {/* Step 9: Status Updates */}
+        {step === 9 && (
           <div className="animate-fadeIn">
             <StepHeader
-              number={8}
+              number={9}
               title="Status Updates"
               description="Update client status with one click - they'll be notified automatically via email."
             />
@@ -704,8 +833,8 @@ export default function DemoPage() {
           </div>
         )}
 
-        {/* Step 9: Try It Yourself */}
-        {step === 9 && (
+        {/* Step 10: Try It Yourself */}
+        {step === 10 && (
           <div className="animate-fadeIn">
             <div className="text-center py-8">
               <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-green-500/20 text-green-400 text-sm mb-6">
@@ -917,6 +1046,22 @@ function SearchIcon({ className }: { className?: string }) {
   return (
     <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
       <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
+    </svg>
+  );
+}
+
+function DiceIcon({ className }: { className?: string }) {
+  return (
+    <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+      <path strokeLinecap="round" strokeLinejoin="round" d="M21 7.5l-2.25-1.313M21 7.5v2.25m0-2.25l-2.25 1.313M3 7.5l2.25-1.313M3 7.5l2.25 1.313M3 7.5v2.25m9 3l2.25-1.313M12 12.75l-2.25-1.313M12 12.75V15m0 6.75l2.25-1.313M12 21.75V19.5m0 2.25l-2.25-1.313m0-16.875L12 2.25l2.25 1.313M21 14.25v2.25l-2.25 1.313m-13.5 0L3 16.5v-2.25" />
+    </svg>
+  );
+}
+
+function PlusIcon({ className }: { className?: string }) {
+  return (
+    <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+      <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
     </svg>
   );
 }

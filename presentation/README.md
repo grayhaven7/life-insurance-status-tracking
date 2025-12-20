@@ -4,7 +4,7 @@
 
 A guided walkthrough that shows how the app looks and works, step by step.
 
-## The Tour (10 Steps)
+## The Tour (11 Steps)
 
 1. **Welcome** - Introduction to the portal
 2. **Client Login** - How clients access their portal
@@ -13,9 +13,10 @@ A guided walkthrough that shows how the app looks and works, step by step.
 5. **Activity History** - Recent updates and advisor notes
 6. **Admin Login** - Team access to admin portal
 7. **Admin Dashboard** - Client list, stats, and search
-8. **Client Management** - View client details and progress
-9. **Status Updates** - Update status with live demo (try clicking!)
-10. **Try It Yourself** - Test credentials to log in for real
+8. **Add New Client** - Create client accounts with password generator
+9. **Client Management** - View client details and progress
+10. **Status Updates** - Update status with live demo (try clicking!)
+11. **Try It Yourself** - Test credentials to log in for real
 
 ## Test Credentials
 

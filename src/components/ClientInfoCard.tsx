@@ -106,7 +106,7 @@ export default function ClientInfoCard({ client }: Props) {
               <button
                 onClick={handleDelete}
                 disabled={deleting}
-                className="flex-1 bg-error hover:bg-red-600 text-white text-sm py-2 px-4 rounded-lg font-medium disabled:opacity-50 transition-colors"
+                className="flex-1 bg-error hover:bg-red-600 text-btn-text text-sm py-2 px-4 rounded-lg font-medium disabled:opacity-50 transition-colors"
               >
                 {deleting ? "Deleting..." : "Yes, Delete"}
               </button>

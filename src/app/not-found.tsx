@@ -22,7 +22,7 @@ export default function NotFound() {
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <Link
               href="/login"
-              className="inline-flex items-center justify-center gap-2 bg-accent hover:bg-accent-secondary text-white px-5 py-2.5 rounded-lg font-medium transition-colors"
+              className="inline-flex items-center justify-center gap-2 bg-accent hover:bg-accent-secondary text-btn-text px-5 py-2.5 rounded-lg font-medium transition-colors"
             >
               Client Login
             </Link>

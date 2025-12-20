@@ -43,7 +43,9 @@ async function main() {
   
   const testClient = await prisma.client.upsert({
     where: { email: "client@test.com" },
-    update: {},
+    update: {
+      currentStage: 1, // Reset to step 1 for testing the full application process
+    },
     create: {
       email: "client@test.com",
       name: "Test Client",

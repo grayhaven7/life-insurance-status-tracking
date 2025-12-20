@@ -74,7 +74,7 @@ export default async function AdminDashboardPage() {
             <ClientSearch />
             <Link
               href="/admin/clients/new"
-              className="inline-flex items-center gap-2 bg-accent hover:bg-accent-secondary text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors"
+              className="inline-flex items-center gap-2 bg-accent hover:bg-accent-secondary text-btn-text px-4 py-2 rounded-lg text-sm font-medium transition-colors"
             >
               <PlusIcon className="w-4 h-4" />
               Add Client
@@ -94,7 +94,7 @@ export default async function AdminDashboardPage() {
             </p>
             <Link
               href="/admin/clients/new"
-              className="inline-flex items-center gap-2 bg-accent hover:bg-accent-secondary text-white px-5 py-2.5 rounded-lg font-medium transition-colors"
+              className="inline-flex items-center gap-2 bg-accent hover:bg-accent-secondary text-btn-text px-5 py-2.5 rounded-lg font-medium transition-colors"
             >
               <PlusIcon className="w-4 h-4" />
               Add Your First Client

@@ -17,11 +17,13 @@ export default function StatusUpdateForm({ clientId, currentStage, stages }: Pro
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
+  const [emailSent, setEmailSent] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
     setSuccess(false);
+    setEmailSent(false);
     setLoading(true);
 
     try {
@@ -38,10 +40,14 @@ export default function StatusUpdateForm({ clientId, currentStage, stages }: Pro
       }
 
       setSuccess(true);
+      setEmailSent(data.emailSent === true);
       setNote("");
       router.refresh();
 
-      setTimeout(() => setSuccess(false), 3000);
+      setTimeout(() => {
+        setSuccess(false);
+        setEmailSent(false);
+      }, 5000);
     } catch (err) {
       setError(err instanceof Error ? err.message : "An error occurred");
     } finally {
@@ -69,9 +75,19 @@ export default function StatusUpdateForm({ clientId, currentStage, stages }: Pro
         )}
 
         {success && (
-          <div className="flex items-center gap-2 px-3 py-2 rounded-lg bg-success-muted border border-success/20 text-sm text-success">
-            <CheckIcon className="w-4 h-4 flex-shrink-0" />
-            Status updated successfully! Email notification sent.
+          <div className={`flex items-center gap-2 px-3 py-2 rounded-lg text-sm ${
+            emailSent 
+              ? "bg-success-muted border border-success/20 text-success"
+              : "bg-warning-muted border border-warning/20 text-warning"
+          }`}>
+            {emailSent ? (
+              <CheckIcon className="w-4 h-4 flex-shrink-0" />
+            ) : (
+              <AlertIcon className="w-4 h-4 flex-shrink-0" />
+            )}
+            {emailSent 
+              ? "Status updated successfully! Email notification sent."
+              : "Status updated successfully, but email notification failed to send."}
           </div>
         )}
 
@@ -114,7 +130,7 @@ export default function StatusUpdateForm({ clientId, currentStage, stages }: Pro
         <button
           type="submit"
           disabled={loading || !canUpdate}
-          className="w-full flex items-center justify-center gap-2 bg-accent hover:bg-accent-secondary text-btn-text font-medium py-2.5 px-4 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+          className="w-full flex items-center justify-center gap-2 bg-accent hover:bg-accent-secondary text-white font-medium py-2.5 px-4 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
         >
           {loading ? (
             <>

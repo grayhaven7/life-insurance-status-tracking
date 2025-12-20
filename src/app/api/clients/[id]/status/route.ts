@@ -56,18 +56,24 @@ export async function POST(request: NextRequest, { params }: RouteParams) {
     });
 
     // Send email notification
+    let emailSent = false;
+    let emailError: string | null = null;
+
     if (process.env.RESEND_API_KEY) {
       try {
-        await sendStatusUpdateEmail({
+        const emailResult = await sendStatusUpdateEmail({
           to: client.email,
           clientName: client.name,
           newStage: stage,
           note,
         });
-      } catch (emailError) {
-        console.error("Failed to send status update email:", emailError);
-        // Don't fail the request if email fails
+        emailSent = emailResult !== null;
+      } catch (err) {
+        console.error("Failed to send status update email:", err);
+        emailError = err instanceof Error ? err.message : "Failed to send email";
       }
+    } else {
+      emailError = "Email service not configured";
     }
 
     return NextResponse.json({
@@ -81,6 +87,8 @@ export async function POST(request: NextRequest, { params }: RouteParams) {
         note: historyEntry.note,
         createdAt: historyEntry.createdAt,
       },
+      emailSent,
+      emailError,
     });
   } catch (error) {
     console.error("Error updating status:", error);

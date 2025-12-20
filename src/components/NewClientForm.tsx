@@ -157,7 +157,7 @@ export default function NewClientForm() {
         <button
           type="submit"
           disabled={loading}
-          className="flex-1 flex items-center justify-center gap-2 bg-accent hover:bg-accent-secondary text-btn-text font-medium py-3 px-4 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+          className="flex-1 flex items-center justify-center gap-2 bg-accent hover:bg-accent-secondary text-white font-medium py-3 px-4 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
         >
           {loading ? (
             <>

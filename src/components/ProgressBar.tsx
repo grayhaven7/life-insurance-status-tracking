@@ -81,8 +81,8 @@ export default function ProgressBar({ currentStage, showDetails = true }: Progre
                 <div
                   className={`
                     w-6 h-6 rounded-full flex items-center justify-center text-xs font-medium flex-shrink-0
-                    ${isCompleted ? "bg-success text-btn-text" : ""}
-                    ${isCurrent ? "bg-accent text-btn-text" : ""}
+                    ${isCompleted ? "bg-success text-white" : ""}
+                    ${isCurrent ? "bg-accent text-white" : ""}
                     ${isPending ? "bg-bg-tertiary text-text-muted border border-border-primary" : ""}
                   `}
                 >

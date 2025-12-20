@@ -109,7 +109,7 @@ export default function NewClientForm() {
         <label htmlFor="password" className="block text-sm font-medium text-text-secondary mb-2">
           Temporary Password <span className="text-error">*</span>
         </label>
-        <div className="flex gap-2">
+        <div className="flex flex-col sm:flex-row gap-2">
           <input
             id="password"
             type="text"
@@ -122,7 +122,7 @@ export default function NewClientForm() {
           <button
             type="button"
             onClick={generatePassword}
-            className="px-4 py-3 text-sm bg-bg-tertiary hover:bg-bg-hover border border-border-primary text-text-secondary hover:text-text-primary rounded-lg font-medium transition-all flex items-center gap-2"
+            className="px-4 py-3 text-sm bg-bg-tertiary hover:bg-bg-hover border border-border-primary text-text-secondary hover:text-text-primary rounded-lg font-medium transition-all flex items-center justify-center gap-2 sm:flex-shrink-0"
           >
             <DiceIcon className="w-4 h-4" />
             Generate
@@ -146,7 +146,7 @@ export default function NewClientForm() {
         </label>
       </div>
 
-      <div className="flex gap-3 pt-2">
+      <div className="flex flex-col-reverse sm:flex-row gap-3 pt-2">
         <button
           type="button"
           onClick={() => router.back()}

@@ -15,9 +15,9 @@ export default async function NewClientPage() {
     <div className="min-h-screen bg-bg-primary">
       <AdminHeader userName={session.user.name} />
 
-      <main className="max-w-2xl mx-auto px-6 py-8">
+      <main className="max-w-2xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
         {/* Breadcrumb */}
-        <nav className="flex items-center gap-2 text-sm mb-6">
+        <nav className="flex items-center gap-2 text-sm mb-4 sm:mb-6">
           <Link href="/admin/dashboard" className="text-text-tertiary hover:text-text-secondary transition-colors">
             Clients
           </Link>
@@ -25,14 +25,14 @@ export default async function NewClientPage() {
           <span className="text-text-primary font-medium">Add New Client</span>
         </nav>
 
-        <div className="mb-8">
-          <h2 className="text-xl font-semibold text-text-primary">Add New Client</h2>
+        <div className="mb-6 sm:mb-8">
+          <h2 className="text-lg sm:text-xl font-semibold text-text-primary">Add New Client</h2>
           <p className="text-sm text-text-tertiary mt-1">
             Create a new client account. They will receive their login credentials via email.
           </p>
         </div>
 
-        <div className="rounded-xl border border-border-primary bg-bg-secondary p-6 md:p-8">
+        <div className="rounded-xl border border-border-primary bg-bg-secondary p-4 sm:p-6 md:p-8">
           <NewClientForm />
         </div>
       </main>

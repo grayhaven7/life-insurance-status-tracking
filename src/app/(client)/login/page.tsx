@@ -48,17 +48,17 @@ export default function ClientLoginPage() {
       </div>
 
       {/* Header */}
-      <header className="relative p-6 border-b border-border-primary bg-bg-primary/50 backdrop-blur-xl">
+      <header className="relative px-4 py-4 sm:p-6 border-b border-border-primary bg-bg-primary/50 backdrop-blur-xl">
         <div className="max-w-7xl mx-auto flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-lg bg-accent flex items-center justify-center">
+          <div className="flex items-center gap-2 sm:gap-3">
+            <div className="w-8 h-8 rounded-lg bg-accent flex items-center justify-center flex-shrink-0">
               <svg className="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
               </svg>
             </div>
-            <div>
-              <h1 className="text-sm font-semibold text-text-primary">Financial Planning Group</h1>
-              <p className="text-xs text-text-tertiary">Client Portal</p>
+            <div className="min-w-0">
+              <h1 className="text-sm font-semibold text-text-primary truncate">Financial Planning Group</h1>
+              <p className="text-xs text-text-tertiary hidden sm:block">Client Portal</p>
             </div>
           </div>
           <ThemeToggle />
@@ -66,16 +66,16 @@ export default function ClientLoginPage() {
       </header>
 
       {/* Main content */}
-      <main className="relative flex-1 flex items-center justify-center p-6">
+      <main className="relative flex-1 flex items-center justify-center p-4 sm:p-6">
         <div className="w-full max-w-sm">
-          <div className="text-center mb-8">
-            <h2 className="text-2xl font-semibold text-text-primary">Welcome Back</h2>
+          <div className="text-center mb-6 sm:mb-8">
+            <h2 className="text-xl sm:text-2xl font-semibold text-text-primary">Welcome Back</h2>
             <p className="text-sm text-text-tertiary mt-2">
               Sign in to track your life insurance application
             </p>
           </div>
 
-          <div className="rounded-xl border border-border-primary bg-bg-secondary/80 backdrop-blur-xl p-6">
+          <div className="rounded-xl border border-border-primary bg-bg-secondary/80 backdrop-blur-xl p-4 sm:p-6">
             <form onSubmit={handleSubmit} className="space-y-5">
               {error && (
                 <div className="flex items-center gap-2 px-3 py-2 rounded-lg bg-error-muted border border-error/20 text-sm text-error">
@@ -153,7 +153,7 @@ export default function ClientLoginPage() {
       </main>
 
       {/* Footer */}
-      <footer className="relative p-6 text-center text-text-muted text-xs border-t border-border-primary">
+      <footer className="relative px-4 py-4 sm:p-6 text-center text-text-muted text-xs border-t border-border-primary">
         <p>&copy; {new Date().getFullYear()} Financial Planning Group. All rights reserved.</p>
       </footer>
     </div>

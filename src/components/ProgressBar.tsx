@@ -14,19 +14,19 @@ export default function ProgressBar({ currentStage, showDetails = true }: Progre
   return (
     <div className="w-full">
       {/* Progress percentage header */}
-      <div className="flex justify-between items-center mb-6">
-        <div>
-          <h3 className="text-lg font-semibold text-text-primary">Application Progress</h3>
-          <p className="text-sm text-text-tertiary mt-0.5">Track your journey to completion</p>
+      <div className="flex justify-between items-center mb-4 sm:mb-6">
+        <div className="min-w-0 flex-1">
+          <h3 className="text-base sm:text-lg font-semibold text-text-primary">Application Progress</h3>
+          <p className="text-xs sm:text-sm text-text-tertiary mt-0.5">Track your journey to completion</p>
         </div>
-        <div className="text-right">
-          <span className="text-3xl font-bold text-accent tabular-nums">{progress}%</span>
+        <div className="text-right flex-shrink-0 ml-4">
+          <span className="text-2xl sm:text-3xl font-bold text-accent tabular-nums">{progress}%</span>
           <p className="text-xs text-text-muted">Complete</p>
         </div>
       </div>
 
       {/* Main progress bar */}
-      <div className="relative mb-8">
+      <div className="relative mb-6 sm:mb-8">
         <div className="h-2 bg-bg-tertiary rounded-full overflow-hidden">
           <div
             className="h-full bg-gradient-to-r from-accent to-accent-secondary rounded-full transition-all duration-700 ease-out"
@@ -37,10 +37,10 @@ export default function ProgressBar({ currentStage, showDetails = true }: Progre
 
       {/* Current stage highlight */}
       {currentStageData && showDetails && (
-        <div className="relative overflow-hidden rounded-xl border border-border-primary bg-bg-secondary p-6 mb-8">
+        <div className="relative overflow-hidden rounded-xl border border-border-primary bg-bg-secondary p-4 sm:p-6 mb-6 sm:mb-8">
           <div className="absolute top-0 right-0 w-32 h-32 bg-accent/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
           <div className="relative">
-            <div className="flex items-center gap-2 mb-3">
+            <div className="flex flex-wrap items-center gap-2 mb-2 sm:mb-3">
               <span className="inline-flex items-center px-2 py-0.5 rounded-md text-xs font-medium bg-accent-muted text-accent border border-accent/20">
                 STEP {currentStage} OF {STAGES.length}
               </span>
@@ -50,8 +50,8 @@ export default function ProgressBar({ currentStage, showDetails = true }: Progre
                 </span>
               )}
             </div>
-            <h4 className="text-xl font-semibold text-text-primary mb-2">{currentStageData.name}</h4>
-            <p className="text-sm text-text-secondary">{currentStageData.description}</p>
+            <h4 className="text-lg sm:text-xl font-semibold text-text-primary mb-1.5 sm:mb-2">{currentStageData.name}</h4>
+            <p className="text-xs sm:text-sm text-text-secondary">{currentStageData.description}</p>
           </div>
         </div>
       )}

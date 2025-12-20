@@ -35,13 +35,13 @@ export default async function ClientDashboardPage() {
     <div className="min-h-screen bg-bg-primary">
       <ClientDashboardHeader clientName={client.name} />
 
-      <main className="max-w-4xl mx-auto px-6 py-8">
+      <main className="max-w-4xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
         {/* Welcome section */}
-        <div className="mb-8">
-          <h2 className="text-2xl font-semibold text-text-primary">
+        <div className="mb-6 sm:mb-8">
+          <h2 className="text-xl sm:text-2xl font-semibold text-text-primary">
             Hello, {client.name.split(" ")[0]}!
           </h2>
-          <p className="text-text-tertiary mt-1">
+          <p className="text-sm sm:text-base text-text-tertiary mt-1">
             Track your life insurance application progress below.
           </p>
         </div>
@@ -53,8 +53,8 @@ export default async function ClientDashboardPage() {
 
         {/* Recent activity */}
         {client.statusHistory.length > 0 && (
-          <div className="mt-8 rounded-xl border border-border-primary bg-bg-secondary p-6 md:p-8">
-            <div className="flex items-center gap-2 mb-5">
+          <div className="mt-6 sm:mt-8 rounded-xl border border-border-primary bg-bg-secondary p-4 sm:p-6 md:p-8">
+            <div className="flex items-center gap-2 mb-4 sm:mb-5">
               <div className="w-8 h-8 rounded-lg bg-accent-muted flex items-center justify-center">
                 <ActivityIcon className="w-4 h-4 text-accent" />
               </div>
@@ -66,10 +66,10 @@ export default async function ClientDashboardPage() {
                 return (
                   <div
                     key={history.id}
-                    className="flex items-start gap-4 p-4 rounded-lg bg-bg-tertiary border border-border-secondary"
+                    className="flex items-start gap-3 sm:gap-4 p-3 sm:p-4 rounded-lg bg-bg-tertiary border border-border-secondary"
                   >
-                    <div className="w-10 h-10 rounded-lg bg-success-muted flex items-center justify-center flex-shrink-0">
-                      <CheckIcon className="w-5 h-5 text-success" />
+                    <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-lg bg-success-muted flex items-center justify-center flex-shrink-0">
+                      <CheckIcon className="w-4 h-4 sm:w-5 sm:h-5 text-success" />
                     </div>
                     <div className="flex-1 min-w-0">
                       <p className="text-sm font-medium text-text-primary">
@@ -97,7 +97,7 @@ export default async function ClientDashboardPage() {
         )}
 
         {/* Contact section */}
-        <div className="mt-8 relative overflow-hidden rounded-xl border border-border-primary bg-bg-secondary p-6 md:p-8">
+        <div className="mt-6 sm:mt-8 relative overflow-hidden rounded-xl border border-border-primary bg-bg-secondary p-4 sm:p-6 md:p-8">
           <div className="absolute top-0 right-0 w-48 h-48 bg-accent/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
           <div className="relative">
             <div className="flex items-center gap-2 mb-4">

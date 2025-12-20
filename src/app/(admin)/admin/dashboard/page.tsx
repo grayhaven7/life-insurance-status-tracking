@@ -30,9 +30,9 @@ export default async function AdminDashboardPage() {
     <div className="min-h-screen bg-bg-primary">
       <AdminHeader userName={session.user.name} />
 
-      <main className="max-w-7xl mx-auto px-6 py-8">
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
         {/* Stats */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 mb-6 sm:mb-8">
           <StatCard
             label="Total Clients"
             value={clients.length}
@@ -65,16 +65,18 @@ export default async function AdminDashboardPage() {
         </div>
 
         {/* Client list header */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+        <div className="flex flex-col gap-4 mb-6">
           <div>
-            <h2 className="text-xl font-semibold text-text-primary">All Clients</h2>
+            <h2 className="text-lg sm:text-xl font-semibold text-text-primary">All Clients</h2>
             <p className="text-sm text-text-tertiary mt-0.5">Manage and track client applications</p>
           </div>
-          <div className="flex gap-3">
-            <ClientSearch />
+          <div className="flex flex-col sm:flex-row gap-3">
+            <div className="flex-1 sm:flex-initial">
+              <ClientSearch />
+            </div>
             <Link
               href="/admin/clients/new"
-              className="inline-flex items-center gap-2 bg-accent hover:bg-accent-secondary !text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors"
+              className="inline-flex items-center justify-center gap-2 bg-accent hover:bg-accent-secondary !text-white px-4 py-2.5 sm:py-2 rounded-lg text-sm font-medium transition-colors"
             >
               <PlusIcon className="w-4 h-4" />
               Add Client
@@ -234,14 +236,14 @@ function StatCard({
   };
 
   return (
-    <div className="rounded-xl border border-border-primary bg-bg-secondary p-5">
-      <div className="flex items-center justify-between mb-3">
-        <p className="text-sm font-medium text-text-tertiary">{label}</p>
-        <div className={`w-8 h-8 rounded-lg flex items-center justify-center ${accent ? accentClasses[accent] : 'text-text-muted bg-bg-tertiary'}`}>
+    <div className="rounded-xl border border-border-primary bg-bg-secondary p-3 sm:p-5">
+      <div className="flex items-center justify-between mb-2 sm:mb-3">
+        <p className="text-xs sm:text-sm font-medium text-text-tertiary">{label}</p>
+        <div className={`w-7 h-7 sm:w-8 sm:h-8 rounded-lg flex items-center justify-center ${accent ? accentClasses[accent] : 'text-text-muted bg-bg-tertiary'}`}>
           {icon}
         </div>
       </div>
-      <p className="text-2xl font-semibold text-text-primary tabular-nums">{value}</p>
+      <p className="text-xl sm:text-2xl font-semibold text-text-primary tabular-nums">{value}</p>
     </div>
   );
 }

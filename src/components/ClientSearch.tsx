@@ -30,7 +30,7 @@ export default function ClientSearch() {
         placeholder="Search clients..."
         value={search}
         onChange={(e) => setSearch(e.target.value)}
-        className="w-64 pl-9 pr-4 py-2 text-sm bg-bg-secondary border border-border-primary rounded-lg text-text-primary placeholder:text-text-muted focus:border-accent focus:ring-1 focus:ring-accent/20 outline-none transition-all"
+        className="w-full sm:w-64 pl-9 pr-4 py-2 text-sm bg-bg-secondary border border-border-primary rounded-lg text-text-primary placeholder:text-text-muted focus:border-accent focus:ring-1 focus:ring-accent/20 outline-none transition-all"
       />
       {search && (
         <button

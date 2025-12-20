@@ -10,23 +10,23 @@ interface Props {
 export default function ClientDashboardHeader({ clientName }: Props) {
   return (
     <header className="sticky top-0 z-50 border-b border-border-primary bg-bg-primary/80 backdrop-blur-xl">
-      <div className="max-w-7xl mx-auto px-6">
-        <div className="flex items-center justify-between h-16">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6">
+        <div className="flex items-center justify-between h-14 sm:h-16">
           {/* Logo & Title */}
-          <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-lg bg-accent flex items-center justify-center">
+          <div className="flex items-center gap-2 sm:gap-3">
+            <div className="w-8 h-8 rounded-lg bg-accent flex items-center justify-center flex-shrink-0">
               <svg className="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
               </svg>
             </div>
-            <div>
-              <h1 className="text-sm font-semibold text-text-primary">Financial Planning Group</h1>
-              <p className="text-xs text-text-tertiary">Client Portal</p>
+            <div className="min-w-0">
+              <h1 className="text-sm font-semibold text-text-primary truncate">Financial Planning Group</h1>
+              <p className="text-xs text-text-tertiary hidden sm:block">Client Portal</p>
             </div>
           </div>
 
           {/* User & Actions */}
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 sm:gap-3">
             <ThemeToggle />
             <div className="hidden sm:flex items-center gap-3">
               <div className="w-8 h-8 rounded-full bg-accent-muted flex items-center justify-center">

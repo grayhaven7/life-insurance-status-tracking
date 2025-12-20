@@ -39,10 +39,10 @@ export default function ClientInfoCard({ client }: Props) {
   };
 
   return (
-    <div className="rounded-xl border border-border-primary bg-bg-secondary p-6">
-      <div className="flex items-start gap-4 mb-6">
-        <div className="w-14 h-14 rounded-xl bg-accent-muted flex items-center justify-center flex-shrink-0">
-          <span className="text-xl font-semibold text-accent">
+    <div className="rounded-xl border border-border-primary bg-bg-secondary p-4 sm:p-6">
+      <div className="flex items-start gap-3 sm:gap-4 mb-4 sm:mb-6">
+        <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-xl bg-accent-muted flex items-center justify-center flex-shrink-0">
+          <span className="text-lg sm:text-xl font-semibold text-accent">
             {client.name
               .split(" ")
               .map((n) => n[0])
@@ -52,8 +52,8 @@ export default function ClientInfoCard({ client }: Props) {
           </span>
         </div>
         <div className="min-w-0">
-          <h2 className="text-lg font-semibold text-text-primary truncate">{client.name}</h2>
-          <p className="text-sm text-text-tertiary">
+          <h2 className="text-base sm:text-lg font-semibold text-text-primary truncate">{client.name}</h2>
+          <p className="text-xs sm:text-sm text-text-tertiary">
             Client since{" "}
             {new Date(client.createdAt).toLocaleDateString("en-US", {
               month: "long",
@@ -90,7 +90,7 @@ export default function ClientInfoCard({ client }: Props) {
         )}
       </div>
 
-      <div className="mt-6 pt-6 border-t border-border-primary">
+      <div className="mt-4 sm:mt-6 pt-4 sm:pt-6 border-t border-border-primary">
         {!showDeleteConfirm ? (
           <button
             onClick={() => setShowDeleteConfirm(true)}

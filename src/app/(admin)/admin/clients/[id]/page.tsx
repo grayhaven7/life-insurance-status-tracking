@@ -43,7 +43,7 @@ export default async function ClientDetailPage({ params }: PageProps) {
     <div className="min-h-screen bg-bg-primary">
       <AdminHeader userName={session.user.name} />
 
-      <main className="max-w-7xl mx-auto px-6 py-8">
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
         {/* Breadcrumb */}
         <nav className="flex items-center gap-2 text-sm mb-6">
           <Link href="/admin/dashboard" className="text-text-tertiary hover:text-text-secondary transition-colors">
@@ -53,9 +53,9 @@ export default async function ClientDetailPage({ params }: PageProps) {
           <span className="text-text-primary font-medium">{client.name}</span>
         </nav>
 
-        <div className="grid lg:grid-cols-3 gap-6">
+        <div className="grid lg:grid-cols-3 gap-4 sm:gap-6">
           {/* Left column - Client info and status update */}
-          <div className="lg:col-span-1 space-y-6">
+          <div className="lg:col-span-1 space-y-4 sm:space-y-6">
             <ClientInfoCard client={client} />
             <StatusUpdateForm
               clientId={client.id}
@@ -65,49 +65,49 @@ export default async function ClientDetailPage({ params }: PageProps) {
           </div>
 
           {/* Right column - Progress and history */}
-          <div className="lg:col-span-2 space-y-6">
+          <div className="lg:col-span-2 space-y-4 sm:space-y-6">
             {/* Progress */}
-            <div className="rounded-xl border border-border-primary bg-bg-secondary p-6">
+            <div className="rounded-xl border border-border-primary bg-bg-secondary p-4 sm:p-6">
               <ProgressBar currentStage={client.currentStage} showDetails={true} />
             </div>
 
             {/* Status history */}
-            <div className="rounded-xl border border-border-primary bg-bg-secondary p-6">
-              <div className="flex items-center gap-2 mb-5">
+            <div className="rounded-xl border border-border-primary bg-bg-secondary p-4 sm:p-6">
+              <div className="flex items-center gap-2 mb-4 sm:mb-5">
                 <div className="w-8 h-8 rounded-lg bg-accent-muted flex items-center justify-center">
                   <HistoryIcon className="w-4 h-4 text-accent" />
                 </div>
                 <h3 className="text-base font-semibold text-text-primary">Status History</h3>
               </div>
               {client.statusHistory.length === 0 ? (
-                <div className="text-center py-12">
+                <div className="text-center py-8 sm:py-12">
                   <div className="w-12 h-12 rounded-lg bg-bg-tertiary flex items-center justify-center mx-auto mb-3">
                     <ClockIcon className="w-6 h-6 text-text-muted" />
                   </div>
                   <p className="text-sm text-text-tertiary">No status updates yet.</p>
                 </div>
               ) : (
-                <div className="space-y-4">
+                <div className="space-y-3 sm:space-y-4">
                   {client.statusHistory.map((history, index) => {
                     const stage = STAGES.find((s) => s.id === history.stage);
                     const isLast = index === client.statusHistory.length - 1;
                     return (
                       <div
                         key={history.id}
-                        className="relative pl-8"
+                        className="relative pl-7 sm:pl-8"
                       >
                         {/* Timeline line */}
                         {!isLast && (
-                          <div className="absolute left-[11px] top-8 bottom-0 w-px bg-border-primary" />
+                          <div className="absolute left-[10px] sm:left-[11px] top-8 bottom-0 w-px bg-border-primary" />
                         )}
                         
                         {/* Timeline dot */}
-                        <div className="absolute left-0 top-2 w-6 h-6 rounded-full bg-accent flex items-center justify-center">
-                          <div className="w-2 h-2 rounded-full bg-white" />
+                        <div className="absolute left-0 top-2 w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-accent flex items-center justify-center">
+                          <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-white" />
                         </div>
                         
-                        <div className="rounded-lg bg-bg-tertiary border border-border-secondary p-4">
-                          <div className="flex items-center justify-between mb-2">
+                        <div className="rounded-lg bg-bg-tertiary border border-border-secondary p-3 sm:p-4">
+                          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1 sm:gap-2 mb-2">
                             <span className="text-sm font-medium text-text-primary">
                               Stage {history.stage}: {stage?.shortName || "Unknown"}
                             </span>

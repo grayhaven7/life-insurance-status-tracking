@@ -58,8 +58,8 @@ export default function StatusUpdateForm({ clientId, currentStage, stages }: Pro
   const canUpdate = newStage !== currentStage;
 
   return (
-    <div className="rounded-xl border border-border-primary bg-bg-secondary p-6">
-      <div className="flex items-center gap-2 mb-5">
+    <div className="rounded-xl border border-border-primary bg-bg-secondary p-4 sm:p-6">
+      <div className="flex items-center gap-2 mb-4 sm:mb-5">
         <div className="w-8 h-8 rounded-lg bg-accent-muted flex items-center justify-center">
           <RefreshIcon className="w-4 h-4 text-accent" />
         </div>

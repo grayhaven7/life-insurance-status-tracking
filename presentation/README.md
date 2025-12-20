@@ -1,14 +1,66 @@
 # Presentation Folder
 
-This folder contains documentation for the Life Insurance Status Tracking App presentation.
+This folder contains the demo presentation for the Life Insurance Status Tracking App.
 
-## 📁 Contents
+---
+
+## 🎬 INTERACTIVE DEMO PRESENTATION
+
+### **Open `demo.html` in your browser to start the presentation!**
+
+This is a 15-slide interactive presentation that walks through all features with:
+- Arrow key navigation (← →) or click the buttons
+- Live demo prompts telling you exactly what to show
+- Test credentials displayed on relevant slides
+- Professional, polished design
+
+---
+
+## 📁 All Files
 
 | File | Description |
 |------|-------------|
-| `OVERVIEW.md` | Complete feature documentation with screenshot placeholders |
+| **`demo.html`** | ⭐ **Interactive slideshow presentation** - Open in browser! |
+| `DEMO_GUIDE.md` | Text version of the demo walkthrough |
+| `CLIENT_HANDOUT.md` | One-page handout to give clients with test login credentials |
+| `OVERVIEW.md` | Complete feature documentation |
 | `QUICK_REFERENCE.md` | One-page quick reference card |
 | `screenshots/` | Folder for screenshot images |
+
+---
+
+## 🔑 Test Login Credentials
+
+**Admin Account:**
+- URL: `/admin/login`
+- Email: `admin@test.com`
+- Password: `test123`
+
+**Client Account:**
+- URL: `/login`
+- Email: `client@test.com`
+- Password: `test123`
+
+---
+
+## 💡 How to Run the Demo
+
+1. **Start your app** (if not already running):
+   ```bash
+   npm run dev
+   ```
+
+2. **Open the presentation**:
+   - Double-click `demo.html` or open it in Chrome/Safari/Firefox
+
+3. **Have the app open** in another browser window side-by-side
+
+4. **Follow the prompts** on each slide to show live features
+
+5. **Pro tip**: Use two browser windows side-by-side:
+   - One logged in as admin
+   - One logged in as client
+   - Show how updates appear in real-time!
 
 ## 📸 Taking Screenshots
 

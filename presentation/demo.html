@@ -1,0 +1,943 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Life Insurance Status Tracking - Demo Presentation</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+      background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+      min-height: 100vh;
+      color: #1f2937;
+    }
+
+    .presentation {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    .slide {
+      display: none;
+      background: white;
+      border-radius: 20px;
+      padding: 60px;
+      min-height: 80vh;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+      animation: fadeIn 0.5s ease;
+    }
+
+    .slide.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    h1 {
+      font-size: 3rem;
+      color: #1e3a8a;
+      margin-bottom: 20px;
+      line-height: 1.2;
+    }
+
+    h2 {
+      font-size: 2rem;
+      color: #1e3a8a;
+      margin-bottom: 30px;
+      padding-bottom: 15px;
+      border-bottom: 3px solid #f97316;
+    }
+
+    h3 {
+      font-size: 1.5rem;
+      color: #374151;
+      margin: 30px 0 15px 0;
+    }
+
+    p {
+      font-size: 1.25rem;
+      line-height: 1.8;
+      color: #4b5563;
+      margin-bottom: 20px;
+    }
+
+    .subtitle {
+      font-size: 1.5rem;
+      color: #6b7280;
+      margin-bottom: 40px;
+    }
+
+    ul {
+      list-style: none;
+      margin: 20px 0;
+    }
+
+    ul li {
+      font-size: 1.25rem;
+      padding: 15px 0 15px 50px;
+      position: relative;
+      color: #374151;
+      border-bottom: 1px solid #e5e7eb;
+    }
+
+    ul li:last-child {
+      border-bottom: none;
+    }
+
+    ul li::before {
+      content: "✓";
+      position: absolute;
+      left: 0;
+      color: #22c55e;
+      font-weight: bold;
+      font-size: 1.5rem;
+      background: #dcfce7;
+      width: 35px;
+      height: 35px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+
+    .credentials-box {
+      background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+      color: white;
+      padding: 40px;
+      border-radius: 15px;
+      margin: 30px 0;
+    }
+
+    .credentials-box h3 {
+      color: white;
+      margin-top: 0;
+      font-size: 1.3rem;
+      opacity: 0.9;
+    }
+
+    .credential-row {
+      display: flex;
+      gap: 40px;
+      margin-top: 20px;
+    }
+
+    .credential-item {
+      flex: 1;
+      background: rgba(255,255,255,0.15);
+      padding: 25px;
+      border-radius: 10px;
+    }
+
+    .credential-item .label {
+      font-size: 0.9rem;
+      opacity: 0.8;
+      margin-bottom: 5px;
+    }
+
+    .credential-item .value {
+      font-size: 1.4rem;
+      font-family: 'Courier New', monospace;
+      font-weight: bold;
+    }
+
+    .two-columns {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      margin: 30px 0;
+    }
+
+    .column {
+      background: #f9fafb;
+      padding: 30px;
+      border-radius: 15px;
+      border: 2px solid #e5e7eb;
+    }
+
+    .column h3 {
+      margin-top: 0;
+      color: #1e3a8a;
+    }
+
+    .column.highlight {
+      background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+      border-color: #f97316;
+    }
+
+    .stage-list {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin: 20px 0;
+    }
+
+    .stage-item {
+      display: flex;
+      align-items: center;
+      padding: 12px 15px;
+      background: #f3f4f6;
+      border-radius: 8px;
+      font-size: 1rem;
+    }
+
+    .stage-item .num {
+      background: #1e3a8a;
+      color: white;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.85rem;
+      font-weight: bold;
+      margin-right: 12px;
+      flex-shrink: 0;
+    }
+
+    .stage-item.complete {
+      background: #dcfce7;
+    }
+
+    .stage-item.complete .num {
+      background: #22c55e;
+    }
+
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 25px;
+      margin: 30px 0;
+    }
+
+    .feature-card {
+      background: #f9fafb;
+      padding: 30px;
+      border-radius: 15px;
+      border-left: 5px solid #3b82f6;
+    }
+
+    .feature-card h4 {
+      font-size: 1.2rem;
+      color: #1e3a8a;
+      margin-bottom: 10px;
+    }
+
+    .feature-card p {
+      font-size: 1rem;
+      margin: 0;
+    }
+
+    .demo-step {
+      background: #fffbeb;
+      border: 2px solid #f59e0b;
+      padding: 30px;
+      border-radius: 15px;
+      margin: 25px 0;
+    }
+
+    .demo-step h4 {
+      color: #d97706;
+      font-size: 1.1rem;
+      margin-bottom: 10px;
+    }
+
+    .demo-step p {
+      margin: 0;
+      font-size: 1.1rem;
+    }
+
+    .demo-step code {
+      background: #1e3a8a;
+      color: white;
+      padding: 3px 10px;
+      border-radius: 5px;
+      font-size: 1rem;
+    }
+
+    .nav-controls {
+      position: fixed;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 15px;
+      background: white;
+      padding: 15px 25px;
+      border-radius: 50px;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+    }
+
+    .nav-btn {
+      background: #1e3a8a;
+      color: white;
+      border: none;
+      padding: 12px 30px;
+      font-size: 1rem;
+      border-radius: 25px;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .nav-btn:hover {
+      background: #3b82f6;
+      transform: scale(1.05);
+    }
+
+    .nav-btn:disabled {
+      background: #d1d5db;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .slide-counter {
+      display: flex;
+      align-items: center;
+      padding: 0 20px;
+      font-weight: bold;
+      color: #6b7280;
+    }
+
+    .logo {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .logo-text {
+      font-size: 1rem;
+      color: #6b7280;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+    }
+
+    .big-icon {
+      font-size: 4rem;
+      margin-bottom: 20px;
+    }
+
+    .center {
+      text-align: center;
+    }
+
+    .benefit-box {
+      background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
+      border: 2px solid #22c55e;
+      padding: 25px;
+      border-radius: 15px;
+      margin: 20px 0;
+    }
+
+    .benefit-box h4 {
+      color: #166534;
+      margin-bottom: 10px;
+    }
+
+    .highlight-text {
+      background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+      padding: 20px 30px;
+      border-radius: 10px;
+      font-size: 1.3rem;
+      text-align: center;
+      margin: 30px 0;
+      border: 2px solid #f59e0b;
+    }
+
+    .workflow-steps {
+      display: flex;
+      justify-content: space-between;
+      margin: 40px 0;
+    }
+
+    .workflow-step {
+      flex: 1;
+      text-align: center;
+      padding: 20px;
+      position: relative;
+    }
+
+    .workflow-step:not(:last-child)::after {
+      content: "→";
+      position: absolute;
+      right: -15px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 2rem;
+      color: #d1d5db;
+    }
+
+    .workflow-step .step-num {
+      background: #1e3a8a;
+      color: white;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      font-weight: bold;
+      margin: 0 auto 15px;
+    }
+
+    .workflow-step .step-title {
+      font-weight: bold;
+      color: #1e3a8a;
+      margin-bottom: 5px;
+    }
+
+    .workflow-step .step-desc {
+      font-size: 0.95rem;
+      color: #6b7280;
+    }
+
+    .try-it-box {
+      background: linear-gradient(135deg, #1e3a8a 0%, #7c3aed 100%);
+      color: white;
+      padding: 40px;
+      border-radius: 20px;
+      text-align: center;
+      margin: 30px 0;
+    }
+
+    .try-it-box h3 {
+      color: white;
+      font-size: 1.8rem;
+      margin-bottom: 15px;
+    }
+
+    .try-it-box p {
+      color: rgba(255,255,255,0.9);
+      font-size: 1.2rem;
+    }
+
+    kbd {
+      background: #374151;
+      color: white;
+      padding: 5px 12px;
+      border-radius: 6px;
+      font-family: monospace;
+      font-size: 1rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="presentation">
+    
+    <!-- Slide 1: Title -->
+    <div class="slide active">
+      <div class="logo">
+        <div class="logo-text">Financial Planning Group</div>
+      </div>
+      <div class="center">
+        <div class="big-icon">📊</div>
+        <h1>Life Insurance Status<br>Tracking Portal</h1>
+        <p class="subtitle">A Modern Client Portal for Tracking Applications</p>
+        <div style="margin-top: 60px;">
+          <p style="color: #9ca3af; font-size: 1rem;">Press → or click "Next" to begin the demo</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Slide 2: The Problem -->
+    <div class="slide">
+      <h2>😫 The Problem</h2>
+      <div class="feature-grid">
+        <div class="feature-card" style="border-left-color: #ef4444;">
+          <h4>Constant Phone Calls</h4>
+          <p>"What stage is my application at?" - Multiple calls per week from anxious clients</p>
+        </div>
+        <div class="feature-card" style="border-left-color: #ef4444;">
+          <h4>Manual Status Updates</h4>
+          <p>Sending emails one-by-one to update clients on their progress</p>
+        </div>
+        <div class="feature-card" style="border-left-color: #ef4444;">
+          <h4>No Visibility</h4>
+          <p>Clients have no way to see where they are in the 17-stage process</p>
+        </div>
+        <div class="feature-card" style="border-left-color: #ef4444;">
+          <h4>Lost in Spreadsheets</h4>
+          <p>Tracking client progress across Excel files and email threads</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Slide 3: The Solution -->
+    <div class="slide">
+      <h2>✨ The Solution</h2>
+      <p>A dedicated <strong>Client Portal</strong> where clients can check their status 24/7, and an <strong>Admin Dashboard</strong> for your team to manage everything in one place.</p>
+      
+      <div class="two-columns" style="margin-top: 40px;">
+        <div class="column">
+          <h3>👥 For Your Clients</h3>
+          <ul>
+            <li>Login to see their progress anytime</li>
+            <li>Visual progress bar (% complete)</li>
+            <li>Current stage with clear explanation</li>
+            <li>Automatic email notifications</li>
+            <li>Easy contact options if they need help</li>
+          </ul>
+        </div>
+        <div class="column highlight">
+          <h3>👔 For Your Team</h3>
+          <ul>
+            <li>Dashboard showing all clients</li>
+            <li>One-click status updates</li>
+            <li>Add notes that clients can see</li>
+            <li>Automatic email notifications sent</li>
+            <li>Complete history of all changes</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Slide 4: The 17 Stages -->
+    <div class="slide">
+      <h2>📈 The 17 Application Stages</h2>
+      <p>Every life insurance application moves through these stages from start to finish:</p>
+      
+      <div class="stage-list">
+        <div class="stage-item"><span class="num">1</span> Submitted</div>
+        <div class="stage-item"><span class="num">2</span> Part 2 Sent</div>
+        <div class="stage-item"><span class="num">3</span> Part 2 Completed</div>
+        <div class="stage-item"><span class="num">4</span> Medical Exam Booked</div>
+        <div class="stage-item"><span class="num">5</span> Medical Exam Completed</div>
+        <div class="stage-item"><span class="num">6</span> Records Ordered</div>
+        <div class="stage-item"><span class="num">7</span> Records Received</div>
+        <div class="stage-item"><span class="num">8</span> Procedure/Report Outstanding</div>
+        <div class="stage-item"><span class="num">9</span> Procedure/Report Completed</div>
+        <div class="stage-item"><span class="num">10</span> News To Deliver</div>
+        <div class="stage-item"><span class="num">11</span> Zoom Call Scheduled (Review)</div>
+        <div class="stage-item"><span class="num">12</span> Zoom Call Completed (Review)</div>
+        <div class="stage-item"><span class="num">13</span> Paperwork Delivered</div>
+        <div class="stage-item"><span class="num">14</span> Zoom Call Scheduled (Signing)</div>
+        <div class="stage-item"><span class="num">15</span> Zoom Call Completed (Signing)</div>
+        <div class="stage-item"><span class="num">16</span> Paperwork Signed</div>
+        <div class="stage-item complete"><span class="num">17</span> Tax-Free Pension In Force ✅</div>
+      </div>
+    </div>
+
+    <!-- Slide 5: Client Portal - Login -->
+    <div class="slide">
+      <h2>🔐 Client Portal: Login</h2>
+      <p>Clients receive their login credentials via email when you add them to the system.</p>
+      
+      <div class="demo-step">
+        <h4>📍 LIVE DEMO: Open this URL now</h4>
+        <p>Go to <code>/login</code> in your browser</p>
+      </div>
+
+      <div class="feature-grid">
+        <div class="feature-card">
+          <h4>Clean, Professional Design</h4>
+          <p>Branded with "Financial Planning Group" - looks trustworthy and modern</p>
+        </div>
+        <div class="feature-card">
+          <h4>Simple Login</h4>
+          <p>Just email and password - credentials provided by advisor</p>
+        </div>
+        <div class="feature-card">
+          <h4>Secure Access</h4>
+          <p>Passwords are encrypted, sessions are protected</p>
+        </div>
+        <div class="feature-card">
+          <h4>Mobile Friendly</h4>
+          <p>Works great on phones and tablets</p>
+        </div>
+      </div>
+
+      <div class="credentials-box">
+        <h3>🔑 Test Credentials - Client Login</h3>
+        <div class="credential-row">
+          <div class="credential-item">
+            <div class="label">Email</div>
+            <div class="value">client@test.com</div>
+          </div>
+          <div class="credential-item">
+            <div class="label">Password</div>
+            <div class="value">test123</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Slide 6: Client Dashboard -->
+    <div class="slide">
+      <h2>📊 Client Portal: Dashboard</h2>
+      <p>After logging in, clients see their personalized dashboard with all progress information.</p>
+
+      <div class="demo-step">
+        <h4>📍 LIVE DEMO: Log in as client now</h4>
+        <p>Use <code>client@test.com</code> / <code>test123</code> and explore the dashboard</p>
+      </div>
+
+      <div class="feature-grid">
+        <div class="feature-card">
+          <h4>👋 Personal Welcome</h4>
+          <p>"Hello, [Name]!" - Personalized greeting with their first name</p>
+        </div>
+        <div class="feature-card">
+          <h4>📈 Progress Bar</h4>
+          <p>Large percentage display with beautiful animated gradient bar</p>
+        </div>
+        <div class="feature-card">
+          <h4>📍 Current Stage</h4>
+          <p>Shows "Step X of 17" with stage name and helpful description</p>
+        </div>
+        <div class="feature-card">
+          <h4>✅ Full Timeline</h4>
+          <p>All 17 stages visible - green check for done, orange for current, gray for upcoming</p>
+        </div>
+        <div class="feature-card">
+          <h4>🕐 Recent Activity</h4>
+          <p>Last 5 status updates with dates, notes, and who made the change</p>
+        </div>
+        <div class="feature-card">
+          <h4>📞 Need Help?</h4>
+          <p>One-click email or phone buttons to contact advisor</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Slide 7: Admin Login -->
+    <div class="slide">
+      <h2>🔐 Admin Portal: Login</h2>
+      <p>Your team uses a separate, secure admin portal to manage all clients.</p>
+
+      <div class="demo-step">
+        <h4>📍 LIVE DEMO: Open a new browser window</h4>
+        <p>Go to <code>/admin/login</code> (keep the client dashboard open in another window!)</p>
+      </div>
+
+      <div class="highlight-text">
+        💡 <strong>Pro Tip:</strong> Open admin and client portals side-by-side to see updates in real-time!
+      </div>
+
+      <div class="credentials-box">
+        <h3>🔑 Test Credentials - Admin Login</h3>
+        <div class="credential-row">
+          <div class="credential-item">
+            <div class="label">Email</div>
+            <div class="value">admin@test.com</div>
+          </div>
+          <div class="credential-item">
+            <div class="label">Password</div>
+            <div class="value">test123</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Slide 8: Admin Dashboard -->
+    <div class="slide">
+      <h2>📋 Admin Portal: Dashboard</h2>
+      <p>See all your clients at a glance with key statistics and quick actions.</p>
+
+      <div class="demo-step">
+        <h4>📍 LIVE DEMO: Log in as admin and explore</h4>
+        <p>Use <code>admin@test.com</code> / <code>test123</code></p>
+      </div>
+
+      <div class="feature-grid">
+        <div class="feature-card">
+          <h4>📊 Statistics Cards</h4>
+          <p>Total clients, in progress, completed, and new this week - all at a glance</p>
+        </div>
+        <div class="feature-card">
+          <h4>🔍 Search</h4>
+          <p>Instantly find any client by name or email</p>
+        </div>
+        <div class="feature-card">
+          <h4>➕ Add Client Button</h4>
+          <p>One-click to add new clients to the system</p>
+        </div>
+        <div class="feature-card">
+          <h4>📋 Client Table</h4>
+          <p>Shows avatar, name, email, phone, status badge, progress bar, and last updated</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Slide 9: Add New Client -->
+    <div class="slide">
+      <h2>➕ Adding a New Client</h2>
+      <p>Creating a new client account takes less than 30 seconds.</p>
+
+      <div class="demo-step">
+        <h4>📍 LIVE DEMO: Click "Add Client" on the dashboard</h4>
+        <p>Try filling out the form (you can cancel after)</p>
+      </div>
+
+      <div class="workflow-steps">
+        <div class="workflow-step">
+          <div class="step-num">1</div>
+          <div class="step-title">Enter Details</div>
+          <div class="step-desc">Name, email, phone</div>
+        </div>
+        <div class="workflow-step">
+          <div class="step-num">2</div>
+          <div class="step-title">Generate Password</div>
+          <div class="step-desc">Click "Generate" for secure password</div>
+        </div>
+        <div class="workflow-step">
+          <div class="step-num">3</div>
+          <div class="step-title">Send Welcome Email</div>
+          <div class="step-desc">Check the box to email credentials</div>
+        </div>
+        <div class="workflow-step">
+          <div class="step-num">4</div>
+          <div class="step-title">Done!</div>
+          <div class="step-desc">Client can log in immediately</div>
+        </div>
+      </div>
+
+      <div class="benefit-box">
+        <h4>✨ What Happens Automatically</h4>
+        <p>Client receives a welcome email with their login credentials and a link to the portal. They start at Stage 1 (Submitted) and can immediately see their progress.</p>
+      </div>
+    </div>
+
+    <!-- Slide 10: Update Client Status -->
+    <div class="slide">
+      <h2>🔄 Updating Client Status</h2>
+      <p>This is the core feature - updating a client's progress through the 17 stages.</p>
+
+      <div class="demo-step">
+        <h4>📍 LIVE DEMO: Click "View" on the test client</h4>
+        <p>Go to the client detail page</p>
+      </div>
+
+      <div class="two-columns">
+        <div class="column">
+          <h3>Left Side: Actions</h3>
+          <ul>
+            <li>Client info card with contact details</li>
+            <li>Status dropdown with all 17 stages</li>
+            <li>Optional note field</li>
+            <li>"Update Status & Notify Client" button</li>
+            <li>Delete client option</li>
+          </ul>
+        </div>
+        <div class="column highlight">
+          <h3>Right Side: Progress</h3>
+          <ul>
+            <li>Large percentage and progress bar</li>
+            <li>Current stage highlight box</li>
+            <li>Complete 17-stage timeline</li>
+            <li>Full status history with all past updates</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Slide 11: The Magic Moment -->
+    <div class="slide">
+      <h2>✨ The Magic: Real-Time Updates</h2>
+      <p>Watch what happens when you update a client's status!</p>
+
+      <div class="demo-step">
+        <h4>📍 LIVE DEMO: Do this now!</h4>
+        <p>1. Have both windows visible (admin + client dashboard)<br>
+        2. In admin: Select a new stage, add a note, click Update<br>
+        3. In client window: Refresh the page<br>
+        4. See the progress bar and timeline update instantly!</p>
+      </div>
+
+      <div class="try-it-box">
+        <h3>🎯 Try This Example</h3>
+        <p>In the admin panel, update the client to <strong>"Medical Exam Completed"</strong><br>
+        Add a note: <strong>"Great news - your results look perfect!"</strong><br>
+        Click Update, then refresh the client dashboard to see the change.</p>
+      </div>
+
+      <div class="highlight-text">
+        📧 The client also receives an <strong>automatic email notification</strong> with the update!
+      </div>
+    </div>
+
+    <!-- Slide 12: Email Notifications -->
+    <div class="slide">
+      <h2>📧 Automatic Email Notifications</h2>
+      <p>Clients are automatically notified whenever their status changes.</p>
+
+      <div class="feature-grid">
+        <div class="feature-card">
+          <h4>🆕 Welcome Email</h4>
+          <p>Sent when you create a new client - includes their login credentials</p>
+        </div>
+        <div class="feature-card">
+          <h4>🔄 Status Update Email</h4>
+          <p>Sent every time you update their stage - includes the new status and any notes</p>
+        </div>
+        <div class="feature-card">
+          <h4>📝 Notes Included</h4>
+          <p>Any notes you add appear in the email, so clients get context</p>
+        </div>
+        <div class="feature-card">
+          <h4>💼 Professional Templates</h4>
+          <p>Clean, branded email templates that look professional</p>
+        </div>
+      </div>
+
+      <div class="benefit-box">
+        <h4>📱 Result</h4>
+        <p>Clients stay informed without you having to write individual emails. They get notified the moment you make an update.</p>
+      </div>
+    </div>
+
+    <!-- Slide 13: Key Benefits -->
+    <div class="slide">
+      <h2>💰 Key Benefits</h2>
+      
+      <div class="two-columns">
+        <div class="column">
+          <h3>For Your Team</h3>
+          <ul>
+            <li><strong>Save 5+ hours/week</strong> - No more status update calls</li>
+            <li><strong>Stay organized</strong> - All clients in one dashboard</li>
+            <li><strong>One-click updates</strong> - Change status in seconds</li>
+            <li><strong>Complete history</strong> - Full audit trail</li>
+            <li><strong>Automatic notifications</strong> - No manual emails</li>
+          </ul>
+        </div>
+        <div class="column highlight">
+          <h3>For Your Clients</h3>
+          <ul>
+            <li><strong>24/7 access</strong> - Check anytime, any device</li>
+            <li><strong>Clear progress</strong> - Visual bar shows exactly where they are</li>
+            <li><strong>Peace of mind</strong> - Always know what's happening</li>
+            <li><strong>Automatic updates</strong> - Email notifications on changes</li>
+            <li><strong>Better experience</strong> - Modern, professional portal</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Slide 14: Try It Yourself -->
+    <div class="slide">
+      <h2>🚀 Try It Yourself!</h2>
+      <p>Use these test accounts to explore the portal on your own:</p>
+
+      <div class="credentials-box">
+        <h3>🔑 Admin Portal</h3>
+        <div class="credential-row">
+          <div class="credential-item">
+            <div class="label">URL</div>
+            <div class="value">/admin/login</div>
+          </div>
+          <div class="credential-item">
+            <div class="label">Email</div>
+            <div class="value">admin@test.com</div>
+          </div>
+          <div class="credential-item">
+            <div class="label">Password</div>
+            <div class="value">test123</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="credentials-box" style="background: linear-gradient(135deg, #059669 0%, #10b981 100%);">
+        <h3>🔑 Client Portal</h3>
+        <div class="credential-row">
+          <div class="credential-item">
+            <div class="label">URL</div>
+            <div class="value">/login</div>
+          </div>
+          <div class="credential-item">
+            <div class="label">Email</div>
+            <div class="value">client@test.com</div>
+          </div>
+          <div class="credential-item">
+            <div class="label">Password</div>
+            <div class="value">test123</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="highlight-text">
+        These are test accounts - feel free to click around and try everything!
+      </div>
+    </div>
+
+    <!-- Slide 15: Questions -->
+    <div class="slide">
+      <div class="center">
+        <div class="big-icon">❓</div>
+        <h1>Questions?</h1>
+        <p class="subtitle">Let's discuss any questions you have about the portal.</p>
+        
+        <div style="margin-top: 60px;">
+          <div class="credentials-box" style="text-align: left;">
+            <h3>📋 Quick Reference</h3>
+            <div class="credential-row">
+              <div class="credential-item">
+                <div class="label">Admin Login</div>
+                <div class="value">admin@test.com / test123</div>
+              </div>
+              <div class="credential-item">
+                <div class="label">Client Login</div>
+                <div class="value">client@test.com / test123</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Navigation -->
+  <div class="nav-controls">
+    <button class="nav-btn" id="prevBtn" onclick="changeSlide(-1)">← Previous</button>
+    <div class="slide-counter">
+      <span id="currentSlide">1</span> / <span id="totalSlides">15</span>
+    </div>
+    <button class="nav-btn" id="nextBtn" onclick="changeSlide(1)">Next →</button>
+  </div>
+
+  <script>
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('.slide');
+    const totalSlides = slides.length;
+
+    document.getElementById('totalSlides').textContent = totalSlides;
+
+    function showSlide(n) {
+      slides[currentSlide].classList.remove('active');
+      currentSlide = (n + totalSlides) % totalSlides;
+      slides[currentSlide].classList.add('active');
+      document.getElementById('currentSlide').textContent = currentSlide + 1;
+      
+      document.getElementById('prevBtn').disabled = currentSlide === 0;
+      document.getElementById('nextBtn').disabled = currentSlide === totalSlides - 1;
+    }
+
+    function changeSlide(direction) {
+      showSlide(currentSlide + direction);
+    }
+
+    // Keyboard navigation
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight' || e.key === ' ') {
+        if (currentSlide < totalSlides - 1) changeSlide(1);
+      } else if (e.key === 'ArrowLeft') {
+        if (currentSlide > 0) changeSlide(-1);
+      }
+    });
+
+    // Initialize
+    showSlide(0);
+  </script>
+</body>
+</html>

@@ -1,32 +1,25 @@
-# Demo Page
+# Product Demo
 
-## Live Interactive Demo
+**URL:** `/demo`
 
-**URL:** `https://your-app.vercel.app/demo`
+A guided walkthrough that shows how the app looks and works, step by step.
 
-The demo page is a fully interactive sandbox where users can:
+## The Tour (10 Steps)
 
-1. **See both Admin and Client views side-by-side**
-2. **Actually update the status** using the admin panel
-3. **Watch the client view update in real-time**
-4. **See email notification popup** when status changes
-5. **Try the real app** with test credentials
-
----
+1. **Welcome** - Introduction to the portal
+2. **Client Login** - How clients access their portal
+3. **Client Dashboard** - Personalized welcome and progress overview
+4. **Progress Tracking** - Current stage and 17-stage timeline
+5. **Activity History** - Recent updates and advisor notes
+6. **Admin Login** - Team access to admin portal
+7. **Admin Dashboard** - Client list, stats, and search
+8. **Client Management** - View client details and progress
+9. **Status Updates** - Update status with live demo (try clicking!)
+10. **Try It Yourself** - Test credentials to log in for real
 
 ## Test Credentials
 
-To try the actual app after the demo:
-
 | Portal | Email | Password |
 |--------|-------|----------|
-| **Admin** | `admin@test.com` | `test123` |
-| **Client** | `client@test.com` | `test123` |
-
----
-
-## How to Share
-
-Just send them: `https://your-app.vercel.app/demo`
-
-They can explore everything without needing to log in first.
+| Client | `client@test.com` | `test123` |
+| Admin | `admin@test.com` | `test123` |

@@ -16,6 +16,7 @@ A client portal for Emerald Tide Financial to track Tax-Free Pension application
 - **Database**: PostgreSQL with Prisma ORM
 - **Authentication**: NextAuth.js
 - **Email**: Resend
+- **SMS**: Twilio
 - **Styling**: Tailwind CSS
 - **Hosting**: Vercel (recommended)
 
@@ -46,6 +47,7 @@ A client portal for Emerald Tide Financial to track Tax-Free Pension application
 - Node.js 18+
 - PostgreSQL database
 - Resend account (for emails)
+- Twilio account (optional, for SMS)
 
 ### Installation
 
@@ -58,7 +60,7 @@ npm install
 2. Set up environment variables:
 
 ```bash
-cp .env.example .env
+cp env.example .env
 ```
 
 Edit `.env` with your configuration:
@@ -73,6 +75,13 @@ NEXTAUTH_URL="http://localhost:3000"
 
 # Resend - Get your API key from https://resend.com
 RESEND_API_KEY="re_xxxxxxxxxx"
+
+# Twilio (SMS) - optional
+TWILIO_ACCOUNT_SID="ACxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+TWILIO_AUTH_TOKEN="xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+# Choose ONE:
+TWILIO_FROM_NUMBER="+15551234567"
+# TWILIO_MESSAGING_SERVICE_SID="MGxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
 ```
 
 3. Set up the database:

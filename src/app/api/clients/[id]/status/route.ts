@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { auth } from "@/lib/auth";
 import prisma from "@/lib/db";
 import { sendStatusUpdateEmail } from "@/lib/email";
+import { sendStatusUpdateSms } from "@/lib/sms";
 import { STAGES } from "@/lib/stages";
 
 interface RouteParams {
@@ -87,6 +88,32 @@ export async function POST(request: NextRequest, { params }: RouteParams) {
       emailError = "Email service not configured (RESEND_API_KEY missing)";
     }
 
+    // Send SMS notification (Twilio)
+    let smsSent = false;
+    let smsError: string | null = null;
+    let smsDebugInfo: Record<string, unknown> | null = null;
+
+    if (!client.phone) {
+      smsError = "Client has no phone number on file";
+    } else {
+      try {
+        const smsResult = await sendStatusUpdateSms({
+          to: client.phone,
+          clientName: client.name,
+          newStage: stage,
+          note,
+        });
+        smsSent = smsResult !== null;
+        if (smsResult && typeof smsResult === "object") {
+          const maybe = smsResult as { sid?: unknown; status?: unknown; to?: unknown };
+          smsDebugInfo = { sid: maybe.sid, status: maybe.status, to: maybe.to };
+        }
+      } catch (err) {
+        console.error("Failed to send status update SMS:", err);
+        smsError = err instanceof Error ? err.message : "Failed to send SMS";
+      }
+    }
+
     return NextResponse.json({
       client: {
         id: updatedClient.id,
@@ -101,6 +128,9 @@ export async function POST(request: NextRequest, { params }: RouteParams) {
       emailSent,
       emailError,
       emailDebugInfo,
+      smsSent,
+      smsError,
+      smsDebugInfo,
     });
   } catch (error) {
     console.error("Error updating status:", error);

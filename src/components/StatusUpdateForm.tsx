@@ -19,6 +19,8 @@ export default function StatusUpdateForm({ clientId, currentStage, stages }: Pro
   const [success, setSuccess] = useState(false);
   const [emailSent, setEmailSent] = useState(false);
   const [emailError, setEmailError] = useState<string | null>(null);
+  const [smsSent, setSmsSent] = useState(false);
+  const [smsError, setSmsError] = useState<string | null>(null);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -26,6 +28,8 @@ export default function StatusUpdateForm({ clientId, currentStage, stages }: Pro
     setSuccess(false);
     setEmailSent(false);
     setEmailError(null);
+    setSmsSent(false);
+    setSmsError(null);
     setLoading(true);
 
     try {
@@ -46,6 +50,7 @@ export default function StatusUpdateForm({ clientId, currentStage, stages }: Pro
 
       setSuccess(true);
       setEmailSent(data.emailSent === true);
+      setSmsSent(data.smsSent === true);
       
       // Capture email error details for display
       if (data.emailError) {
@@ -55,6 +60,15 @@ export default function StatusUpdateForm({ clientId, currentStage, stages }: Pro
         setEmailError(`${data.emailError}${debugInfo}`);
         console.error("[Email Error]", data.emailError, data.emailDebugInfo);
       }
+
+      // Capture SMS error details for display
+      if (data.smsError) {
+        const debugInfo = data.smsDebugInfo 
+          ? ` | Debug: ${JSON.stringify(data.smsDebugInfo)}`
+          : "";
+        setSmsError(`${data.smsError}${debugInfo}`);
+        console.error("[SMS Error]", data.smsError, data.smsDebugInfo);
+      }
       
       setNote("");
       router.refresh();
@@ -63,6 +77,8 @@ export default function StatusUpdateForm({ clientId, currentStage, stages }: Pro
         setSuccess(false);
         setEmailSent(false);
         setEmailError(null);
+        setSmsSent(false);
+        setSmsError(null);
       }, 10000);
     } catch (err) {
       setError(err instanceof Error ? err.message : "An error occurred");
@@ -92,23 +108,32 @@ export default function StatusUpdateForm({ clientId, currentStage, stages }: Pro
 
         {success && (
           <div className={`px-3 py-2 rounded-lg text-sm ${
-            emailSent 
+            emailSent && smsSent
               ? "bg-success-muted border border-success/20 text-success"
               : "bg-warning-muted border border-warning/20 text-warning"
           }`}>
             <div className="flex items-center gap-2">
-              {emailSent ? (
+              {emailSent && smsSent ? (
                 <CheckIcon className="w-4 h-4 flex-shrink-0" />
               ) : (
                 <AlertIcon className="w-4 h-4 flex-shrink-0" />
               )}
-              {emailSent 
-                ? "Status updated successfully! Email notification sent."
-                : "Status updated successfully, but email notification failed to send."}
+              <span>
+                Status updated successfully.
+                {" "}
+                Email: {emailSent ? "sent" : "not sent"}.
+                {" "}
+                SMS: {smsSent ? "sent" : "not sent"}.
+              </span>
             </div>
             {emailError && (
               <div className="mt-2 text-xs font-mono bg-black/10 p-2 rounded overflow-x-auto">
                 {emailError}
+              </div>
+            )}
+            {smsError && (
+              <div className="mt-2 text-xs font-mono bg-black/10 p-2 rounded overflow-x-auto">
+                {smsError}
               </div>
             )}
           </div>
@@ -146,7 +171,7 @@ export default function StatusUpdateForm({ clientId, currentStage, stages }: Pro
             placeholder="Add a note about this status update..."
           />
           <p className="text-xs text-text-muted mt-1.5">
-            This note will be included in the email notification.
+            This note will be included in the email/SMS notification.
           </p>
         </div>
 

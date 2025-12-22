@@ -18,12 +18,14 @@ export default function StatusUpdateForm({ clientId, currentStage, stages }: Pro
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
   const [emailSent, setEmailSent] = useState(false);
+  const [emailError, setEmailError] = useState<string | null>(null);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
     setSuccess(false);
     setEmailSent(false);
+    setEmailError(null);
     setLoading(true);
 
     try {
@@ -35,19 +37,33 @@ export default function StatusUpdateForm({ clientId, currentStage, stages }: Pro
 
       const data = await response.json();
 
+      // Log full response for debugging
+      console.log("[Status Update Response]", JSON.stringify(data, null, 2));
+
       if (!response.ok) {
         throw new Error(data.error || "Failed to update status");
       }
 
       setSuccess(true);
       setEmailSent(data.emailSent === true);
+      
+      // Capture email error details for display
+      if (data.emailError) {
+        const debugInfo = data.emailDebugInfo 
+          ? ` | Debug: ${JSON.stringify(data.emailDebugInfo)}`
+          : "";
+        setEmailError(`${data.emailError}${debugInfo}`);
+        console.error("[Email Error]", data.emailError, data.emailDebugInfo);
+      }
+      
       setNote("");
       router.refresh();
 
       setTimeout(() => {
         setSuccess(false);
         setEmailSent(false);
-      }, 5000);
+        setEmailError(null);
+      }, 10000);
     } catch (err) {
       setError(err instanceof Error ? err.message : "An error occurred");
     } finally {
@@ -75,19 +91,26 @@ export default function StatusUpdateForm({ clientId, currentStage, stages }: Pro
         )}
 
         {success && (
-          <div className={`flex items-center gap-2 px-3 py-2 rounded-lg text-sm ${
+          <div className={`px-3 py-2 rounded-lg text-sm ${
             emailSent 
               ? "bg-success-muted border border-success/20 text-success"
               : "bg-warning-muted border border-warning/20 text-warning"
           }`}>
-            {emailSent ? (
-              <CheckIcon className="w-4 h-4 flex-shrink-0" />
-            ) : (
-              <AlertIcon className="w-4 h-4 flex-shrink-0" />
+            <div className="flex items-center gap-2">
+              {emailSent ? (
+                <CheckIcon className="w-4 h-4 flex-shrink-0" />
+              ) : (
+                <AlertIcon className="w-4 h-4 flex-shrink-0" />
+              )}
+              {emailSent 
+                ? "Status updated successfully! Email notification sent."
+                : "Status updated successfully, but email notification failed to send."}
+            </div>
+            {emailError && (
+              <div className="mt-2 text-xs font-mono bg-black/10 p-2 rounded overflow-x-auto">
+                {emailError}
+              </div>
             )}
-            {emailSent 
-              ? "Status updated successfully! Email notification sent."
-              : "Status updated successfully, but email notification failed to send."}
           </div>
         )}
 

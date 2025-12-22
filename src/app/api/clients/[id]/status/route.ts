@@ -58,6 +58,7 @@ export async function POST(request: NextRequest, { params }: RouteParams) {
     // Send email notification
     let emailSent = false;
     let emailError: string | null = null;
+    let emailDebugInfo: Record<string, unknown> | null = null;
 
     if (process.env.RESEND_API_KEY) {
       try {
@@ -68,12 +69,22 @@ export async function POST(request: NextRequest, { params }: RouteParams) {
           note,
         });
         emailSent = emailResult !== null;
+        if (emailResult) {
+          emailDebugInfo = { emailId: emailResult.id };
+        }
       } catch (err) {
         console.error("Failed to send status update email:", err);
         emailError = err instanceof Error ? err.message : "Failed to send email";
+        // Capture additional debug info from Resend errors
+        if (err && typeof err === "object") {
+          const resendErr = (err as { resendError?: unknown }).resendError;
+          if (resendErr) {
+            emailDebugInfo = { resendError: resendErr };
+          }
+        }
       }
     } else {
-      emailError = "Email service not configured";
+      emailError = "Email service not configured (RESEND_API_KEY missing)";
     }
 
     return NextResponse.json({
@@ -89,6 +100,7 @@ export async function POST(request: NextRequest, { params }: RouteParams) {
       },
       emailSent,
       emailError,
+      emailDebugInfo,
     });
   } catch (error) {
     console.error("Error updating status:", error);

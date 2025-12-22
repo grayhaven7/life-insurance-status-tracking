@@ -12,3 +12,4 @@ ALTER TABLE "clients" ADD CONSTRAINT "clients_assigned_admin_id_fkey"
 -- Create index for faster lookups
 CREATE INDEX "clients_assigned_admin_id_idx" ON "clients"("assigned_admin_id");
 
+

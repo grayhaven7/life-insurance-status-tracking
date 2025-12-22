@@ -121,22 +121,40 @@ export async function sendStatusUpdateEmail({
     </html>
   `;
 
+  const fromAddress = process.env.EMAIL_FROM || "Emerald Tide Financial <onboarding@resend.dev>";
+  
+  console.log("[Email Debug] Attempting to send status update email:", {
+    from: fromAddress,
+    to,
+    subject,
+    clientName,
+    stage: newStage,
+  });
+
   try {
     const { data, error } = await client.emails.send({
-      from: "Emerald Tide Financial <onboarding@resend.dev>",
+      from: fromAddress,
       to: [to],
       subject,
       html,
     });
 
     if (error) {
-      console.error("Failed to send email:", error);
-      throw error;
+      console.error("[Email Debug] Resend API returned error:", JSON.stringify(error, null, 2));
+      const enhancedError = new Error(`Resend API error: ${error.message || JSON.stringify(error)}`);
+      (enhancedError as Error & { resendError: unknown }).resendError = error;
+      throw enhancedError;
     }
 
+    console.log("[Email Debug] Email sent successfully:", JSON.stringify(data, null, 2));
     return data;
   } catch (error) {
-    console.error("Error sending status update email:", error);
+    console.error("[Email Debug] Exception sending email:", {
+      message: error instanceof Error ? error.message : String(error),
+      name: error instanceof Error ? error.name : "Unknown",
+      stack: error instanceof Error ? error.stack : undefined,
+      fullError: JSON.stringify(error, Object.getOwnPropertyNames(error as object), 2),
+    });
     throw error;
   }
 }

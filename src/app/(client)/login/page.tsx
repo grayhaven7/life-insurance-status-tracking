@@ -71,7 +71,7 @@ export default function ClientLoginPage() {
           <div className="text-center mb-6 sm:mb-8">
             <h2 className="text-xl sm:text-2xl font-semibold text-text-primary">Welcome Back</h2>
             <p className="text-sm text-text-tertiary mt-2">
-              Sign in to track your life insurance application
+              Sign in to track your Tax-Free Pension application
             </p>
           </div>
 

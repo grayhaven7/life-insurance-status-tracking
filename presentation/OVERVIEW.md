@@ -17,7 +17,7 @@
 
 The **Life Insurance Status Tracking App** is a modern web application built for **Financial Planning Group** that enables:
 
-- **Administrators** to manage clients and track their life insurance application progress through 17 stages
+- **Administrators** to manage clients and track their Tax-Free Pension application progress through 17 stages
 - **Clients** to view their application status in real-time and receive email notifications on updates
 
 ### Technology Stack
@@ -174,7 +174,7 @@ The **Life Insurance Status Tracking App** is a modern web application built for
 
 - **Personalized Welcome:**
   - "Hello, [First Name]!"
-  - Subtitle: "Track your life insurance application progress below."
+  - Subtitle: "Track your Tax-Free Pension application progress below."
 
 - **Progress Section:**
   - Large percentage display

@@ -42,7 +42,7 @@ export default async function ClientDashboardPage() {
             Hello, {client.name.split(" ")[0]}!
           </h2>
           <p className="text-sm sm:text-base text-text-tertiary mt-1">
-            Track your life insurance application progress below.
+            Track your Tax-Free Pension application progress below.
           </p>
         </div>
 

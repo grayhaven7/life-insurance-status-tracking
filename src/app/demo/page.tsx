@@ -244,7 +244,7 @@ export default function DemoPage() {
                   {/* Welcome */}
                   <div className="mb-6">
                     <h2 className="text-2xl font-bold text-slate-900">Hello, John! 👋</h2>
-                    <p className="text-slate-500">Track your life insurance application progress below.</p>
+                    <p className="text-slate-500">Track your Tax-Free Pension application progress below.</p>
                   </div>
 
                   {/* Progress Card */}

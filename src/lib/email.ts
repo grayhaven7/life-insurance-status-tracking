@@ -61,7 +61,7 @@ export async function sendStatusUpdateEmail({
         <div style="max-width: 600px; margin: 0 auto; padding: 20px;">
           <div style="background-color: #1e3a5f; padding: 30px; text-align: center; border-radius: 8px 8px 0 0;">
             <h1 style="color: #ffffff; margin: 0; font-size: 24px;">Financial Planning Group</h1>
-            <p style="color: #c9a227; margin: 10px 0 0 0; font-size: 14px;">Life Insurance Application Update</p>
+            <p style="color: #c9a227; margin: 10px 0 0 0; font-size: 14px;">Tax-Free Pension Application Update</p>
           </div>
           
           <div style="background-color: #ffffff; padding: 30px; border-radius: 0 0 8px 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
@@ -71,8 +71,8 @@ export async function sendStatusUpdateEmail({
             
             <p style="color: #333; font-size: 16px; margin: 0 0 20px 0;">
               ${isComplete 
-                ? "We are thrilled to inform you that your life insurance application process is complete!" 
-                : "We wanted to update you on the status of your life insurance application."}
+                ? "We are thrilled to inform you that your Tax-Free Pension application process is complete!" 
+                : "We wanted to update you on the status of your Tax-Free Pension application."}
             </p>
             
             <div style="background-color: #f8f9fa; border-left: 4px solid #c9a227; padding: 20px; margin: 20px 0; border-radius: 0 8px 8px 0;">
@@ -180,7 +180,7 @@ export async function sendWelcomeEmail({
             </p>
             
             <p style="color: #333; font-size: 16px; margin: 0 0 20px 0;">
-              Your client portal account has been created. You can now track the progress of your life insurance application online.
+              Your client portal account has been created. You can now track the progress of your Tax-Free Pension application online.
             </p>
             
             <div style="background-color: #f8f9fa; border-left: 4px solid #c9a227; padding: 20px; margin: 20px 0; border-radius: 0 8px 8px 0;">

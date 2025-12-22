@@ -1,4 +1,4 @@
-// Life Insurance Application Stages (17 total)
+// Tax-Free Pension Application Stages (17 total)
 
 export interface Stage {
   id: number;

@@ -11,7 +11,7 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   title: "Financial Planning Group - Client Portal",
-  description: "Track your life insurance application status",
+  description: "Track your Tax-Free Pension application status",
 };
 
 export default function RootLayout({

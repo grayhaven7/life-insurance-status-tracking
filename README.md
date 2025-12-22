@@ -1,6 +1,6 @@
 # Life Insurance Status Tracking Portal
 
-A client portal for Financial Planning Group to track life insurance application status through 17 stages, with email notifications on status changes.
+A client portal for Financial Planning Group to track Tax-Free Pension application status through 17 stages, with email notifications on status changes.
 
 ## Features
 

@@ -126,8 +126,6 @@ export default async function ClientDashboardPage() {
             <div className="flex flex-wrap gap-3">
               <a
                 href={`mailto:${adminEmail}`}
-                target="_blank"
-                rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg bg-bg-tertiary hover:bg-bg-hover border border-border-primary text-sm font-medium text-text-secondary hover:text-text-primary transition-all"
               >
                 <MailIcon className="w-4 h-4" />

@@ -175,7 +175,7 @@ export default function NewClientForm({ currentAdminId }: Props) {
           ))}
         </select>
         <p className="text-xs text-text-muted mt-2">
-          The client will see this advisor's contact info on their dashboard.
+          The client will see this advisor&apos;s contact info on their dashboard.
         </p>
       </div>
 

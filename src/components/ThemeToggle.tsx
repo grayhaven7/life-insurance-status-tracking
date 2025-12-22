@@ -1,58 +1,35 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 export default function ThemeToggle() {
-  const [isDark, setIsDark] = useState(false);
-  const [mounted, setMounted] = useState(false);
-
   useEffect(() => {
-    setMounted(true);
     // Check for saved preference or system preference
     const savedTheme = localStorage.getItem("theme");
     const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
     
     if (savedTheme === "dark" || (!savedTheme && prefersDark)) {
-      setIsDark(true);
       document.documentElement.classList.add("dark");
     } else {
-      setIsDark(false);
       document.documentElement.classList.remove("dark");
     }
   }, []);
 
   const toggleTheme = () => {
-    if (isDark) {
-      document.documentElement.classList.remove("dark");
-      localStorage.setItem("theme", "light");
-      setIsDark(false);
-    } else {
-      document.documentElement.classList.add("dark");
-      localStorage.setItem("theme", "dark");
-      setIsDark(true);
-    }
+    const root = document.documentElement;
+    const nextIsDark = !root.classList.contains("dark");
+    root.classList.toggle("dark", nextIsDark);
+    localStorage.setItem("theme", nextIsDark ? "dark" : "light");
   };
-
-  // Prevent hydration mismatch
-  if (!mounted) {
-    return (
-      <button className="w-8 h-8 rounded-lg bg-bg-tertiary flex items-center justify-center">
-        <div className="w-4 h-4" />
-      </button>
-    );
-  }
 
   return (
     <button
       onClick={toggleTheme}
       className="w-8 h-8 rounded-lg bg-bg-tertiary hover:bg-bg-hover border border-border-primary flex items-center justify-center transition-colors"
-      aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"}
+      aria-label="Toggle theme"
     >
-      {isDark ? (
-        <SunIcon className="w-4 h-4 text-text-secondary" />
-      ) : (
-        <MoonIcon className="w-4 h-4 text-text-secondary" />
-      )}
+      <SunIcon className="w-4 h-4 text-text-secondary hidden dark:block" />
+      <MoonIcon className="w-4 h-4 text-text-secondary block dark:hidden" />
     </button>
   );
 }

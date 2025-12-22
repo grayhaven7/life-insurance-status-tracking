@@ -12,6 +12,12 @@ interface HistoryItem {
   updatedBy: string;
 }
 
+function daysAgo(days: number): Date {
+  const d = new Date();
+  d.setDate(d.getDate() - days);
+  return d;
+}
+
 export default function DemoPage() {
   const [step, setStep] = useState(0);
   const [demoStage, setDemoStage] = useState(5);
@@ -22,35 +28,35 @@ export default function DemoPage() {
       id: 5,
       stage: 5,
       note: "Medical exam completed successfully",
-      createdAt: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000),
+      createdAt: daysAgo(1),
       updatedBy: "Neil Gronowetter",
     },
     {
       id: 4,
       stage: 4,
       note: "Exam scheduled for Tuesday at 10am",
-      createdAt: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000),
+      createdAt: daysAgo(3),
       updatedBy: "Neil Gronowetter",
     },
     {
       id: 3,
       stage: 3,
       note: "Thank you for completing Part 2!",
-      createdAt: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000),
+      createdAt: daysAgo(5),
       updatedBy: "Neil Gronowetter",
     },
     {
       id: 2,
       stage: 2,
       note: "Part 2 forms sent to your email",
-      createdAt: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000),
+      createdAt: daysAgo(7),
       updatedBy: "Neil Gronowetter",
     },
     {
       id: 1,
       stage: 1,
       note: "Application received",
-      createdAt: new Date(Date.now() - 10 * 24 * 60 * 60 * 1000),
+      createdAt: daysAgo(10),
       updatedBy: "Neil Gronowetter",
     },
   ]);

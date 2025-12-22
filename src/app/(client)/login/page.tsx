@@ -157,10 +157,6 @@ export default function ClientLoginPage() {
         </div>
       </main>
 
-      {/* Footer */}
-      <footer className="relative px-4 py-4 sm:p-6 text-center text-text-muted text-xs border-t border-border-primary">
-        <p>&copy; {new Date().getFullYear()} Emerald Tide Financial. All rights reserved.</p>
-      </footer>
     </div>
   );
 }

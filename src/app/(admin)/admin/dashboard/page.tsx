@@ -26,6 +26,11 @@ export default async function AdminDashboardPage() {
     },
   });
 
+  const now = new Date();
+  const weekAgo = new Date(now);
+  weekAgo.setDate(now.getDate() - 7);
+  const newThisWeekCount = clients.filter((c) => new Date(c.createdAt) > weekAgo).length;
+
   return (
     <div className="min-h-screen bg-bg-primary">
       <AdminHeader userName={session.user.name} />
@@ -52,13 +57,7 @@ export default async function AdminDashboardPage() {
           />
           <StatCard
             label="New This Week"
-            value={
-              clients.filter(
-                (c) =>
-                  new Date(c.createdAt) >
-                  new Date(Date.now() - 7 * 24 * 60 * 60 * 1000)
-              ).length
-            }
+            value={newThisWeekCount}
             icon={<SparklesIcon className="w-5 h-5" />}
             accent="info"
           />

@@ -12,7 +12,8 @@ type TwilioConfig =
 function getTwilioConfig(): TwilioConfig {
   const accountSid = process.env.TWILIO_ACCOUNT_SID;
   const authToken = process.env.TWILIO_AUTH_TOKEN;
-  const fromNumber = process.env.TWILIO_FROM_NUMBER;
+  // Back-compat: older code used TWILIO_PHONE_NUMBER
+  const fromNumber = process.env.TWILIO_FROM_NUMBER || process.env.TWILIO_PHONE_NUMBER;
   const messagingServiceSid = process.env.TWILIO_MESSAGING_SERVICE_SID;
 
   if (!accountSid || !authToken) {
@@ -51,8 +52,8 @@ export interface SendStatusUpdateSmsParams {
 export async function sendStatusUpdateSms({ to, clientName, newStage, note }: SendStatusUpdateSmsParams) {
   const cfg = getTwilioConfig();
   if ("error" in cfg) {
-    console.warn(cfg.error);
-    return null;
+    // Throw so API can return smsError (but still keep status update successful)
+    throw new Error(cfg.error);
   }
 
   const stage = getStageById(newStage);

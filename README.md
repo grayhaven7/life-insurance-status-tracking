@@ -81,6 +81,8 @@ TWILIO_ACCOUNT_SID="ACxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
 TWILIO_AUTH_TOKEN="xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
 # Choose ONE:
 TWILIO_FROM_NUMBER="+15551234567"
+# (Back-compat: older env name)
+# TWILIO_PHONE_NUMBER="+15551234567"
 # TWILIO_MESSAGING_SERVICE_SID="MGxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
 ```
 

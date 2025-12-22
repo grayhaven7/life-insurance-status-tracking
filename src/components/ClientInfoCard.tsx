@@ -9,16 +9,54 @@ interface Client {
   email: string;
   phone: string | null;
   createdAt: Date;
+  assignedAdminId?: string | null;
+}
+
+interface Admin {
+  id: string;
+  name: string;
+}
+
+interface AssignedAdmin {
+  id: string;
+  name: string;
+  contactEmail: string | null;
+  contactPhone: string | null;
 }
 
 interface Props {
   client: Client;
+  admins?: Admin[];
+  assignedAdmin?: AssignedAdmin | null;
 }
 
-export default function ClientInfoCard({ client }: Props) {
+export default function ClientInfoCard({ client, admins = [], assignedAdmin }: Props) {
   const router = useRouter();
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const [deleting, setDeleting] = useState(false);
+  const [updatingAdmin, setUpdatingAdmin] = useState(false);
+  const [selectedAdminId, setSelectedAdminId] = useState(assignedAdmin?.id || "");
+
+  const handleAdminChange = async (adminId: string) => {
+    setSelectedAdminId(adminId);
+    setUpdatingAdmin(true);
+    try {
+      const response = await fetch(`/api/clients/${client.id}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ assignedAdminId: adminId || null }),
+      });
+
+      if (response.ok) {
+        router.refresh();
+      }
+    } catch (error) {
+      console.error("Failed to update assigned admin:", error);
+      setSelectedAdminId(assignedAdmin?.id || "");
+    } finally {
+      setUpdatingAdmin(false);
+    }
+  };
 
   const handleDelete = async () => {
     setDeleting(true);
@@ -90,6 +128,42 @@ export default function ClientInfoCard({ client }: Props) {
         )}
       </div>
 
+      {/* Assigned Advisor */}
+      {admins.length > 0 && (
+        <div className="mt-4 sm:mt-6 pt-4 sm:pt-6 border-t border-border-primary">
+          <label className="block text-xs font-medium text-text-muted uppercase tracking-wider mb-2">
+            Assigned Advisor
+          </label>
+          <div className="relative">
+            <select
+              value={selectedAdminId}
+              onChange={(e) => handleAdminChange(e.target.value)}
+              disabled={updatingAdmin}
+              className="w-full px-3 py-2.5 text-sm bg-bg-tertiary border border-border-primary rounded-lg text-text-primary focus:border-accent focus:ring-1 focus:ring-accent/20 outline-none transition-all disabled:opacity-50 appearance-none cursor-pointer"
+            >
+              <option value="">No advisor assigned</option>
+              {admins.map((admin) => (
+                <option key={admin.id} value={admin.id}>
+                  {admin.name}
+                </option>
+              ))}
+            </select>
+            <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+              {updatingAdmin ? (
+                <LoaderIcon className="w-4 h-4 text-text-muted animate-spin" />
+              ) : (
+                <ChevronDownIcon className="w-4 h-4 text-text-muted" />
+              )}
+            </div>
+          </div>
+          {assignedAdmin?.contactEmail && (
+            <p className="text-xs text-text-muted mt-2">
+              Contact: {assignedAdmin.contactEmail}
+            </p>
+          )}
+        </div>
+      )}
+
       <div className="mt-4 sm:mt-6 pt-4 sm:pt-6 border-t border-border-primary">
         {!showDeleteConfirm ? (
           <button
@@ -144,6 +218,23 @@ function TrashIcon({ className }: { className?: string }) {
   return (
     <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
       <path strokeLinecap="round" strokeLinejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
+    </svg>
+  );
+}
+
+function ChevronDownIcon({ className }: { className?: string }) {
+  return (
+    <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+      <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+    </svg>
+  );
+}
+
+function LoaderIcon({ className }: { className?: string }) {
+  return (
+    <svg className={className} fill="none" viewBox="0 0 24 24">
+      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
     </svg>
   );
 }

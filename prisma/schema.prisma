@@ -16,24 +16,29 @@ model User {
   passwordHash  String          @map("password_hash")
   name          String
   role          String          @default("admin")
+  contactEmail  String?         @map("contact_email")   // Email for client contact (may differ from login email)
+  contactPhone  String?         @map("contact_phone")   // Phone number for client contact
   createdAt     DateTime        @default(now()) @map("created_at")
   updatedAt     DateTime        @updatedAt @map("updated_at")
   statusChanges StatusHistory[]
+  assignedClients Client[]      @relation("AssignedAdmin")
 
   @@map("users")
 }
 
 // Insurance applicant clients
 model Client {
-  id            String          @id @default(cuid())
-  email         String          @unique
-  passwordHash  String          @map("password_hash")
-  name          String
-  phone         String?
-  currentStage  Int             @default(1) @map("current_stage")
-  createdAt     DateTime        @default(now()) @map("created_at")
-  updatedAt     DateTime        @updatedAt @map("updated_at")
-  statusHistory StatusHistory[]
+  id              String          @id @default(cuid())
+  email           String          @unique
+  passwordHash    String          @map("password_hash")
+  name            String
+  phone           String?
+  currentStage    Int             @default(1) @map("current_stage")
+  assignedAdminId String?         @map("assigned_admin_id")
+  createdAt       DateTime        @default(now()) @map("created_at")
+  updatedAt       DateTime        @updatedAt @map("updated_at")
+  statusHistory   StatusHistory[]
+  assignedAdmin   User?           @relation("AssignedAdmin", fields: [assignedAdminId], references: [id])
 
   @@map("clients")
 }

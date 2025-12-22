@@ -21,19 +21,37 @@ export default async function ClientDetailPage({ params }: PageProps) {
 
   const { id } = await params;
 
-  const client = await prisma.client.findUnique({
-    where: { id },
-    include: {
-      statusHistory: {
-        orderBy: { createdAt: "desc" },
-        include: {
-          user: {
-            select: { name: true },
+  const [client, admins] = await Promise.all([
+    prisma.client.findUnique({
+      where: { id },
+      include: {
+        assignedAdmin: {
+          select: {
+            id: true,
+            name: true,
+            contactEmail: true,
+            contactPhone: true,
+          },
+        },
+        statusHistory: {
+          orderBy: { createdAt: "desc" },
+          include: {
+            user: {
+              select: { name: true },
+            },
           },
         },
       },
-    },
-  });
+    }),
+    prisma.user.findMany({
+      where: { role: "admin" },
+      orderBy: { name: "asc" },
+      select: {
+        id: true,
+        name: true,
+      },
+    }),
+  ]);
 
   if (!client) {
     notFound();
@@ -56,7 +74,11 @@ export default async function ClientDetailPage({ params }: PageProps) {
         <div className="grid lg:grid-cols-3 gap-4 sm:gap-6">
           {/* Left column - Client info and status update */}
           <div className="lg:col-span-1 space-y-4 sm:space-y-6">
-            <ClientInfoCard client={client} />
+            <ClientInfoCard 
+              client={client} 
+              admins={admins}
+              assignedAdmin={client.assignedAdmin}
+            />
             <StatusUpdateForm
               clientId={client.id}
               currentStage={client.currentStage}

@@ -1,12 +1,22 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
+
+interface Admin {
+  id: string;
+  name: string;
+  email: string;
+  contactEmail: string | null;
+  contactPhone: string | null;
+}
 
 export default function NewClientForm() {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [admins, setAdmins] = useState<Admin[]>([]);
+  const [loadingAdmins, setLoadingAdmins] = useState(true);
 
   const [formData, setFormData] = useState({
     name: "",
@@ -14,7 +24,25 @@ export default function NewClientForm() {
     phone: "",
     password: "",
     sendEmail: true,
+    assignedAdminId: "",
   });
+
+  useEffect(() => {
+    async function fetchAdmins() {
+      try {
+        const response = await fetch("/api/admins");
+        if (response.ok) {
+          const data = await response.json();
+          setAdmins(data);
+        }
+      } catch (err) {
+        console.error("Failed to fetch admins:", err);
+      } finally {
+        setLoadingAdmins(false);
+      }
+    }
+    fetchAdmins();
+  }, []);
 
   const generatePassword = () => {
     const chars = "ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnpqrstuvwxyz23456789";
@@ -103,6 +131,29 @@ export default function NewClientForm() {
           className="w-full px-4 py-3 text-sm bg-bg-tertiary border border-border-primary rounded-lg text-text-primary placeholder:text-text-muted focus:border-accent focus:ring-1 focus:ring-accent/20 outline-none transition-all"
           placeholder="(555) 123-4567"
         />
+      </div>
+
+      <div>
+        <label htmlFor="assignedAdmin" className="block text-sm font-medium text-text-secondary mb-2">
+          Assigned Advisor <span className="text-text-muted font-normal">(optional)</span>
+        </label>
+        <select
+          id="assignedAdmin"
+          value={formData.assignedAdminId}
+          onChange={(e) => setFormData((prev) => ({ ...prev, assignedAdminId: e.target.value }))}
+          disabled={loadingAdmins}
+          className="w-full px-4 py-3 text-sm bg-bg-tertiary border border-border-primary rounded-lg text-text-primary focus:border-accent focus:ring-1 focus:ring-accent/20 outline-none transition-all disabled:opacity-50"
+        >
+          <option value="">Select an advisor...</option>
+          {admins.map((admin) => (
+            <option key={admin.id} value={admin.id}>
+              {admin.name}
+            </option>
+          ))}
+        </select>
+        <p className="text-xs text-text-muted mt-2">
+          The client will see this advisor's contact info on their dashboard.
+        </p>
       </div>
 
       <div>

@@ -41,7 +41,7 @@ export async function POST(request: NextRequest) {
     }
 
     const body = await request.json();
-    const { name, email, phone, password, sendEmail } = body;
+    const { name, email, phone, password, sendEmail, assignedAdminId } = body;
 
     if (!name || !email || !password) {
       return NextResponse.json(
@@ -73,6 +73,7 @@ export async function POST(request: NextRequest) {
         phone: phone || null,
         passwordHash,
         currentStage: 1,
+        assignedAdminId: assignedAdminId || null,
       },
     });
 

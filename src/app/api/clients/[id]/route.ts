@@ -26,6 +26,15 @@ export async function GET(request: NextRequest, { params }: RouteParams) {
         currentStage: true,
         createdAt: true,
         updatedAt: true,
+        assignedAdminId: true,
+        assignedAdmin: {
+          select: {
+            id: true,
+            name: true,
+            contactEmail: true,
+            contactPhone: true,
+          },
+        },
         statusHistory: {
           orderBy: { createdAt: "desc" },
           include: {
@@ -58,7 +67,7 @@ export async function PATCH(request: NextRequest, { params }: RouteParams) {
 
     const { id } = await params;
     const body = await request.json();
-    const { name, email, phone } = body;
+    const { name, email, phone, assignedAdminId } = body;
 
     const client = await prisma.client.update({
       where: { id },
@@ -66,6 +75,17 @@ export async function PATCH(request: NextRequest, { params }: RouteParams) {
         ...(name && { name }),
         ...(email && { email }),
         ...(phone !== undefined && { phone: phone || null }),
+        ...(assignedAdminId !== undefined && { assignedAdminId: assignedAdminId || null }),
+      },
+      include: {
+        assignedAdmin: {
+          select: {
+            id: true,
+            name: true,
+            contactEmail: true,
+            contactPhone: true,
+          },
+        },
       },
     });
 
@@ -74,6 +94,8 @@ export async function PATCH(request: NextRequest, { params }: RouteParams) {
       name: client.name,
       email: client.email,
       phone: client.phone,
+      assignedAdminId: client.assignedAdminId,
+      assignedAdmin: client.assignedAdmin,
     });
   } catch (error) {
     console.error("Error updating client:", error);

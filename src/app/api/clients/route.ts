@@ -65,8 +65,25 @@ export async function POST(request: NextRequest) {
     // Hash password
     const passwordHash = await hashPassword(password);
 
-    // Default to current admin if no admin is assigned
-    const finalAssignedAdminId = assignedAdminId || session.user.id;
+    // Default to "test" admin if it exists, otherwise use current admin
+    let defaultAdminId = session.user.id;
+    if (!assignedAdminId) {
+      const testAdmin = await prisma.user.findFirst({
+        where: {
+          role: "admin",
+          OR: [
+            { name: { equals: "test", mode: "insensitive" } },
+            { email: { contains: "test", mode: "insensitive" } },
+          ],
+        },
+        select: { id: true },
+      });
+      if (testAdmin) {
+        defaultAdminId = testAdmin.id;
+      }
+    }
+
+    const finalAssignedAdminId = assignedAdminId || defaultAdminId;
 
     // Create client
     const client = await prisma.client.create({

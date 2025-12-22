@@ -38,10 +38,25 @@ export default function NewClientForm({ currentAdminId }: Props) {
         if (response.ok) {
           const data = await response.json();
           setAdmins(data);
-          // If currentAdminId is set and not already in formData, set it
-          if (currentAdminId && !formData.assignedAdminId) {
-            setFormData((prev) => ({ ...prev, assignedAdminId: currentAdminId }));
-          }
+          
+          // Prefer "test" admin if it exists, otherwise use currentAdminId
+          setFormData((prev) => {
+            // Don't override if already set
+            if (prev.assignedAdminId) return prev;
+            
+            const testAdmin = data.find(
+              (admin: Admin) =>
+                admin.name.toLowerCase() === "test" ||
+                admin.email.toLowerCase().includes("test")
+            );
+            
+            if (testAdmin) {
+              return { ...prev, assignedAdminId: testAdmin.id };
+            } else if (currentAdminId) {
+              return { ...prev, assignedAdminId: currentAdminId };
+            }
+            return prev;
+          });
         }
       } catch (err) {
         console.error("Failed to fetch admins:", err);

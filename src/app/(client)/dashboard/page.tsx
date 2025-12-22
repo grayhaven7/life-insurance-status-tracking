@@ -18,6 +18,7 @@ export default async function ClientDashboardPage() {
       assignedAdmin: {
         select: {
           name: true,
+          email: true,
           contactEmail: true,
           contactPhone: true,
         },
@@ -123,23 +124,30 @@ export default async function ClientDashboardPage() {
               .
             </p>
             <div className="flex flex-wrap gap-3">
-              {client.assignedAdmin?.contactEmail ? (
-                <a
-                  href={`mailto:${client.assignedAdmin.contactEmail}`}
-                  className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg bg-bg-tertiary hover:bg-bg-hover border border-border-primary text-sm font-medium text-text-secondary hover:text-text-primary transition-all"
-                >
-                  <MailIcon className="w-4 h-4" />
-                  Email {client.assignedAdmin.name?.split(" ")[0] || "Us"}
-                </a>
-              ) : (
-                <a
-                  href="mailto:neil@financialplanninggroup.com"
-                  className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg bg-bg-tertiary hover:bg-bg-hover border border-border-primary text-sm font-medium text-text-secondary hover:text-text-primary transition-all"
-                >
-                  <MailIcon className="w-4 h-4" />
-                  Email Us
-                </a>
-              )}
+              {(() => {
+                // Use contactEmail if available, otherwise fall back to regular email, then default
+                const adminEmail = client.assignedAdmin?.contactEmail || client.assignedAdmin?.email;
+                if (adminEmail) {
+                  return (
+                    <a
+                      href={`mailto:${adminEmail}`}
+                      className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg bg-bg-tertiary hover:bg-bg-hover border border-border-primary text-sm font-medium text-text-secondary hover:text-text-primary transition-all"
+                    >
+                      <MailIcon className="w-4 h-4" />
+                      Email {client.assignedAdmin?.name?.split(" ")[0] || "Us"}
+                    </a>
+                  );
+                }
+                return (
+                  <a
+                    href="mailto:neil@financialplanninggroup.com"
+                    className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg bg-bg-tertiary hover:bg-bg-hover border border-border-primary text-sm font-medium text-text-secondary hover:text-text-primary transition-all"
+                  >
+                    <MailIcon className="w-4 h-4" />
+                    Email Us
+                  </a>
+                );
+              })()}
               {client.assignedAdmin?.contactPhone ? (
                 <a
                   href={`sms:${client.assignedAdmin.contactPhone}`}

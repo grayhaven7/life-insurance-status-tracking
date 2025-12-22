@@ -33,7 +33,7 @@ export default async function NewClientPage() {
         </div>
 
         <div className="rounded-xl border border-border-primary bg-bg-secondary p-4 sm:p-6 md:p-8">
-          <NewClientForm />
+          <NewClientForm currentAdminId={session.user.id} />
         </div>
       </main>
     </div>

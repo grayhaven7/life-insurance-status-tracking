@@ -65,6 +65,9 @@ export async function POST(request: NextRequest) {
     // Hash password
     const passwordHash = await hashPassword(password);
 
+    // Default to current admin if no admin is assigned
+    const finalAssignedAdminId = assignedAdminId || session.user.id;
+
     // Create client
     const client = await prisma.client.create({
       data: {
@@ -73,7 +76,7 @@ export async function POST(request: NextRequest) {
         phone: phone || null,
         passwordHash,
         currentStage: 1,
-        assignedAdminId: assignedAdminId || null,
+        assignedAdminId: finalAssignedAdminId,
       },
     });
 

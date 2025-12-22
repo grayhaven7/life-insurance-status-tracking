@@ -11,7 +11,11 @@ interface Admin {
   contactPhone: string | null;
 }
 
-export default function NewClientForm() {
+interface Props {
+  currentAdminId?: string;
+}
+
+export default function NewClientForm({ currentAdminId }: Props) {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -24,7 +28,7 @@ export default function NewClientForm() {
     phone: "",
     password: "",
     sendEmail: true,
-    assignedAdminId: "",
+    assignedAdminId: currentAdminId || "",
   });
 
   useEffect(() => {
@@ -34,6 +38,10 @@ export default function NewClientForm() {
         if (response.ok) {
           const data = await response.json();
           setAdmins(data);
+          // If currentAdminId is set and not already in formData, set it
+          if (currentAdminId && !formData.assignedAdminId) {
+            setFormData((prev) => ({ ...prev, assignedAdminId: currentAdminId }));
+          }
         }
       } catch (err) {
         console.error("Failed to fetch admins:", err);
@@ -42,7 +50,7 @@ export default function NewClientForm() {
       }
     }
     fetchAdmins();
-  }, []);
+  }, [currentAdminId]);
 
   const generatePassword = () => {
     const chars = "ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnpqrstuvwxyz23456789";

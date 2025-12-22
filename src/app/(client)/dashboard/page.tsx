@@ -104,48 +104,62 @@ export default async function ClientDashboardPage() {
         )}
 
         {/* Contact section */}
-        {(client.assignedAdmin?.contactEmail || client.assignedAdmin?.contactPhone) && (
-          <div className="mt-6 sm:mt-8 relative overflow-hidden rounded-xl border border-border-primary bg-bg-secondary p-4 sm:p-6 md:p-8">
-            <div className="absolute top-0 right-0 w-48 h-48 bg-accent/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
-            <div className="relative">
-              <div className="flex items-center gap-2 mb-4">
-                <div className="w-8 h-8 rounded-lg bg-accent-muted flex items-center justify-center">
-                  <HelpIcon className="w-4 h-4 text-accent" />
-                </div>
-                <h3 className="text-base font-semibold text-text-primary">Need Help?</h3>
+        <div className="mt-6 sm:mt-8 relative overflow-hidden rounded-xl border border-border-primary bg-bg-secondary p-4 sm:p-6 md:p-8">
+          <div className="absolute top-0 right-0 w-48 h-48 bg-accent/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+          <div className="relative">
+            <div className="flex items-center gap-2 mb-4">
+              <div className="w-8 h-8 rounded-lg bg-accent-muted flex items-center justify-center">
+                <HelpIcon className="w-4 h-4 text-accent" />
               </div>
-              <p className="text-sm text-text-tertiary mb-5">
-                If you have questions about your application, contact{" "}
-                {client.assignedAdmin?.name ? (
-                  <span className="font-medium text-text-secondary">{client.assignedAdmin.name}</span>
-                ) : (
-                  "your financial advisor"
-                )}
-                .
-              </p>
-              <div className="flex flex-wrap gap-3">
-                {client.assignedAdmin?.contactEmail && (
-                  <a
-                    href={`mailto:${client.assignedAdmin.contactEmail}`}
-                    className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg bg-bg-tertiary hover:bg-bg-hover border border-border-primary text-sm font-medium text-text-secondary hover:text-text-primary transition-all"
-                  >
-                    <MailIcon className="w-4 h-4" />
-                    Email {client.assignedAdmin.name?.split(" ")[0] || "Us"}
-                  </a>
-                )}
-                {client.assignedAdmin?.contactPhone && (
-                  <a
-                    href={`sms:${client.assignedAdmin.contactPhone}`}
-                    className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg bg-bg-tertiary hover:bg-bg-hover border border-border-primary text-sm font-medium text-text-secondary hover:text-text-primary transition-all"
-                  >
-                    <MessageIcon className="w-4 h-4" />
-                    Text {client.assignedAdmin.name?.split(" ")[0] || "Us"}
-                  </a>
-                )}
-              </div>
+              <h3 className="text-base font-semibold text-text-primary">Need Help?</h3>
+            </div>
+            <p className="text-sm text-text-tertiary mb-5">
+              If you have questions about your application, contact{" "}
+              {client.assignedAdmin?.name ? (
+                <span className="font-medium text-text-secondary">{client.assignedAdmin.name}</span>
+              ) : (
+                "your financial advisor"
+              )}
+              .
+            </p>
+            <div className="flex flex-wrap gap-3">
+              {client.assignedAdmin?.contactEmail ? (
+                <a
+                  href={`mailto:${client.assignedAdmin.contactEmail}`}
+                  className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg bg-bg-tertiary hover:bg-bg-hover border border-border-primary text-sm font-medium text-text-secondary hover:text-text-primary transition-all"
+                >
+                  <MailIcon className="w-4 h-4" />
+                  Email {client.assignedAdmin.name?.split(" ")[0] || "Us"}
+                </a>
+              ) : (
+                <a
+                  href="mailto:neil@financialplanninggroup.com"
+                  className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg bg-bg-tertiary hover:bg-bg-hover border border-border-primary text-sm font-medium text-text-secondary hover:text-text-primary transition-all"
+                >
+                  <MailIcon className="w-4 h-4" />
+                  Email Us
+                </a>
+              )}
+              {client.assignedAdmin?.contactPhone ? (
+                <a
+                  href={`sms:${client.assignedAdmin.contactPhone}`}
+                  className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg bg-bg-tertiary hover:bg-bg-hover border border-border-primary text-sm font-medium text-text-secondary hover:text-text-primary transition-all"
+                >
+                  <MessageIcon className="w-4 h-4" />
+                  Text {client.assignedAdmin.name?.split(" ")[0] || "Us"}
+                </a>
+              ) : (
+                <a
+                  href="sms:+1234567890"
+                  className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg bg-bg-tertiary hover:bg-bg-hover border border-border-primary text-sm font-medium text-text-secondary hover:text-text-primary transition-all"
+                >
+                  <MessageIcon className="w-4 h-4" />
+                  Text Us
+                </a>
+              )}
             </div>
           </div>
-        )}
+        </div>
       </main>
     </div>
   );

@@ -227,9 +227,11 @@ export async function sendWelcomeEmail({
     </html>
   `;
 
+  const fromAddress = process.env.EMAIL_FROM || "Emerald Tide Financial <onboarding@resend.dev>";
+
   try {
     const { data, error } = await client.emails.send({
-      from: "Emerald Tide Financial <onboarding@resend.dev>",
+      from: fromAddress,
       to: [to],
       subject: "Welcome to Your Client Portal",
       html,

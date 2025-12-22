@@ -57,7 +57,7 @@ export default function ClientLoginPage() {
               </svg>
             </div>
             <div className="min-w-0">
-              <h1 className="text-sm font-semibold text-text-primary truncate">Financial Planning Group</h1>
+              <h1 className="text-sm font-semibold text-text-primary truncate">Emerald Tide Financial</h1>
               <p className="text-xs text-text-tertiary hidden sm:block">Client Portal</p>
             </div>
           </div>
@@ -154,7 +154,7 @@ export default function ClientLoginPage() {
 
       {/* Footer */}
       <footer className="relative px-4 py-4 sm:p-6 text-center text-text-muted text-xs border-t border-border-primary">
-        <p>&copy; {new Date().getFullYear()} Financial Planning Group. All rights reserved.</p>
+        <p>&copy; {new Date().getFullYear()} Emerald Tide Financial. All rights reserved.</p>
       </footer>
     </div>
   );

@@ -1,6 +1,6 @@
 # Life Insurance Status Tracking Portal
 
-A client portal for Financial Planning Group to track Tax-Free Pension application status through 17 stages, with email notifications on status changes.
+A client portal for Emerald Tide Financial to track Tax-Free Pension application status through 17 stages, with email notifications on status changes.
 
 ## Features
 
@@ -183,7 +183,7 @@ For production, you should:
 
 ## License
 
-Private - Financial Planning Group
+Private - Emerald Tide Financial
 
 ## Support
 

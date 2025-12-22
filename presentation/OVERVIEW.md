@@ -15,7 +15,7 @@
 
 ## Application Overview
 
-The **Life Insurance Status Tracking App** is a modern web application built for **Financial Planning Group** that enables:
+The **Life Insurance Status Tracking App** is a modern web application built for **Emerald Tide Financial** that enables:
 
 - **Administrators** to manage clients and track their Tax-Free Pension application progress through 17 stages
 - **Clients** to view their application status in real-time and receive email notifications on updates
@@ -39,7 +39,7 @@ The **Life Insurance Status Tracking App** is a modern web application built for
 **Features:**
 - Secure login portal for administrators
 - Email and password authentication
-- Branded header with "Financial Planning Group - Admin Portal"
+- Branded header with "Emerald Tide Financial - Admin Portal"
 - Link to switch to client login if needed
 
 ---
@@ -157,7 +157,7 @@ The **Life Insurance Status Tracking App** is a modern web application built for
 
 **Features:**
 - Beautiful gradient background (blue theme)
-- Branded header: "Financial Planning Group - Client Portal"
+- Branded header: "Emerald Tide Financial - Client Portal"
 - Email and password fields
 - Loading spinner during authentication
 - Link to admin login
@@ -334,4 +334,4 @@ Resize browser to mobile width and capture:
 
 ---
 
-*This presentation was generated for the Life Insurance Status Tracking App by Financial Planning Group*
+*This presentation was generated for the Life Insurance Status Tracking App by Emerald Tide Financial*

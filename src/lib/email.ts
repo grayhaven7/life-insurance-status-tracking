@@ -60,7 +60,7 @@ export async function sendStatusUpdateEmail({
       <body style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 0; background-color: #f5f5f5;">
         <div style="max-width: 600px; margin: 0 auto; padding: 20px;">
           <div style="background-color: #1e3a5f; padding: 30px; text-align: center; border-radius: 8px 8px 0 0;">
-            <h1 style="color: #ffffff; margin: 0; font-size: 24px;">Financial Planning Group</h1>
+            <h1 style="color: #ffffff; margin: 0; font-size: 24px;">Emerald Tide Financial</h1>
             <p style="color: #c9a227; margin: 10px 0 0 0; font-size: 14px;">Tax-Free Pension Application Update</p>
           </div>
           
@@ -113,7 +113,7 @@ export async function sendStatusUpdateEmail({
             
             <p style="color: #999; font-size: 12px; text-align: center; margin: 0;">
               If you have any questions, please contact your financial advisor.<br>
-              Financial Planning Group | Neil Gronowetter
+              Emerald Tide Financial | Neil Gronowetter
             </p>
           </div>
         </div>
@@ -123,7 +123,7 @@ export async function sendStatusUpdateEmail({
 
   try {
     const { data, error } = await client.emails.send({
-      from: "Financial Planning Group <onboarding@resend.dev>",
+      from: "Emerald Tide Financial <onboarding@resend.dev>",
       to: [to],
       subject,
       html,
@@ -171,7 +171,7 @@ export async function sendWelcomeEmail({
       <body style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 0; background-color: #f5f5f5;">
         <div style="max-width: 600px; margin: 0 auto; padding: 20px;">
           <div style="background-color: #1e3a5f; padding: 30px; text-align: center; border-radius: 8px 8px 0 0;">
-            <h1 style="color: #ffffff; margin: 0; font-size: 24px;">Welcome to Financial Planning Group</h1>
+            <h1 style="color: #ffffff; margin: 0; font-size: 24px;">Welcome to Emerald Tide Financial</h1>
           </div>
           
           <div style="background-color: #ffffff; padding: 30px; border-radius: 0 0 8px 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
@@ -201,7 +201,7 @@ export async function sendWelcomeEmail({
             
             <p style="color: #999; font-size: 12px; text-align: center; margin: 0;">
               If you have any questions, please contact your financial advisor.<br>
-              Financial Planning Group | Neil Gronowetter
+              Emerald Tide Financial | Neil Gronowetter
             </p>
           </div>
         </div>
@@ -211,7 +211,7 @@ export async function sendWelcomeEmail({
 
   try {
     const { data, error } = await client.emails.send({
-      from: "Financial Planning Group <onboarding@resend.dev>",
+      from: "Emerald Tide Financial <onboarding@resend.dev>",
       to: [to],
       subject: "Welcome to Your Client Portal",
       html,

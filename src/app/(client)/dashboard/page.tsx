@@ -118,11 +118,11 @@ export default async function ClientDashboardPage() {
                 Email Us
               </a>
               <a
-                href="tel:+1234567890"
+                href="sms:+1234567890"
                 className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg bg-bg-tertiary hover:bg-bg-hover border border-border-primary text-sm font-medium text-text-secondary hover:text-text-primary transition-all"
               >
-                <PhoneIcon className="w-4 h-4" />
-                Call Us
+                <MessageIcon className="w-4 h-4" />
+                Text Us
               </a>
             </div>
           </div>
@@ -164,10 +164,10 @@ function MailIcon({ className }: { className?: string }) {
   );
 }
 
-function PhoneIcon({ className }: { className?: string }) {
+function MessageIcon({ className }: { className?: string }) {
   return (
     <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-      <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z" />
+      <path strokeLinecap="round" strokeLinejoin="round" d="M8.625 12a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H8.25m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H12m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0h-.375M21 12c0 4.556-4.03 8.25-9 8.25a9.764 9.764 0 01-2.555-.337A5.972 5.972 0 015.41 21.97a5.969 5.969 0 01-2.358-.842 6.014 6.014 0 01.517-3.054A8.18 8.18 0 012.25 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25z" />
     </svg>
   );
 }

@@ -10,7 +10,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Financial Planning Group - Client Portal",
+  title: "Emerald Tide Financial - Client Portal",
   description: "Track your Tax-Free Pension application status",
 };
 

@@ -52,7 +52,7 @@ export default function AdminLoginPage() {
               </svg>
             </div>
             <div className="min-w-0">
-              <h1 className="text-sm font-semibold text-text-primary truncate">Financial Planning Group</h1>
+              <h1 className="text-sm font-semibold text-text-primary truncate">Emerald Tide Financial</h1>
               <p className="text-xs text-text-tertiary hidden sm:block">Admin Portal</p>
             </div>
           </div>

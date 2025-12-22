@@ -89,4 +89,4 @@ If you have questions or feedback, please write them down and we'll discuss.
 
 ---
 
-*Financial Planning Group - Life Insurance Status Tracking Portal*
+*Emerald Tide Financial - Life Insurance Status Tracking Portal*

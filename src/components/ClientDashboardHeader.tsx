@@ -20,7 +20,7 @@ export default function ClientDashboardHeader({ clientName }: Props) {
               </svg>
             </div>
             <div className="min-w-0">
-              <h1 className="text-sm font-semibold text-text-primary truncate">Financial Planning Group</h1>
+              <h1 className="text-sm font-semibold text-text-primary truncate">Emerald Tide Financial</h1>
               <p className="text-xs text-text-tertiary hidden sm:block">Client Portal</p>
             </div>
           </div>

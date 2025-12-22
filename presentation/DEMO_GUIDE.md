@@ -291,5 +291,5 @@ This is the "wow" moment of the demo!
 
 ---
 
-*Prepared for Financial Planning Group*
+*Prepared for Emerald Tide Financial*
 *Life Insurance Status Tracking Portal*

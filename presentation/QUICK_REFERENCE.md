@@ -106,4 +106,4 @@ Clients receive automatic emails when:
 
 ---
 
-*Financial Planning Group - Life Insurance Status Tracking*
+*Emerald Tide Financial - Life Insurance Status Tracking*

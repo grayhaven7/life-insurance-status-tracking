@@ -127,10 +127,14 @@ export default async function ClientDashboardPage() {
               {(() => {
                 // Use contactEmail if available, otherwise fall back to regular email, then default
                 const adminEmail = client.assignedAdmin?.contactEmail || client.assignedAdmin?.email;
+                const adminName = client.assignedAdmin?.name || "Financial Advisor";
+                const subject = encodeURIComponent(`Question about my Tax-Free Pension application`);
+                const body = encodeURIComponent(`Hello ${adminName.split(" ")[0]},\n\nI have a question about my application status.\n\nThank you!`);
+                
                 if (adminEmail) {
                   return (
                     <a
-                      href={`mailto:${adminEmail}`}
+                      href={`mailto:${adminEmail}?subject=${subject}&body=${body}`}
                       className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg bg-bg-tertiary hover:bg-bg-hover border border-border-primary text-sm font-medium text-text-secondary hover:text-text-primary transition-all"
                     >
                       <MailIcon className="w-4 h-4" />
@@ -140,7 +144,7 @@ export default async function ClientDashboardPage() {
                 }
                 return (
                   <a
-                    href="mailto:neil@financialplanninggroup.com"
+                    href={`mailto:neil@financialplanninggroup.com?subject=${subject}&body=${body}`}
                     className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg bg-bg-tertiary hover:bg-bg-hover border border-border-primary text-sm font-medium text-text-secondary hover:text-text-primary transition-all"
                   >
                     <MailIcon className="w-4 h-4" />

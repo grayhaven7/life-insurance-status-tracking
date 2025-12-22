@@ -106,8 +106,8 @@ export default async function ClientDashboardPage() {
 
         {/* Contact section */}
         <div className="mt-6 sm:mt-8 relative overflow-hidden rounded-xl border border-border-primary bg-bg-secondary p-4 sm:p-6 md:p-8">
-          <div className="absolute top-0 right-0 w-48 h-48 bg-accent/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
-          <div className="relative">
+          <div className="absolute top-0 right-0 w-48 h-48 bg-accent/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none" />
+          <div className="relative z-10">
             <div className="flex items-center gap-2 mb-4">
               <div className="w-8 h-8 rounded-lg bg-accent-muted flex items-center justify-center">
                 <HelpIcon className="w-4 h-4 text-accent" />
@@ -126,29 +126,19 @@ export default async function ClientDashboardPage() {
             <div className="flex flex-wrap gap-3">
               {(() => {
                 // Use contactEmail if available, otherwise fall back to regular email, then default
-                const adminEmail = client.assignedAdmin?.contactEmail || client.assignedAdmin?.email;
+                const adminEmail = client.assignedAdmin?.contactEmail || client.assignedAdmin?.email || "neil@financialplanninggroup.com";
                 const adminName = client.assignedAdmin?.name || "Financial Advisor";
-                const subject = encodeURIComponent(`Question about my Tax-Free Pension application`);
+                const subject = encodeURIComponent("Question about my Tax-Free Pension application");
                 const body = encodeURIComponent(`Hello ${adminName.split(" ")[0]},\n\nI have a question about my application status.\n\nThank you!`);
+                const mailtoLink = `mailto:${adminEmail}?subject=${subject}&body=${body}`;
                 
-                if (adminEmail) {
-                  return (
-                    <a
-                      href={`mailto:${adminEmail}?subject=${subject}&body=${body}`}
-                      className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg bg-bg-tertiary hover:bg-bg-hover border border-border-primary text-sm font-medium text-text-secondary hover:text-text-primary transition-all"
-                    >
-                      <MailIcon className="w-4 h-4" />
-                      Email {client.assignedAdmin?.name?.split(" ")[0] || "Us"}
-                    </a>
-                  );
-                }
                 return (
                   <a
-                    href={`mailto:neil@financialplanninggroup.com?subject=${subject}&body=${body}`}
-                    className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg bg-bg-tertiary hover:bg-bg-hover border border-border-primary text-sm font-medium text-text-secondary hover:text-text-primary transition-all"
+                    href={mailtoLink}
+                    className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg bg-bg-tertiary hover:bg-bg-hover border border-border-primary text-sm font-medium text-text-secondary hover:text-text-primary transition-all cursor-pointer"
                   >
                     <MailIcon className="w-4 h-4" />
-                    Email Us
+                    Email {client.assignedAdmin?.name?.split(" ")[0] || "Us"}
                   </a>
                 );
               })()}

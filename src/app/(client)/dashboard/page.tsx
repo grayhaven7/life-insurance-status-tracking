@@ -39,6 +39,11 @@ export default async function ClientDashboardPage() {
     redirect("/login");
   }
 
+  // Compute contact info
+  const adminEmail = client.assignedAdmin?.contactEmail || client.assignedAdmin?.email || "neil@financialplanninggroup.com";
+  const adminName = client.assignedAdmin?.name || "Financial Advisor";
+  const adminPhone = client.assignedAdmin?.contactPhone || "+1234567890";
+
   return (
     <div className="min-h-screen bg-bg-primary">
       <ClientDashboardHeader clientName={client.name} />
@@ -116,49 +121,25 @@ export default async function ClientDashboardPage() {
             </div>
             <p className="text-sm text-text-tertiary mb-5">
               If you have questions about your application, contact{" "}
-              {client.assignedAdmin?.name ? (
-                <span className="font-medium text-text-secondary">{client.assignedAdmin.name}</span>
-              ) : (
-                "your financial advisor"
-              )}
-              .
+              <span className="font-medium text-text-secondary">{adminName}</span>.
             </p>
             <div className="flex flex-wrap gap-3">
-              {(() => {
-                // Use contactEmail if available, otherwise fall back to regular email, then default
-                const adminEmail = client.assignedAdmin?.contactEmail || client.assignedAdmin?.email || "neil@financialplanninggroup.com";
-                const adminName = client.assignedAdmin?.name || "Financial Advisor";
-                const subject = encodeURIComponent("Question about my Tax-Free Pension application");
-                const body = encodeURIComponent(`Hello ${adminName.split(" ")[0]},\n\nI have a question about my application status.\n\nThank you!`);
-                const mailtoLink = `mailto:${adminEmail}?subject=${subject}&body=${body}`;
-                
-                return (
-                  <a
-                    href={mailtoLink}
-                    className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg bg-bg-tertiary hover:bg-bg-hover border border-border-primary text-sm font-medium text-text-secondary hover:text-text-primary transition-all cursor-pointer"
-                  >
-                    <MailIcon className="w-4 h-4" />
-                    Email {client.assignedAdmin?.name?.split(" ")[0] || "Us"}
-                  </a>
-                );
-              })()}
-              {client.assignedAdmin?.contactPhone ? (
-                <a
-                  href={`sms:${client.assignedAdmin.contactPhone}`}
-                  className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg bg-bg-tertiary hover:bg-bg-hover border border-border-primary text-sm font-medium text-text-secondary hover:text-text-primary transition-all"
-                >
-                  <MessageIcon className="w-4 h-4" />
-                  Text {client.assignedAdmin.name?.split(" ")[0] || "Us"}
-                </a>
-              ) : (
-                <a
-                  href="sms:+1234567890"
-                  className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg bg-bg-tertiary hover:bg-bg-hover border border-border-primary text-sm font-medium text-text-secondary hover:text-text-primary transition-all"
-                >
-                  <MessageIcon className="w-4 h-4" />
-                  Text Us
-                </a>
-              )}
+              <a
+                href={`mailto:${adminEmail}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg bg-bg-tertiary hover:bg-bg-hover border border-border-primary text-sm font-medium text-text-secondary hover:text-text-primary transition-all"
+              >
+                <MailIcon className="w-4 h-4" />
+                Email {adminName.split(" ")[0]}
+              </a>
+              <a
+                href={`sms:${adminPhone}`}
+                className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg bg-bg-tertiary hover:bg-bg-hover border border-border-primary text-sm font-medium text-text-secondary hover:text-text-primary transition-all"
+              >
+                <MessageIcon className="w-4 h-4" />
+                Text {adminName.split(" ")[0]}
+              </a>
             </div>
           </div>
         </div>

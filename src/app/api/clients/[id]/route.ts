@@ -69,6 +69,22 @@ export async function PATCH(request: NextRequest, { params }: RouteParams) {
     const body = await request.json();
     const { name, email, phone, assignedAdminId } = body;
 
+    // Check if email is being changed and is already taken
+    if (email) {
+      const existingClient = await prisma.client.findFirst({
+        where: {
+          email,
+          NOT: { id },
+        },
+      });
+      if (existingClient) {
+        return NextResponse.json(
+          { error: "A client with this email already exists" },
+          { status: 400 }
+        );
+      }
+    }
+
     const client = await prisma.client.update({
       where: { id },
       data: {

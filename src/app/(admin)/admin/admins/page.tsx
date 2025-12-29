@@ -110,6 +110,30 @@ export default function AdminsPage() {
     }
   };
 
+  const handleCancelInvitation = async (invitation: Invitation) => {
+    if (!confirm(`Are you sure you want to cancel the invitation for ${invitation.name || invitation.email}?`)) {
+      return;
+    }
+
+    try {
+      setError(null);
+      const response = await fetch(`/api/admins/invitations/${invitation.id}`, {
+        method: "DELETE",
+      });
+
+      if (!response.ok) {
+        const data = await response.json();
+        throw new Error(data.error || "Failed to cancel invitation");
+      }
+
+      await fetchAdmins();
+    } catch (err) {
+      const errorMessage = err instanceof Error ? err.message : "Failed to cancel invitation";
+      setError(errorMessage);
+      alert(errorMessage);
+    }
+  };
+
   const handleFormClose = () => {
     setShowForm(false);
     setEditingAdmin(null);
@@ -299,6 +323,9 @@ export default function AdminsPage() {
                       <th className="px-6 py-3 text-left text-xs font-medium text-text-muted uppercase tracking-wider">
                         Status
                       </th>
+                      <th className="px-6 py-3 text-right text-xs font-medium text-text-muted uppercase tracking-wider">
+                        Actions
+                      </th>
                     </tr>
                   </thead>
                   <tbody>
@@ -354,6 +381,15 @@ export default function AdminsPage() {
                             >
                               {isExpired ? "Expired" : isExpiringSoon ? "Expiring Soon" : "Pending"}
                             </span>
+                          </td>
+                          <td className="px-6 py-4 text-right">
+                            <button
+                              onClick={() => handleCancelInvitation(invitation)}
+                              className="inline-flex items-center gap-1 text-text-secondary hover:text-error text-sm font-medium transition-colors"
+                            >
+                              <XIcon className="w-4 h-4" />
+                              <span className="hidden sm:inline">Cancel</span>
+                            </button>
                           </td>
                         </tr>
                       );
@@ -460,6 +496,20 @@ function MailIcon({ className }: { className?: string }) {
         strokeLinejoin="round"
         d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75"
       />
+    </svg>
+  );
+}
+
+function XIcon({ className }: { className?: string }) {
+  return (
+    <svg
+      className={className}
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke="currentColor"
+      strokeWidth={1.5}
+    >
+      <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
     </svg>
   );
 }

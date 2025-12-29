@@ -121,6 +121,12 @@ function AdminSignupContent() {
 
       if (!response.ok) {
         const errorMessage = responseData?.error || responseText || response.statusText || "Failed to create account";
+        console.error("Signup error:", {
+          status: response.status,
+          statusText: response.statusText,
+          error: responseData?.error,
+          responseText,
+        });
         throw new Error(errorMessage);
       }
 

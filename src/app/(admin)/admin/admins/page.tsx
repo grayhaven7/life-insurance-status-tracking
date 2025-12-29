@@ -16,10 +16,25 @@ interface Admin {
   updatedAt: string;
 }
 
+interface Invitation {
+  id: string;
+  email: string;
+  name: string | null;
+  contactEmail: string | null;
+  contactPhone: string | null;
+  expiresAt: string;
+  createdAt: string;
+  invitedBy: {
+    name: string;
+    email: string;
+  };
+}
+
 export default function AdminsPage() {
   const { data: session, status } = useSession();
   const router = useRouter();
   const [admins, setAdmins] = useState<Admin[]>([]);
+  const [invitations, setInvitations] = useState<Invitation[]>([]);
   const [loading, setLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);
   const [editingAdmin, setEditingAdmin] = useState<Admin | null>(null);
@@ -40,10 +55,19 @@ export default function AdminsPage() {
   const fetchAdmins = async () => {
     try {
       setLoading(true);
-      const response = await fetch("/api/admins");
-      if (!response.ok) throw new Error("Failed to fetch admins");
-      const data = await response.json();
-      setAdmins(data);
+      const [adminsResponse, invitationsResponse] = await Promise.all([
+        fetch("/api/admins"),
+        fetch("/api/admins/invitations"),
+      ]);
+      
+      if (!adminsResponse.ok) throw new Error("Failed to fetch admins");
+      const adminsData = await adminsResponse.json();
+      setAdmins(adminsData);
+      
+      if (invitationsResponse.ok) {
+        const invitationsData = await invitationsResponse.json();
+        setInvitations(invitationsData);
+      }
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed to load admins");
     } finally {
@@ -250,6 +274,96 @@ export default function AdminsPage() {
             </div>
           </div>
         )}
+
+        {/* Pending Invitations */}
+        {invitations.length > 0 && (
+          <div className="mt-8">
+            <div className="mb-4">
+              <h3 className="text-lg font-semibold text-text-primary">Pending Invitations</h3>
+              <p className="text-sm text-text-tertiary mt-0.5">Invitations waiting for acceptance</p>
+            </div>
+            <div className="rounded-xl border border-border-primary bg-bg-secondary overflow-hidden">
+              <div className="overflow-x-auto">
+                <table className="w-full">
+                  <thead>
+                    <tr className="border-b border-border-primary">
+                      <th className="px-6 py-3 text-left text-xs font-medium text-text-muted uppercase tracking-wider">
+                        Invited Admin
+                      </th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-text-muted uppercase tracking-wider hidden md:table-cell">
+                        Invited By
+                      </th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-text-muted uppercase tracking-wider hidden lg:table-cell">
+                        Expires
+                      </th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-text-muted uppercase tracking-wider">
+                        Status
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {invitations.map((invitation, idx) => {
+                      const expiresAt = new Date(invitation.expiresAt);
+                      const isExpiringSoon = expiresAt.getTime() - Date.now() < 24 * 60 * 60 * 1000; // Less than 24 hours
+                      const isExpired = expiresAt < new Date();
+                      
+                      return (
+                        <tr
+                          key={invitation.id}
+                          className={`hover:bg-bg-hover transition-colors ${
+                            idx !== invitations.length - 1 ? "border-b border-border-secondary" : ""
+                          }`}
+                        >
+                          <td className="px-6 py-4">
+                            <div className="flex items-center gap-3">
+                              <div className="w-9 h-9 rounded-lg bg-warning-muted flex items-center justify-center flex-shrink-0">
+                                <MailIcon className="w-5 h-5 text-warning" />
+                              </div>
+                              <div className="min-w-0">
+                                <p className="text-sm font-medium text-text-primary truncate">
+                                  {invitation.name || invitation.email}
+                                </p>
+                                <p className="text-xs text-text-tertiary truncate md:hidden">
+                                  {invitation.email}
+                                </p>
+                              </div>
+                            </div>
+                          </td>
+                          <td className="px-6 py-4 hidden md:table-cell">
+                            <p className="text-sm text-text-secondary">{invitation.email}</p>
+                            <p className="text-xs text-text-muted">Invited by {invitation.invitedBy.name}</p>
+                          </td>
+                          <td className="px-6 py-4 hidden lg:table-cell">
+                            <p className={`text-sm ${isExpired ? "text-error" : isExpiringSoon ? "text-warning" : "text-text-tertiary"}`}>
+                              {expiresAt.toLocaleDateString("en-US", {
+                                month: "short",
+                                day: "numeric",
+                                year: "numeric",
+                              })}
+                            </p>
+                          </td>
+                          <td className="px-6 py-4">
+                            <span
+                              className={`inline-flex items-center px-2 py-0.5 rounded-md text-xs font-medium border ${
+                                isExpired
+                                  ? "bg-error-muted text-error border-error/20"
+                                  : isExpiringSoon
+                                  ? "bg-warning-muted text-warning border-warning/20"
+                                  : "bg-info-muted text-info border-info/20"
+                              }`}
+                            >
+                              {isExpired ? "Expired" : isExpiringSoon ? "Expiring Soon" : "Pending"}
+                            </span>
+                          </td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        )}
       </main>
 
       {/* Admin Form Modal */}
@@ -327,6 +441,24 @@ function TrashIcon({ className }: { className?: string }) {
         strokeLinecap="round"
         strokeLinejoin="round"
         d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
+      />
+    </svg>
+  );
+}
+
+function MailIcon({ className }: { className?: string }) {
+  return (
+    <svg
+      className={className}
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke="currentColor"
+      strokeWidth={1.5}
+    >
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75"
       />
     </svg>
   );

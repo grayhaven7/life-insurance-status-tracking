@@ -27,6 +27,7 @@ export default function AdminForm({ admin, onClose, onSuccess }: Props) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [showPassword, setShowPassword] = useState(false);
+  const [success, setSuccess] = useState<string | null>(null);
 
   const isEditing = !!admin;
 
@@ -45,69 +46,77 @@ export default function AdminForm({ admin, onClose, onSuccess }: Props) {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
+    setSuccess(null);
     setLoading(true);
 
     try {
-      const url = isEditing ? `/api/admins/${admin.id}` : "/api/admins";
-      const method = isEditing ? "PUT" : "POST";
+      if (isEditing) {
+        // Editing existing admin
+        const body: any = {
+          name: formData.name,
+          email: formData.email,
+          contactEmail: formData.contactEmail || null,
+          contactPhone: formData.contactPhone || null,
+        };
 
-      // If editing and password is empty, don't include it
-      const body: any = {
-        name: formData.name,
-        email: formData.email,
-        contactEmail: formData.contactEmail || null,
-        contactPhone: formData.contactPhone || null,
-      };
-
-      // Only include password if creating (required) or editing with a new password provided
-      if (!isEditing) {
-        // Creating: password is required
-        if (!formData.password || formData.password.trim() === "") {
-          throw new Error("Password is required");
+        // Only include password if provided
+        if (formData.password && formData.password.trim() !== "") {
+          body.password = formData.password;
         }
-        body.password = formData.password;
-      } else if (formData.password && formData.password.trim() !== "") {
-        // Editing: password is optional, only include if provided
-        body.password = formData.password;
+
+        const response = await fetch(`/api/admins/${admin.id}`, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(body),
+        });
+
+        if (!response.ok) {
+          const data = await response.json();
+          throw new Error(data.error || "Failed to update admin");
+        }
+
+        onSuccess();
+      } else {
+        // Creating new admin - send invitation
+        const response = await fetch("/api/admins/invitations", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            name: formData.name,
+            email: formData.email,
+            contactEmail: formData.contactEmail || null,
+            contactPhone: formData.contactPhone || null,
+          }),
+        });
+
+        if (!response.ok) {
+          const data = await response.json();
+          throw new Error(data.error || "Failed to send invitation");
+        }
+
+        setSuccess(`Invitation sent to ${formData.email}. They will receive an email with instructions to create their account.`);
+        // Close form after a short delay to show success message
+        setTimeout(() => {
+          onSuccess();
+        }, 2000);
       }
-
-      const response = await fetch(url, {
-        method,
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(body),
-      });
-
-      if (!response.ok) {
-        const data = await response.json();
-        throw new Error(data.error || "Failed to save admin");
-      }
-
-      onSuccess();
     } catch (err) {
       setError(err instanceof Error ? err.message : "An error occurred");
-    } finally {
       setLoading(false);
     }
   };
 
-  const generatePassword = () => {
-    const length = 12;
-    const charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*";
-    let password = "";
-    for (let i = 0; i < length; i++) {
-      password += charset.charAt(Math.floor(Math.random() * charset.length));
-    }
-    setFormData({ ...formData, password });
-  };
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
       <div className="bg-bg-secondary border border-border-primary rounded-xl shadow-xl w-full max-w-md max-h-[90vh] overflow-y-auto">
         <div className="sticky top-0 bg-bg-secondary border-b border-border-primary px-6 py-4 flex items-center justify-between">
           <h2 className="text-lg font-semibold text-text-primary">
-            {isEditing ? "Edit Admin" : "Add Admin"}
+            {isEditing ? "Edit Admin" : "Invite Admin"}
           </h2>
           <button
             onClick={onClose}
@@ -121,6 +130,16 @@ export default function AdminForm({ admin, onClose, onSuccess }: Props) {
           {error && (
             <div className="rounded-lg border border-error/20 bg-error-muted p-3 text-sm text-error">
               {error}
+            </div>
+          )}
+          {success && (
+            <div className="rounded-lg border border-success/20 bg-success-muted p-3 text-sm text-success">
+              {success}
+            </div>
+          )}
+          {!isEditing && (
+            <div className="rounded-lg border border-info/20 bg-info-muted p-3 text-sm text-info">
+              An invitation email will be sent to the admin. They will create their own password when they accept the invitation.
             </div>
           )}
 
@@ -154,44 +173,36 @@ export default function AdminForm({ admin, onClose, onSuccess }: Props) {
             />
           </div>
 
-          <div>
-            <label
-              htmlFor="password"
-              className="block text-sm font-medium text-text-secondary mb-1.5"
-            >
-              Password {!isEditing && <span className="text-error">*</span>}
-              {isEditing && <span className="text-text-muted text-xs">(leave blank to keep current)</span>}
-            </label>
-            <div className="relative">
-              <input
-                type={showPassword ? "text" : "password"}
-                id="password"
-                required={!isEditing}
-                value={formData.password}
-                onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-                className="w-full px-3 py-2 pr-20 border border-border-primary rounded-lg bg-bg-primary text-text-primary focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent"
-                placeholder={isEditing ? "Enter new password" : "Enter password"}
-              />
-              <div className="absolute right-2 top-1/2 -translate-y-1/2 flex items-center gap-1">
-                <button
-                  type="button"
-                  onClick={() => setShowPassword(!showPassword)}
-                  className="text-text-muted hover:text-text-primary text-xs px-2 py-1"
-                >
-                  {showPassword ? "Hide" : "Show"}
-                </button>
-                {!isEditing && (
+          {isEditing && (
+            <div>
+              <label
+                htmlFor="password"
+                className="block text-sm font-medium text-text-secondary mb-1.5"
+              >
+                New Password
+                <span className="text-text-muted text-xs"> (leave blank to keep current)</span>
+              </label>
+              <div className="relative">
+                <input
+                  type={showPassword ? "text" : "password"}
+                  id="password"
+                  value={formData.password}
+                  onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+                  className="w-full px-3 py-2 pr-20 border border-border-primary rounded-lg bg-bg-primary text-text-primary focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent"
+                  placeholder="Enter new password"
+                />
+                <div className="absolute right-2 top-1/2 -translate-y-1/2 flex items-center gap-1">
                   <button
                     type="button"
-                    onClick={generatePassword}
-                    className="text-accent hover:text-accent-secondary text-xs px-2 py-1 font-medium"
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="text-text-muted hover:text-text-primary text-xs px-2 py-1"
                   >
-                    Generate
+                    {showPassword ? "Hide" : "Show"}
                   </button>
-                )}
+                </div>
               </div>
             </div>
-          </div>
+          )}
 
           <div>
             <label
@@ -246,7 +257,7 @@ export default function AdminForm({ admin, onClose, onSuccess }: Props) {
               disabled={loading}
               className="flex-1 px-4 py-2 bg-accent hover:bg-accent-secondary !text-white rounded-lg font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              {loading ? "Saving..." : isEditing ? "Update" : "Create"}
+              {loading ? (isEditing ? "Updating..." : "Sending Invitation...") : isEditing ? "Update" : "Send Invitation"}
             </button>
           </div>
         </form>

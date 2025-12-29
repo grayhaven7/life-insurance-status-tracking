@@ -159,6 +159,106 @@ export async function sendStatusUpdateEmail({
   }
 }
 
+export async function sendAdminInvitationEmail({
+  to,
+  name,
+  token,
+  invitedBy,
+}: {
+  to: string;
+  name: string;
+  token: string;
+  invitedBy: string;
+}) {
+  const client = getResendClient();
+  
+  if (!client) {
+    console.warn("Resend API key not configured, skipping email");
+    return null;
+  }
+
+  const baseUrl = process.env.AUTH_URL || process.env.NEXTAUTH_URL || "http://localhost:3000";
+  const signupUrl = `${baseUrl}/admin/signup?token=${token}`;
+
+  const html = `
+    <!DOCTYPE html>
+    <html>
+      <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      </head>
+      <body style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 0; background-color: #f5f5f5;">
+        <div style="max-width: 600px; margin: 0 auto; padding: 20px;">
+          <div style="background-color: #1e3a5f; padding: 30px; text-align: center; border-radius: 8px 8px 0 0;">
+            <h1 style="color: #ffffff; margin: 0; font-size: 24px;">Emerald Tide Financial</h1>
+            <p style="color: #c9a227; margin: 10px 0 0 0; font-size: 14px;">Admin Portal Invitation</p>
+          </div>
+          
+          <div style="background-color: #ffffff; padding: 30px; border-radius: 0 0 8px 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+            <p style="color: #333; font-size: 16px; margin: 0 0 20px 0;">
+              Dear ${name},
+            </p>
+            
+            <p style="color: #333; font-size: 16px; margin: 0 0 20px 0;">
+              You have been invited by <strong>${invitedBy}</strong> to join the Emerald Tide Financial Admin Portal. 
+              This portal allows you to manage client applications and track their progress.
+            </p>
+            
+            <div style="background-color: #f8f9fa; border-left: 4px solid #c9a227; padding: 20px; margin: 20px 0; border-radius: 0 8px 8px 0;">
+              <p style="color: #666; margin: 0 0 10px 0; font-size: 14px;"><strong>Your Invited Email:</strong></p>
+              <p style="color: #333; margin: 0; font-size: 14px;">${to}</p>
+            </div>
+            
+            <p style="color: #333; font-size: 16px; margin: 20px 0;">
+              To complete your account setup, please click the button below. You'll be asked to create a secure password for your account.
+            </p>
+            
+            <div style="text-align: center; margin: 30px 0;">
+              <a href="${signupUrl}" style="display: inline-block; background-color: #1e3a5f; color: #ffffff; text-decoration: none; padding: 12px 30px; border-radius: 6px; font-size: 16px; font-weight: bold;">Create Your Account</a>
+            </div>
+            
+            <p style="color: #666; font-size: 14px; margin: 20px 0;">
+              <strong>Important:</strong> This invitation link will expire in 7 days. If you have any questions, please contact ${invitedBy}.
+            </p>
+            
+            <p style="color: #999; font-size: 12px; margin: 20px 0;">
+              If the button doesn't work, copy and paste this link into your browser:<br>
+              <span style="color: #1e3a5f; word-break: break-all;">${signupUrl}</span>
+            </p>
+            
+            <hr style="border: none; border-top: 1px solid #e9ecef; margin: 30px 0;">
+            
+            <p style="color: #999; font-size: 12px; text-align: center; margin: 0;">
+              Emerald Tide Financial Admin Portal
+            </p>
+          </div>
+        </div>
+      </body>
+    </html>
+  `;
+
+  const fromAddress = process.env.EMAIL_FROM || "Emerald Tide Financial <onboarding@resend.dev>";
+
+  try {
+    const { data, error } = await client.emails.send({
+      from: fromAddress,
+      to: [to],
+      subject: "You've been invited to join the Admin Portal",
+      html,
+    });
+
+    if (error) {
+      console.error("Failed to send admin invitation email:", error);
+      throw error;
+    }
+
+    return data;
+  } catch (error) {
+    console.error("Error sending admin invitation email:", error);
+    throw error;
+  }
+}
+
 export async function sendWelcomeEmail({
   to,
   name,

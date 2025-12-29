@@ -22,8 +22,29 @@ model User {
   updatedAt     DateTime        @updatedAt @map("updated_at")
   statusChanges StatusHistory[]
   assignedClients Client[]      @relation("AssignedAdmin")
+  sentInvitations AdminInvitation[] @relation("InvitedBy")
 
   @@map("users")
+}
+
+// Admin invitations
+model AdminInvitation {
+  id          String   @id @default(cuid())
+  email       String
+  token       String   @unique
+  name        String?
+  contactEmail String?  @map("contact_email")
+  contactPhone String?  @map("contact_phone")
+  invitedById String   @map("invited_by_id")
+  expiresAt   DateTime @map("expires_at")
+  usedAt      DateTime? @map("used_at")
+  createdAt   DateTime @default(now()) @map("created_at")
+
+  invitedBy   User     @relation("InvitedBy", fields: [invitedById], references: [id], onDelete: Cascade)
+
+  @@index([token])
+  @@index([email])
+  @@map("admin_invitations")
 }
 
 // Insurance applicant clients

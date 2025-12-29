@@ -8,8 +8,8 @@ import ThemeToggle from "@/components/ThemeToggle";
 
 export default function ClientLoginPage() {
   const router = useRouter();
-  const [email, setEmail] = useState("client@test.com");
-  const [password, setPassword] = useState("test123");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 

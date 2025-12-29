@@ -3,15 +3,8 @@ import { NextRequest } from "next/server";
 import { auth } from "@/lib/auth";
 import prisma from "@/lib/db";
 
-interface RouteParams {
-  params: Promise<{ id: string }>;
-}
-
-// DELETE /api/admins/invitations/[id] - Cancel/delete an invitation
-export async function DELETE(
-  request: NextRequest,
-  { params }: RouteParams
-) {
+// DELETE /api/admins/invitations/cancel - Cancel/delete an invitation
+export async function DELETE(request: NextRequest) {
   try {
     const session = await auth();
 
@@ -19,7 +12,15 @@ export async function DELETE(
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    const { id: invitationId } = await params;
+    const body = await request.json();
+    const { id: invitationId } = body;
+
+    if (!invitationId) {
+      return NextResponse.json(
+        { error: "Invitation ID is required" },
+        { status: 400 }
+      );
+    }
 
     // Check if invitation exists
     const invitation = await prisma.adminInvitation.findUnique({

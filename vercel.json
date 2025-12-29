@@ -1,4 +1,4 @@
 {
-  "buildCommand": "prisma generate && prisma migrate deploy && tsx prisma/seed.ts || true && next build",
+  "buildCommand": "prisma generate && tsx prisma/seed.ts || true && next build",
   "framework": "nextjs"
 }

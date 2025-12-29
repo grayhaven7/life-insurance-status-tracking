@@ -117,8 +117,12 @@ export default function AdminsPage() {
 
     try {
       setError(null);
-      const response = await fetch(`/api/admins/invitations/${invitation.id}`, {
+      const response = await fetch(`/api/admins/invitations/cancel`, {
         method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ id: invitation.id }),
       });
 
       if (!response.ok) {

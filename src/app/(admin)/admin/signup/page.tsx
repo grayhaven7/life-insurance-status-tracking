@@ -108,22 +108,24 @@ function AdminSignupContent() {
         }),
       });
 
+      // Read response once
+      const responseText = await response.text();
+      let responseData: any = null;
+
+      // Try to parse as JSON
+      try {
+        responseData = JSON.parse(responseText);
+      } catch {
+        // Not JSON, that's okay
+      }
+
       if (!response.ok) {
-        let errorMessage = "Failed to create account";
-        try {
-          const data = await response.json();
-          errorMessage = data.error || errorMessage;
-        } catch (jsonError) {
-          // If response is not JSON, use status text
-          const text = await response.text();
-          errorMessage = text || response.statusText || errorMessage;
-        }
+        const errorMessage = responseData?.error || responseText || response.statusText || "Failed to create account";
         throw new Error(errorMessage);
       }
 
-      // Get the response data to verify account was created
-      const accountData = await response.json();
-      console.log("Account created:", accountData);
+      // Account created successfully
+      console.log("Account created:", responseData);
 
       // Auto-login after account creation
       const result = await signIn("credentials", {

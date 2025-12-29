@@ -97,7 +97,7 @@ function AdminSignupContent() {
 
     try {
       // Accept invitation and create account
-      const response = await fetch(`/api/admins/invitations/${token}/accept`, {
+      const response = await fetch(`/api/admins/invitations/${token}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -287,6 +287,7 @@ function AdminSignupContent() {
                     onChange={(e) => setFormData({ ...formData, password: e.target.value })}
                     required
                     minLength={8}
+                    autoComplete="new-password"
                     className="w-full px-3.5 py-2.5 pr-20 text-sm bg-bg-tertiary border border-border-primary rounded-lg text-text-primary placeholder:text-text-muted focus:border-accent focus:ring-1 focus:ring-accent/20 outline-none transition-all"
                     placeholder="Enter a secure password"
                   />
@@ -315,6 +316,7 @@ function AdminSignupContent() {
                   onChange={(e) => setFormData({ ...formData, confirmPassword: e.target.value })}
                   required
                   minLength={8}
+                  autoComplete="new-password"
                   className="w-full px-3.5 py-2.5 text-sm bg-bg-tertiary border border-border-primary rounded-lg text-text-primary placeholder:text-text-muted focus:border-accent focus:ring-1 focus:ring-accent/20 outline-none transition-all"
                   placeholder="Confirm your password"
                 />

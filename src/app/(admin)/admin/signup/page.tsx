@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { signIn } from "next-auth/react";
 import Link from "next/link";
@@ -15,7 +15,7 @@ interface InvitationData {
   expiresAt: string;
 }
 
-export default function AdminSignupPage() {
+function AdminSignupContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const token = searchParams.get("token");
@@ -320,6 +320,18 @@ export default function AdminSignupPage() {
         </div>
       </main>
     </div>
+  );
+}
+
+export default function AdminSignupPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen bg-bg-primary flex flex-col items-center justify-center p-4">
+        <div className="text-center text-text-secondary">Loading...</div>
+      </div>
+    }>
+      <AdminSignupContent />
+    </Suspense>
   );
 }
 

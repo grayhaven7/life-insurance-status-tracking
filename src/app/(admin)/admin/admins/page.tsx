@@ -67,6 +67,7 @@ export default function AdminsPage() {
     }
 
     try {
+      setError(null);
       const response = await fetch(`/api/admins/${admin.id}`, {
         method: "DELETE",
       });
@@ -78,7 +79,10 @@ export default function AdminsPage() {
 
       await fetchAdmins();
     } catch (err) {
-      alert(err instanceof Error ? err.message : "Failed to delete admin");
+      const errorMessage = err instanceof Error ? err.message : "Failed to delete admin";
+      setError(errorMessage);
+      // Also show alert for immediate feedback
+      alert(errorMessage);
     }
   };
 

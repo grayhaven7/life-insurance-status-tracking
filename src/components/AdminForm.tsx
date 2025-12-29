@@ -59,10 +59,15 @@ export default function AdminForm({ admin, onClose, onSuccess }: Props) {
         contactPhone: formData.contactPhone || null,
       };
 
-      if (!isEditing || formData.password) {
-        if (!formData.password) {
+      // Only include password if creating (required) or editing with a new password provided
+      if (!isEditing) {
+        // Creating: password is required
+        if (!formData.password || formData.password.trim() === "") {
           throw new Error("Password is required");
         }
+        body.password = formData.password;
+      } else if (formData.password && formData.password.trim() !== "") {
+        // Editing: password is optional, only include if provided
         body.password = formData.password;
       }
 

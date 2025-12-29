@@ -88,9 +88,21 @@ export async function POST(request: NextRequest) {
     });
 
     return NextResponse.json(admin, { status: 201 });
-  } catch (error) {
+  } catch (error: any) {
     console.error("Error creating admin:", error);
-    return NextResponse.json({ error: "Internal server error" }, { status: 500 });
+    
+    // Handle Prisma unique constraint errors (duplicate email)
+    if (error?.code === "P2002") {
+      return NextResponse.json(
+        { error: "An account with this email already exists" },
+        { status: 400 }
+      );
+    }
+    
+    return NextResponse.json(
+      { error: error?.message || "Internal server error" },
+      { status: 500 }
+    );
   }
 }
 

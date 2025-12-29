@@ -67,9 +67,21 @@ export async function GET(
       invitedBy: invitation.invitedBy.name,
       expiresAt: invitation.expiresAt,
     });
-  } catch (error) {
+  } catch (error: any) {
     console.error("Error validating invitation:", error);
-    return NextResponse.json({ error: "Internal server error" }, { status: 500 });
+    
+    // Handle Prisma table doesn't exist error
+    if (error?.code === "P2021" || error?.message?.includes("does not exist")) {
+      return NextResponse.json(
+        { error: "Database table not found. Please run database migrations." },
+        { status: 500 }
+      );
+    }
+    
+    return NextResponse.json(
+      { error: error?.message || "Internal server error" },
+      { status: 500 }
+    );
   }
 }
 
@@ -164,12 +176,42 @@ export async function POST(
     return NextResponse.json(result, { status: 201 });
   } catch (error: any) {
     console.error("Error accepting invitation:", error);
+    console.error("Error details:", {
+      code: error?.code,
+      message: error?.message,
+      meta: error?.meta,
+    });
+    
+    // Handle Prisma table doesn't exist error
+    if (error?.code === "P2021" || error?.message?.includes("does not exist")) {
+      return NextResponse.json(
+        { error: "Database table not found. Please run database migrations." },
+        { status: 500 }
+      );
+    }
     
     // Handle Prisma unique constraint errors
     if (error?.code === "P2002") {
+      const field = error?.meta?.target?.[0] || "field";
       return NextResponse.json(
-        { error: "An account with this email already exists" },
+        { error: `An account with this ${field} already exists` },
         { status: 400 }
+      );
+    }
+    
+    // Handle foreign key constraint errors
+    if (error?.code === "P2003") {
+      return NextResponse.json(
+        { error: "Invalid invitation reference" },
+        { status: 400 }
+      );
+    }
+    
+    // Handle transaction errors
+    if (error?.message?.includes("transaction")) {
+      return NextResponse.json(
+        { error: "Failed to complete account creation. Please try again." },
+        { status: 500 }
       );
     }
     

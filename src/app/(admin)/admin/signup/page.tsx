@@ -40,11 +40,17 @@ function AdminSignupContent() {
 
     // Validate invitation token
     fetch(`/api/admins/invitations/${token}`)
-      .then((res) => {
+      .then(async (res) => {
         if (!res.ok) {
-          return res.json().then((data) => {
-            throw new Error(data.error || "Invalid or expired invitation");
-          });
+          let errorMessage = "Invalid or expired invitation";
+          try {
+            const data = await res.json();
+            errorMessage = data.error || errorMessage;
+          } catch {
+            // If response is not JSON, use status text
+            errorMessage = res.statusText || errorMessage;
+          }
+          throw new Error(errorMessage);
         }
         return res.json();
       })
@@ -103,9 +109,21 @@ function AdminSignupContent() {
       });
 
       if (!response.ok) {
-        const data = await response.json();
-        throw new Error(data.error || "Failed to create account");
+        let errorMessage = "Failed to create account";
+        try {
+          const data = await response.json();
+          errorMessage = data.error || errorMessage;
+        } catch (jsonError) {
+          // If response is not JSON, use status text
+          const text = await response.text();
+          errorMessage = text || response.statusText || errorMessage;
+        }
+        throw new Error(errorMessage);
       }
+
+      // Get the response data to verify account was created
+      const accountData = await response.json();
+      console.log("Account created:", accountData);
 
       // Auto-login after account creation
       const result = await signIn("credentials", {

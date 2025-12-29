@@ -93,26 +93,17 @@ npx prisma generate
 npx prisma db push
 ```
 
-4. Seed the database with initial data:
-
-```bash
-npx tsx prisma/seed.ts
-```
-
-5. Start the development server:
+4. Start the development server:
 
 ```bash
 npm run dev
 ```
 
-6. Open [http://localhost:3000](http://localhost:3000)
+5. Open [http://localhost:3000](http://localhost:3000)
 
-### Default Login Credentials
+### Admin Account Management
 
-After seeding, you can log in with:
-
-- **Admin**: neil@financialplanninggroup.com / admin123
-- **Demo Client**: demo@example.com / demo123
+Admin accounts can be created and managed through the admin dashboard at `/admin/admins` after logging in with an existing admin account.
 
 ## Deployment to Vercel
 
@@ -143,11 +134,7 @@ After deployment, run the database migrations:
 npx prisma db push
 ```
 
-And seed the admin user:
-
-```bash
-npx tsx prisma/seed.ts
-```
+Admin accounts can be created through the admin management interface at `/admin/admins`.
 
 ## Project Structure
 
@@ -169,7 +156,6 @@ npx tsx prisma/seed.ts
   /lib                 # Utility functions and configurations
 /prisma
   schema.prisma        # Database schema
-  seed.ts             # Database seeding script
 ```
 
 ## Security Notes

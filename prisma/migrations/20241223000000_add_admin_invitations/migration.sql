@@ -27,3 +27,4 @@ CREATE INDEX "admin_invitations_email_idx" ON "admin_invitations"("email");
 ALTER TABLE "admin_invitations" ADD CONSTRAINT "admin_invitations_invited_by_id_fkey" FOREIGN KEY ("invited_by_id") REFERENCES "users"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 
+

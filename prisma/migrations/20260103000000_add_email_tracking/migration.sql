@@ -25,3 +25,4 @@ CREATE INDEX "email_opens_tracking_id_idx" ON "email_opens"("tracking_id");
 -- AddForeignKey
 ALTER TABLE "email_opens" ADD CONSTRAINT "email_opens_client_id_fkey" FOREIGN KEY ("client_id") REFERENCES "clients"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
+

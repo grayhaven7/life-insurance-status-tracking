@@ -9,3 +9,4 @@ echo "Done! The admin_invitations table should now exist."
 
 
 
+

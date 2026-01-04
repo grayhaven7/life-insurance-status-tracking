@@ -27,3 +27,4 @@ ALTER TABLE "email_opens" ADD CONSTRAINT "email_opens_client_id_fkey" FOREIGN KE
 
 
 
+

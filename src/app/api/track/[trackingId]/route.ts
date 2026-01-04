@@ -18,13 +18,38 @@ export async function GET(request: NextRequest, { params }: RouteParams) {
     // Remove .gif extension if present (for /api/track/[trackingId]/pixel.gif style URLs)
     const cleanTrackingId = trackingId.replace(/\.gif$/, "");
 
+    // Log the request for debugging
+    const userAgent = request.headers.get("user-agent") || "unknown";
+    const referer = request.headers.get("referer") || "none";
+    const ip = request.headers.get("x-forwarded-for") || request.headers.get("x-real-ip") || "unknown";
+
+    console.log("[Email Tracking] Pixel requested:", {
+      trackingId: cleanTrackingId,
+      userAgent: userAgent.substring(0, 100),
+      referer: referer.substring(0, 100),
+      ip,
+      timestamp: new Date().toISOString(),
+    });
+
     // Update tracking record in database
     const emailOpen = await prisma.emailOpen.findUnique({
       where: { trackingId: cleanTrackingId },
+      include: {
+        client: {
+          select: {
+            id: true,
+            name: true,
+            email: true,
+          },
+        },
+      },
     });
 
     if (emailOpen) {
       const now = new Date();
+      const wasFirstOpen = !emailOpen.firstOpenedAt;
+      const previousCount = emailOpen.openCount;
+
       await prisma.emailOpen.update({
         where: { trackingId: cleanTrackingId },
         data: {
@@ -33,6 +58,20 @@ export async function GET(request: NextRequest, { params }: RouteParams) {
           openCount: { increment: 1 },
         },
       });
+
+      console.log("[Email Tracking] Email opened:", {
+        trackingId: cleanTrackingId,
+        clientId: emailOpen.clientId,
+        clientName: emailOpen.client.name,
+        clientEmail: emailOpen.client.email,
+        emailType: emailOpen.emailType,
+        wasFirstOpen,
+        previousCount,
+        newCount: previousCount + 1,
+        timestamp: now.toISOString(),
+      });
+    } else {
+      console.warn("[Email Tracking] Tracking ID not found:", cleanTrackingId);
     }
 
     // Return transparent 1x1 GIF with no-cache headers
@@ -61,6 +100,7 @@ export async function GET(request: NextRequest, { params }: RouteParams) {
     });
   }
 }
+
 
 
 

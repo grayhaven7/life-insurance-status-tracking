@@ -18,6 +18,7 @@ export default function AdminHeader({ userName }: Props) {
     { href: "/admin/dashboard", label: "Clients", icon: UsersIcon },
     { href: "/admin/clients/new", label: "Add Client", icon: PlusIcon },
     { href: "/admin/admins", label: "Admins", icon: ShieldIcon },
+    { href: "/admin/debug/email-tracking", label: "Email Debug", icon: BugIcon },
   ];
 
   return (
@@ -200,6 +201,14 @@ function ShieldIcon({ className }: { className?: string }) {
   return (
     <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
       <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" />
+    </svg>
+  );
+}
+
+function BugIcon({ className }: { className?: string }) {
+  return (
+    <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+      <path strokeLinecap="round" strokeLinejoin="round" d="M12 12.75c.83 0 1.5-.67 1.5-1.5s-.67-1.5-1.5-1.5-1.5.67-1.5 1.5.67 1.5 1.5 1.5zM12 6v6m-3-3h6m-6 6h6m-3-9a9 9 0 00-9 9c0 1.5.4 2.9 1.1 4.1l-1.1 1.1a1 1 0 000 1.4l1.4 1.4a1 1 0 001.4 0l1.1-1.1c1.2.7 2.6 1.1 4.1 1.1s2.9-.4 4.1-1.1l1.1 1.1a1 1 0 001.4 0l1.4-1.4a1 1 0 000-1.4l-1.1-1.1c.7-1.2 1.1-2.6 1.1-4.1a9 9 0 00-9-9z" />
     </svg>
   );
 }

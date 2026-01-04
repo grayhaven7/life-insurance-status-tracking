@@ -1,10 +1,7 @@
 import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import bcrypt from "bcryptjs";
-import { PrismaClient } from "@prisma/client";
-
-// Use a separate prisma instance for auth to avoid circular dependency
-const prisma = new PrismaClient();
+import prisma from "./db";
 
 declare module "next-auth" {
   interface User {

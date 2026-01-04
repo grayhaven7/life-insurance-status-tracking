@@ -144,7 +144,7 @@ export default function ClientLoginPage() {
 
           <p className="mt-6 text-center text-sm text-text-tertiary">
             Are you an administrator?{" "}
-            <Link href="/admin/login" className="text-accent hover:text-accent-secondary font-medium transition-colors">
+            <Link href="/portal" className="text-accent hover:text-accent-secondary font-medium transition-colors">
               Admin Login
             </Link>
           </p>

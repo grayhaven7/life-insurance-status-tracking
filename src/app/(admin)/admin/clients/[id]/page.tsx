@@ -16,7 +16,7 @@ export default async function ClientDetailPage({ params }: PageProps) {
   const session = await getSession();
 
   if (!session || session.user.role !== "admin") {
-    redirect("/admin/login");
+    redirect("/portal");
   }
 
   const { id } = await params;

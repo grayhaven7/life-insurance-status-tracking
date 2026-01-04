@@ -81,7 +81,7 @@ export default function AdminHeader({ userName }: Props) {
               </div>
             </div>
             <button
-              onClick={() => signOut({ callbackUrl: "/admin/login" })}
+              onClick={() => signOut({ callbackUrl: "/portal" })}
               className="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm font-medium text-text-secondary hover:text-text-primary hover:bg-bg-hover transition-all border border-border-primary"
             >
               <LogOutIcon className="w-4 h-4" />
@@ -142,7 +142,7 @@ export default function AdminHeader({ userName }: Props) {
                 </div>
               </div>
               <button
-                onClick={() => signOut({ callbackUrl: "/admin/login" })}
+                onClick={() => signOut({ callbackUrl: "/portal" })}
                 className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-error hover:bg-error-muted transition-all w-full mt-1"
               >
                 <LogOutIcon className="w-5 h-5" />

@@ -10,7 +10,7 @@ export default async function AdminDashboardPage() {
   const session = await getSession();
 
   if (!session || session.user.role !== "admin") {
-    redirect("/admin/login");
+    redirect("/portal");
   }
 
   const clients = await prisma.client.findMany({

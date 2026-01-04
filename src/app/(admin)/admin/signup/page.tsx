@@ -144,7 +144,7 @@ function AdminSignupContent() {
 
       if (result?.error) {
         // Account created but login failed, redirect to login
-        router.push("/admin/login?message=Account created successfully. Please sign in.");
+        router.push("/portal?message=Account created successfully. Please sign in.");
       } else if (result?.ok) {
         router.push("/admin/dashboard");
         router.refresh();
@@ -195,7 +195,7 @@ function AdminSignupContent() {
               <h2 className="text-lg font-semibold text-error mb-2">Invalid Invitation</h2>
               <p className="text-sm text-error mb-6">{error}</p>
               <Link
-                href="/admin/login"
+                href="/portal"
                 className="inline-block bg-accent hover:bg-accent-secondary !text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors"
               >
                 Go to Login
@@ -341,7 +341,7 @@ function AdminSignupContent() {
 
           <p className="mt-6 text-center text-sm text-text-tertiary">
             Already have an account?{" "}
-            <Link href="/admin/login" className="text-accent hover:text-accent-secondary font-medium transition-colors">
+            <Link href="/portal" className="text-accent hover:text-accent-secondary font-medium transition-colors">
               Sign In
             </Link>
           </p>

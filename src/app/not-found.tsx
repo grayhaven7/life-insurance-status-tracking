@@ -27,7 +27,7 @@ export default function NotFound() {
               Client Login
             </Link>
             <Link
-              href="/admin/login"
+              href="/portal"
               className="inline-flex items-center justify-center gap-2 bg-bg-secondary hover:bg-bg-hover border border-border-primary text-text-secondary hover:text-text-primary px-5 py-2.5 rounded-lg font-medium transition-colors"
             >
               Admin Login

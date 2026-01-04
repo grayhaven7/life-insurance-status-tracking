@@ -9,7 +9,7 @@ export async function requireAdminSession() {
   const session = await auth();
 
   if (!session || session.user.role !== "admin") {
-    redirect("/admin/login");
+    redirect("/portal");
   }
 
   return session;

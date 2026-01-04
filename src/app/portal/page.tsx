@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import ThemeToggle from "@/components/ThemeToggle";
 
-export default function ClientLoginPage() {
+export default function AdminLoginPage() {
   const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -22,14 +22,15 @@ export default function ClientLoginPage() {
       const result = await signIn("credentials", {
         email,
         password,
+        loginType: "admin",
         redirect: false,
-        callbackUrl: "/dashboard",
+        callbackUrl: "/admin/dashboard",
       });
 
       if (result?.error) {
         setError("Invalid email or password");
       } else if (result?.ok) {
-        router.push("/dashboard");
+        router.push("/admin/dashboard");
         router.refresh();
       }
     } catch {
@@ -40,15 +41,9 @@ export default function ClientLoginPage() {
   };
 
   return (
-    <div className="min-h-screen bg-bg-primary flex flex-col relative overflow-hidden">
-      {/* Background gradient */}
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-accent/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
-        <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-info/5 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2" />
-      </div>
-
+    <div className="min-h-screen bg-bg-primary flex flex-col">
       {/* Header */}
-      <header className="relative px-4 py-4 sm:p-6 border-b border-border-primary bg-bg-primary/50 backdrop-blur-xl">
+      <header className="px-4 py-4 sm:p-6 border-b border-border-primary">
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           <div className="flex items-center gap-2 sm:gap-3">
             <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center flex-shrink-0 shadow-sm">
@@ -63,7 +58,7 @@ export default function ClientLoginPage() {
             </div>
             <div className="min-w-0">
               <h1 className="text-sm font-semibold text-text-primary truncate">Emerald Tide Financial</h1>
-              <p className="text-xs text-text-tertiary hidden sm:block">Client Portal</p>
+              <p className="text-xs text-text-tertiary hidden sm:block">Admin Portal</p>
             </div>
           </div>
           <ThemeToggle />
@@ -71,16 +66,19 @@ export default function ClientLoginPage() {
       </header>
 
       {/* Main content */}
-      <main className="relative flex-1 flex items-center justify-center p-4 sm:p-6">
+      <main className="flex-1 flex items-center justify-center p-4 sm:p-6">
         <div className="w-full max-w-sm">
           <div className="text-center mb-6 sm:mb-8">
-            <h2 className="text-xl sm:text-2xl font-semibold text-text-primary">Welcome Back</h2>
-            <p className="text-sm text-text-tertiary mt-2">
-              Sign in to track your Tax-Free Pension application
+            <div className="w-12 h-12 sm:w-14 sm:h-14 bg-bg-secondary border border-border-primary rounded-xl flex items-center justify-center mx-auto mb-3 sm:mb-4">
+              <LockIcon className="w-5 h-5 sm:w-6 sm:h-6 text-accent" />
+            </div>
+            <h2 className="text-lg sm:text-xl font-semibold text-text-primary">Admin Login</h2>
+            <p className="text-sm text-text-tertiary mt-1">
+              Access the client management dashboard
             </p>
           </div>
 
-          <div className="rounded-xl border border-border-primary bg-bg-secondary/80 backdrop-blur-xl p-4 sm:p-6">
+          <div className="rounded-xl border border-border-primary bg-bg-secondary p-4 sm:p-6">
             <form onSubmit={handleSubmit} className="space-y-5">
               {error && (
                 <div className="flex items-center gap-2 px-3 py-2 rounded-lg bg-error-muted border border-error/20 text-sm text-error">
@@ -103,7 +101,7 @@ export default function ClientLoginPage() {
                   onChange={(e) => setEmail(e.target.value)}
                   required
                   className="w-full px-3.5 py-2.5 text-sm bg-bg-tertiary border border-border-primary rounded-lg text-text-primary placeholder:text-text-muted focus:border-accent focus:ring-1 focus:ring-accent/20 outline-none transition-all"
-                  placeholder="you@example.com"
+                  placeholder="admin@example.com"
                 />
               </div>
 
@@ -143,21 +141,22 @@ export default function ClientLoginPage() {
           </div>
 
           <p className="mt-6 text-center text-sm text-text-tertiary">
-            Are you an administrator?{" "}
-            <Link href="/portal" className="text-accent hover:text-accent-secondary font-medium transition-colors">
-              Admin Login
+            Are you a client?{" "}
+            <Link href="/progress" className="text-accent hover:text-accent-secondary font-medium transition-colors">
+              Client Login
             </Link>
-          </p>
-
-          <p className="text-center text-text-muted text-xs mt-8">
-            Your credentials were provided by your financial advisor.
-            <br />
-            Contact us if you need assistance.
           </p>
         </div>
       </main>
-
     </div>
+  );
+}
+
+function LockIcon({ className }: { className?: string }) {
+  return (
+    <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+      <path strokeLinecap="round" strokeLinejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" />
+    </svg>
   );
 }
 
@@ -177,3 +176,4 @@ function LoaderIcon({ className }: { className?: string }) {
     </svg>
   );
 }
+

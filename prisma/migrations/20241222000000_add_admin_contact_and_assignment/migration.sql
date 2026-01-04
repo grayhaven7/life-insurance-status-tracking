@@ -21,3 +21,4 @@ CREATE INDEX "clients_assigned_admin_id_idx" ON "clients"("assigned_admin_id");
 
 
 
+

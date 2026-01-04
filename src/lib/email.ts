@@ -106,7 +106,7 @@ export async function sendStatusUpdateEmail({
             </p>
             
             <div style="text-align: center; margin: 30px 0;">
-              <a href="${baseUrl}/login" style="display: inline-block; background-color: #1e3a5f; color: #ffffff; text-decoration: none; padding: 12px 30px; border-radius: 6px; font-size: 16px; font-weight: bold;">View Your Progress</a>
+              <a href="${baseUrl}/progress" style="display: inline-block; background-color: #1e3a5f; color: #ffffff; text-decoration: none; padding: 12px 30px; border-radius: 6px; font-size: 16px; font-weight: bold;">View Your Progress</a>
             </div>
             
             <hr style="border: none; border-top: 1px solid #e9ecef; margin: 30px 0;">
@@ -312,7 +312,7 @@ export async function sendWelcomeEmail({
             </p>
             
             <div style="text-align: center; margin: 30px 0;">
-              <a href="${baseUrl}/login" style="display: inline-block; background-color: #1e3a5f; color: #ffffff; text-decoration: none; padding: 12px 30px; border-radius: 6px; font-size: 16px; font-weight: bold;">Access Your Portal</a>
+              <a href="${baseUrl}/progress" style="display: inline-block; background-color: #1e3a5f; color: #ffffff; text-decoration: none; padding: 12px 30px; border-radius: 6px; font-size: 16px; font-weight: bold;">Access Your Portal</a>
             </div>
             
             <hr style="border: none; border-top: 1px solid #e9ecef; margin: 30px 0;">

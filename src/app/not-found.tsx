@@ -21,7 +21,7 @@ export default function NotFound() {
           </p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <Link
-              href="/login"
+              href="/progress"
               className="inline-flex items-center justify-center gap-2 bg-accent hover:bg-accent-secondary !text-white px-5 py-2.5 rounded-lg font-medium transition-colors"
             >
               Client Login

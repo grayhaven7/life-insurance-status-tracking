@@ -17,5 +17,5 @@ export default async function HomePage() {
     console.error("Auth error on home page:", error);
   }
 
-  redirect("/login");
+  redirect("/progress");
 }

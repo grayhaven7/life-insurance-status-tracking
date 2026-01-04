@@ -70,7 +70,7 @@ export async function sendStatusUpdateSms({ to, clientName, newStage, note }: Se
   if (note && note.trim()) {
     bodyLines.push(`Note: ${note.trim()}`);
   }
-  bodyLines.push(`Portal: ${baseUrl}/login`);
+  bodyLines.push(`Portal: ${baseUrl}/progress`);
 
   const body = bodyLines.join(" ");
 

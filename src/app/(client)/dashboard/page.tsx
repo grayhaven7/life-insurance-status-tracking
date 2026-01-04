@@ -9,7 +9,7 @@ export default async function ClientDashboardPage() {
   const session = await getSession();
 
   if (!session || session.user.role !== "client") {
-    redirect("/login");
+    redirect("/progress");
   }
 
   const client = await prisma.client.findUnique({
@@ -36,7 +36,7 @@ export default async function ClientDashboardPage() {
   });
 
   if (!client) {
-    redirect("/login");
+    redirect("/progress");
   }
 
   // Compute contact info

@@ -45,7 +45,7 @@ export default function ClientDashboardHeader({ clientName }: Props) {
               </div>
             </div>
             <button
-              onClick={() => signOut({ callbackUrl: "/login" })}
+              onClick={() => signOut({ callbackUrl: "/progress" })}
               className="flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm font-medium text-text-secondary hover:text-text-primary hover:bg-bg-hover transition-all border border-border-primary"
             >
               <LogOutIcon className="w-4 h-4" />

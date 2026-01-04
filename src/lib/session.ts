@@ -19,7 +19,7 @@ export async function requireClientSession() {
   const session = await auth();
 
   if (!session || session.user.role !== "client") {
-    redirect("/login");
+    redirect("/progress");
   }
 
   return session;

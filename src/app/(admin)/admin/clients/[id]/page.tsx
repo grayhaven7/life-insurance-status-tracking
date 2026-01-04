@@ -41,6 +41,18 @@ export default async function ClientDetailPage({ params }: PageProps) {
             },
           },
         },
+        emailOpens: {
+          orderBy: { createdAt: "desc" },
+          select: {
+            id: true,
+            emailType: true,
+            subject: true,
+            firstOpenedAt: true,
+            lastOpenedAt: true,
+            openCount: true,
+            createdAt: true,
+          },
+        },
       },
     }),
     prisma.user.findMany({
@@ -156,6 +168,100 @@ export default async function ClientDetailPage({ params }: PageProps) {
                 </div>
               )}
             </div>
+
+            {/* Email Activity */}
+            <div className="rounded-xl border border-border-primary bg-bg-secondary p-4 sm:p-6">
+              <div className="flex items-center gap-2 mb-4 sm:mb-5">
+                <div className="w-8 h-8 rounded-lg bg-accent-muted flex items-center justify-center">
+                  <EmailIcon className="w-4 h-4 text-accent" />
+                </div>
+                <h3 className="text-base font-semibold text-text-primary">Email Activity</h3>
+                {client.emailOpens.length > 0 && (
+                  <span className="ml-auto text-xs text-text-muted">
+                    {client.emailOpens.filter((e) => e.openCount > 0).length}/{client.emailOpens.length} opened
+                  </span>
+                )}
+              </div>
+              {client.emailOpens.length === 0 ? (
+                <div className="text-center py-8 sm:py-12">
+                  <div className="w-12 h-12 rounded-lg bg-bg-tertiary flex items-center justify-center mx-auto mb-3">
+                    <EmailIcon className="w-6 h-6 text-text-muted" />
+                  </div>
+                  <p className="text-sm text-text-tertiary">No emails sent yet.</p>
+                </div>
+              ) : (
+                <div className="space-y-3">
+                  {client.emailOpens.map((emailOpen) => {
+                    const isOpened = emailOpen.openCount > 0;
+                    return (
+                      <div
+                        key={emailOpen.id}
+                        className="rounded-lg bg-bg-tertiary border border-border-secondary p-3 sm:p-4"
+                      >
+                        <div className="flex items-start gap-3">
+                          <div className={`w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 ${
+                            isOpened ? 'bg-success-muted' : 'bg-bg-hover'
+                          }`}>
+                            {isOpened ? (
+                              <EmailOpenIcon className="w-4 h-4 text-success" />
+                            ) : (
+                              <EmailClosedIcon className="w-4 h-4 text-text-muted" />
+                            )}
+                          </div>
+                          <div className="flex-1 min-w-0">
+                            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1 sm:gap-2">
+                              <span className="text-sm font-medium text-text-primary truncate">
+                                {emailOpen.subject || emailOpen.emailType.replace(/_/g, ' ')}
+                              </span>
+                              <span className={`text-xs font-medium px-2 py-0.5 rounded-md ${
+                                isOpened
+                                  ? 'bg-success-muted text-success'
+                                  : 'bg-bg-hover text-text-muted'
+                              }`}>
+                                {isOpened ? `Opened ${emailOpen.openCount}x` : 'Unopened'}
+                              </span>
+                            </div>
+                            <div className="mt-1 space-y-0.5">
+                              <p className="text-xs text-text-muted">
+                                Sent: {new Date(emailOpen.createdAt).toLocaleDateString("en-US", {
+                                  month: "short",
+                                  day: "numeric",
+                                  year: "numeric",
+                                  hour: "2-digit",
+                                  minute: "2-digit",
+                                })}
+                              </p>
+                              {isOpened && emailOpen.firstOpenedAt && (
+                                <p className="text-xs text-success">
+                                  First opened: {new Date(emailOpen.firstOpenedAt).toLocaleDateString("en-US", {
+                                    month: "short",
+                                    day: "numeric",
+                                    year: "numeric",
+                                    hour: "2-digit",
+                                    minute: "2-digit",
+                                  })}
+                                </p>
+                              )}
+                              {isOpened && emailOpen.lastOpenedAt && emailOpen.openCount > 1 && (
+                                <p className="text-xs text-text-tertiary">
+                                  Last opened: {new Date(emailOpen.lastOpenedAt).toLocaleDateString("en-US", {
+                                    month: "short",
+                                    day: "numeric",
+                                    year: "numeric",
+                                    hour: "2-digit",
+                                    minute: "2-digit",
+                                  })}
+                                </p>
+                              )}
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </main>
@@ -183,6 +289,30 @@ function ClockIcon({ className }: { className?: string }) {
   return (
     <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
       <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+    </svg>
+  );
+}
+
+function EmailIcon({ className }: { className?: string }) {
+  return (
+    <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+      <path strokeLinecap="round" strokeLinejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
+    </svg>
+  );
+}
+
+function EmailOpenIcon({ className }: { className?: string }) {
+  return (
+    <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+      <path strokeLinecap="round" strokeLinejoin="round" d="M21.75 9v.906a2.25 2.25 0 01-1.183 1.981l-6.478 3.488M2.25 9v.906a2.25 2.25 0 001.183 1.981l6.478 3.488m8.839 2.51l-4.66-2.51m0 0l-1.023-.55a2.25 2.25 0 00-2.134 0l-1.022.55m0 0l-4.661 2.51m16.5 1.615a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V8.844a2.25 2.25 0 011.183-1.98l7.5-4.04a2.25 2.25 0 012.134 0l7.5 4.04a2.25 2.25 0 011.183 1.98V19.5z" />
+    </svg>
+  );
+}
+
+function EmailClosedIcon({ className }: { className?: string }) {
+  return (
+    <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+      <path strokeLinecap="round" strokeLinejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
     </svg>
   );
 }

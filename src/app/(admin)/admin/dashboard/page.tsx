@@ -23,6 +23,19 @@ export default async function AdminDashboardPage() {
       currentStage: true,
       createdAt: true,
       updatedAt: true,
+      emailOpens: {
+        orderBy: { createdAt: "desc" },
+        take: 5,
+        select: {
+          id: true,
+          emailType: true,
+          subject: true,
+          firstOpenedAt: true,
+          lastOpenedAt: true,
+          openCount: true,
+          createdAt: true,
+        },
+      },
     },
   });
 
@@ -120,6 +133,9 @@ export default async function AdminDashboardPage() {
                       Progress
                     </th>
                     <th className="px-6 py-3 text-left text-xs font-medium text-text-muted uppercase tracking-wider hidden lg:table-cell">
+                      Email
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-text-muted uppercase tracking-wider hidden xl:table-cell">
                       Last Updated
                     </th>
                     <th className="px-6 py-3 text-right text-xs font-medium text-text-muted uppercase tracking-wider">
@@ -132,6 +148,12 @@ export default async function AdminDashboardPage() {
                     const stage = STAGES.find((s) => s.id === client.currentStage);
                     const progress = getProgressPercentage(client.currentStage);
                     const isComplete = client.currentStage === 17;
+                    
+                    // Email tracking stats
+                    const totalEmails = client.emailOpens.length;
+                    const openedEmails = client.emailOpens.filter((e) => e.openCount > 0).length;
+                    const latestEmail = client.emailOpens[0];
+                    const hasOpenedAny = openedEmails > 0;
 
                     return (
                       <tr 
@@ -187,6 +209,63 @@ export default async function AdminDashboardPage() {
                           </div>
                         </td>
                         <td className="px-6 py-4 hidden lg:table-cell">
+                          {totalEmails === 0 ? (
+                            <span className="text-xs text-text-muted">No emails</span>
+                          ) : (
+                            <div className="group relative">
+                              <div className="flex items-center gap-2">
+                                {hasOpenedAny ? (
+                                  <div className="flex items-center gap-1.5">
+                                    <EmailOpenIcon className="w-4 h-4 text-success" />
+                                    <span className="text-xs text-success font-medium">
+                                      {openedEmails}/{totalEmails} opened
+                                    </span>
+                                  </div>
+                                ) : (
+                                  <div className="flex items-center gap-1.5">
+                                    <EmailClosedIcon className="w-4 h-4 text-text-muted" />
+                                    <span className="text-xs text-text-muted">
+                                      Unopened
+                                    </span>
+                                  </div>
+                                )}
+                              </div>
+                              {/* Tooltip */}
+                              <div className="absolute left-0 top-full mt-1 z-10 hidden group-hover:block">
+                                <div className="bg-bg-tertiary border border-border-primary rounded-lg shadow-lg p-3 min-w-[200px]">
+                                  <p className="text-xs font-medium text-text-primary mb-2">Recent Emails</p>
+                                  <div className="space-y-2">
+                                    {client.emailOpens.slice(0, 3).map((emailOpen) => (
+                                      <div key={emailOpen.id} className="text-xs">
+                                        <div className="flex items-center gap-1.5">
+                                          {emailOpen.openCount > 0 ? (
+                                            <EmailOpenIcon className="w-3 h-3 text-success flex-shrink-0" />
+                                          ) : (
+                                            <EmailClosedIcon className="w-3 h-3 text-text-muted flex-shrink-0" />
+                                          )}
+                                          <span className="text-text-secondary truncate">
+                                            {emailOpen.subject || emailOpen.emailType}
+                                          </span>
+                                        </div>
+                                        {emailOpen.openCount > 0 && emailOpen.lastOpenedAt && (
+                                          <p className="text-text-muted ml-4.5 mt-0.5">
+                                            Opened {emailOpen.openCount}x, last: {new Date(emailOpen.lastOpenedAt).toLocaleDateString("en-US", {
+                                              month: "short",
+                                              day: "numeric",
+                                              hour: "2-digit",
+                                              minute: "2-digit",
+                                            })}
+                                          </p>
+                                        )}
+                                      </div>
+                                    ))}
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          )}
+                        </td>
+                        <td className="px-6 py-4 hidden xl:table-cell">
                           <p className="text-sm text-text-tertiary">
                             {new Date(client.updatedAt).toLocaleDateString("en-US", {
                               month: "short",
@@ -291,6 +370,22 @@ function ChevronRightIcon({ className }: { className?: string }) {
   return (
     <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
       <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+    </svg>
+  );
+}
+
+function EmailOpenIcon({ className }: { className?: string }) {
+  return (
+    <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+      <path strokeLinecap="round" strokeLinejoin="round" d="M21.75 9v.906a2.25 2.25 0 01-1.183 1.981l-6.478 3.488M2.25 9v.906a2.25 2.25 0 001.183 1.981l6.478 3.488m8.839 2.51l-4.66-2.51m0 0l-1.023-.55a2.25 2.25 0 00-2.134 0l-1.022.55m0 0l-4.661 2.51m16.5 1.615a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V8.844a2.25 2.25 0 011.183-1.98l7.5-4.04a2.25 2.25 0 012.134 0l7.5 4.04a2.25 2.25 0 011.183 1.98V19.5z" />
+    </svg>
+  );
+}
+
+function EmailClosedIcon({ className }: { className?: string }) {
+  return (
+    <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+      <path strokeLinecap="round" strokeLinejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
     </svg>
   );
 }

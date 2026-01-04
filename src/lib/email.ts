@@ -1,5 +1,6 @@
 import { Resend } from "resend";
 import { getStageById, getProgressPercentage, STAGES } from "./stages";
+import { createEmailTracking, generateTrackingPixel } from "./email-tracking";
 
 // Lazy initialization to avoid build errors
 let resend: Resend | null = null;
@@ -17,6 +18,7 @@ function getResendClient(): Resend | null {
 interface SendStatusUpdateEmailParams {
   to: string;
   clientName: string;
+  clientId: string;
   newStage: number;
   note?: string;
 }
@@ -24,12 +26,13 @@ interface SendStatusUpdateEmailParams {
 export async function sendStatusUpdateEmail({
   to,
   clientName,
+  clientId,
   newStage,
   note,
 }: SendStatusUpdateEmailParams) {
-  const client = getResendClient();
+  const resendClient = getResendClient();
   
-  if (!client) {
+  if (!resendClient) {
     console.warn("Resend API key not configured, skipping email");
     return null;
   }
@@ -49,6 +52,14 @@ export async function sendStatusUpdateEmail({
     : `Application Update: ${stage.name}`;
 
   const baseUrl = process.env.AUTH_URL || process.env.NEXTAUTH_URL || "http://localhost:3000";
+
+  // Create email tracking record
+  const trackingId = await createEmailTracking({
+    clientId,
+    emailType: "status_update",
+    subject,
+  });
+  const trackingPixel = generateTrackingPixel(trackingId);
 
   const html = `
     <!DOCTYPE html>
@@ -117,6 +128,7 @@ export async function sendStatusUpdateEmail({
             </p>
           </div>
         </div>
+        ${trackingPixel}
       </body>
     </html>
   `;
@@ -129,10 +141,11 @@ export async function sendStatusUpdateEmail({
     subject,
     clientName,
     stage: newStage,
+    trackingId,
   });
 
   try {
-    const { data, error } = await client.emails.send({
+    const { data, error } = await resendClient.emails.send({
       from: fromAddress,
       to: [to],
       subject,
@@ -147,7 +160,7 @@ export async function sendStatusUpdateEmail({
     }
 
     console.log("[Email Debug] Email sent successfully:", JSON.stringify(data, null, 2));
-    return data;
+    return { ...data, trackingId };
   } catch (error) {
     console.error("[Email Debug] Exception sending email:", {
       message: error instanceof Error ? error.message : String(error),
@@ -264,20 +277,31 @@ export async function sendWelcomeEmail({
   name,
   email,
   password,
+  clientId,
 }: {
   to: string;
   name: string;
   email: string;
   password: string;
+  clientId: string;
 }) {
-  const client = getResendClient();
+  const resendClient = getResendClient();
   
-  if (!client) {
+  if (!resendClient) {
     console.warn("Resend API key not configured, skipping email");
     return null;
   }
 
   const baseUrl = process.env.AUTH_URL || process.env.NEXTAUTH_URL || "http://localhost:3000";
+
+  // Create email tracking record
+  const subject = "Welcome to Your Client Portal";
+  const trackingId = await createEmailTracking({
+    clientId,
+    emailType: "welcome",
+    subject,
+  });
+  const trackingPixel = generateTrackingPixel(trackingId);
 
   const html = `
     <!DOCTYPE html>
@@ -323,6 +347,7 @@ export async function sendWelcomeEmail({
             </p>
           </div>
         </div>
+        ${trackingPixel}
       </body>
     </html>
   `;
@@ -330,10 +355,10 @@ export async function sendWelcomeEmail({
   const fromAddress = process.env.EMAIL_FROM || "Emerald Tide Financial <onboarding@resend.dev>";
 
   try {
-    const { data, error } = await client.emails.send({
+    const { data, error } = await resendClient.emails.send({
       from: fromAddress,
       to: [to],
-      subject: "Welcome to Your Client Portal",
+      subject,
       html,
     });
 
@@ -342,7 +367,7 @@ export async function sendWelcomeEmail({
       throw error;
     }
 
-    return data;
+    return { ...data, trackingId };
   } catch (error) {
     console.error("Error sending welcome email:", error);
     throw error;

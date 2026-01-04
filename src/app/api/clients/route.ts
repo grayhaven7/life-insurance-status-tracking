@@ -115,6 +115,7 @@ export async function POST(request: NextRequest) {
           name,
           email,
           password,
+          clientId: client.id,
         });
       } catch (emailError) {
         console.error("Failed to send welcome email:", emailError);

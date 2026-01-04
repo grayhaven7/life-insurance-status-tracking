@@ -59,6 +59,7 @@ model Client {
   createdAt       DateTime        @default(now()) @map("created_at")
   updatedAt       DateTime        @updatedAt @map("updated_at")
   statusHistory   StatusHistory[]
+  emailOpens      EmailOpen[]
   assignedAdmin   User?           @relation("AssignedAdmin", fields: [assignedAdminId], references: [id])
 
   @@map("clients")
@@ -77,4 +78,23 @@ model StatusHistory {
   user   User   @relation(fields: [changedBy], references: [id])
 
   @@map("status_history")
+}
+
+// Email open tracking
+model EmailOpen {
+  id            String    @id @default(cuid())
+  trackingId    String    @unique @map("tracking_id")
+  clientId      String    @map("client_id")
+  emailType     String    @map("email_type")  // "status_update", "welcome", "admin_invitation"
+  subject       String?                        // Email subject for reference
+  firstOpenedAt DateTime? @map("first_opened_at")
+  lastOpenedAt  DateTime? @map("last_opened_at")
+  openCount     Int       @default(0) @map("open_count")
+  createdAt     DateTime  @default(now()) @map("created_at")
+
+  client        Client    @relation(fields: [clientId], references: [id], onDelete: Cascade)
+
+  @@index([clientId])
+  @@index([trackingId])
+  @@map("email_opens")
 }

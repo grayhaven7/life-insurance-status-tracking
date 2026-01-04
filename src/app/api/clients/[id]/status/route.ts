@@ -66,12 +66,13 @@ export async function POST(request: NextRequest, { params }: RouteParams) {
         const emailResult = await sendStatusUpdateEmail({
           to: client.email,
           clientName: client.name,
+          clientId: client.id,
           newStage: stage,
           note,
         });
         emailSent = emailResult !== null;
         if (emailResult) {
-          emailDebugInfo = { emailId: emailResult.id };
+          emailDebugInfo = { emailId: emailResult.id, trackingId: emailResult.trackingId };
         }
       } catch (err) {
         console.error("Failed to send status update email:", err);

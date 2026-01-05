@@ -112,7 +112,7 @@ export default function L2Content() {
 
       {/* Footer */}
       <footer className="landing-footer" style={{ backgroundColor: "#CBE4F6" }}>
-        <p>&copy;2025 US Tax-Free Retirement Center</p>
+        <p>&copy;2026 US Tax-Free Retirement Center</p>
       </footer>
     </div>
   );

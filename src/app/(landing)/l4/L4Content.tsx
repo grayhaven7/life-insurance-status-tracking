@@ -184,7 +184,7 @@ export default function L4Content() {
 
       {/* Footer - minimal on dark background */}
       <footer className="text-center py-4" style={{ color: "rgba(255,255,255,0.6)" }}>
-        <p className="text-sm">&copy;2025 US Tax-Free Retirement Center</p>
+        <p className="text-sm">&copy;2026 US Tax-Free Retirement Center</p>
       </footer>
     </div>
   );

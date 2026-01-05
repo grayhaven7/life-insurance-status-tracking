@@ -1,0 +1,398 @@
+/* Landing Pages Specific Styles */
+
+/* Color Variables */
+:root {
+  --landing-light-blue: #CBE4F6;
+  --landing-navy: #123375;
+  --landing-navy-hover: #0A1D42;
+  --landing-dark-brown: #463F3A;
+  --landing-white: #ffffff;
+  --landing-text-dark: #333333;
+}
+
+/* Landing page base styles */
+.landing-page {
+  font-family: var(--font-source-sans), 'Source Sans Pro', -apple-system, BlinkMacSystemFont, sans-serif;
+  color: var(--landing-text-dark);
+  line-height: 1.6;
+}
+
+.landing-page h1,
+.landing-page h2,
+.landing-page h3 {
+  font-family: var(--font-fjalla), 'Fjalla One', Impact, sans-serif;
+  font-weight: 400;
+  line-height: 1.2;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+.landing-page .subhead {
+  font-family: var(--font-alegreya), 'Alegreya Sans', sans-serif;
+}
+
+/* Hero Section */
+.landing-hero {
+  background-color: var(--landing-light-blue);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.landing-hero::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background:
+    radial-gradient(ellipse at 30% 20%, rgba(255,255,255,0.4) 0%, transparent 50%),
+    radial-gradient(ellipse at 70% 80%, rgba(255,255,255,0.3) 0%, transparent 40%);
+  pointer-events: none;
+}
+
+/* CTA Button */
+.landing-btn {
+  display: inline-block;
+  background-color: var(--landing-navy);
+  color: var(--landing-white) !important;
+  font-family: var(--font-fjalla), 'Fjalla One', Impact, sans-serif;
+  font-size: 1.25rem;
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 1rem 2.5rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  text-decoration: none;
+  text-align: center;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 14px rgba(18, 51, 117, 0.3);
+}
+
+.landing-btn:hover {
+  background-color: var(--landing-navy-hover);
+  box-shadow: 0 6px 20px rgba(18, 51, 117, 0.4);
+  transform: translateY(-2px);
+}
+
+.landing-btn:active {
+  transform: translateY(0);
+}
+
+/* JotForm Container */
+.jotform-container {
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+  border-radius: 12px;
+  overflow: visible;
+  background: var(--landing-white);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+}
+
+.jotform-container iframe {
+  width: 100%;
+  border: none;
+  display: block;
+  min-height: 540px;
+}
+
+/* Video Container */
+.video-container {
+  position: relative;
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #000;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+}
+
+.video-container::before {
+  content: '';
+  display: block;
+  padding-top: 56.25%; /* 16:9 aspect ratio */
+}
+
+.video-container iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+/* L4 Confirmation Page Styles */
+.l4-page {
+  background-color: var(--landing-dark-brown);
+  min-height: 100vh;
+  padding: 2rem 1rem;
+  font-family: var(--font-source-sans), 'Ubuntu', sans-serif;
+}
+
+.l4-card {
+  background: var(--landing-white);
+  border-radius: 16px;
+  padding: 2.5rem;
+  max-width: 900px;
+  margin: 0 auto;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+}
+
+.l4-link {
+  display: block;
+  color: var(--landing-navy);
+  text-decoration: none;
+  padding: 0.75rem 0;
+  font-size: 1.1rem;
+  transition: color 0.2s ease;
+  border-bottom: 1px solid #eee;
+}
+
+.l4-link:hover {
+  color: var(--landing-navy-hover);
+  text-decoration: underline;
+}
+
+.l4-link:last-child {
+  border-bottom: none;
+}
+
+/* Mailman Illustration */
+.mailman-illustration {
+  max-width: 200px;
+  height: auto;
+  margin: 2rem auto;
+  display: block;
+}
+
+/* Step indicator */
+.step-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--landing-navy);
+  color: var(--landing-white);
+  font-family: var(--font-fjalla), 'Fjalla One', Impact, sans-serif;
+  font-size: 1.1rem;
+  padding: 0.5rem 1.25rem;
+  border-radius: 50px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* Footer */
+.landing-footer {
+  text-align: center;
+  padding: 2rem 1rem;
+  font-size: 0.875rem;
+  color: #666;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+  .landing-hero {
+    padding: 2rem 1rem;
+    min-height: auto;
+    padding-top: 4rem;
+    padding-bottom: 4rem;
+  }
+
+  .landing-page h1 {
+    font-size: 1.75rem;
+  }
+
+  .landing-page h2 {
+    font-size: 1.5rem;
+  }
+
+  .landing-btn {
+    font-size: 1rem;
+    padding: 0.875rem 2rem;
+    width: 100%;
+    max-width: 320px;
+  }
+
+  .jotform-container {
+    margin: 0 0.5rem;
+  }
+
+  .video-container {
+    border-radius: 8px;
+  }
+
+  .l4-card {
+    padding: 1.5rem;
+  }
+
+  .l4-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* Animation utilities */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.6s ease-out forwards;
+}
+
+.animate-delay-1 {
+  animation-delay: 0.1s;
+}
+
+.animate-delay-2 {
+  animation-delay: 0.2s;
+}
+
+.animate-delay-3 {
+  animation-delay: 0.3s;
+}
+
+/* Isolate landing pages from global app styles */
+.landing-page {
+  /* Override all CSS variables to prevent dark mode flashing */
+  --color-bg-primary: #ffffff !important;
+  --color-bg-secondary: #fafafa !important;
+  --color-bg-tertiary: #f4f4f5 !important;
+  --color-bg-elevated: #ffffff !important;
+  --color-bg-hover: #f4f4f5 !important;
+  --color-text-primary: #18181b !important;
+  --color-text-secondary: #3f3f46 !important;
+  --color-text-muted: #a1a1aa !important;
+  --color-border-primary: #e4e4e7 !important;
+  --color-accent: #123375 !important;
+  --color-accent-glow: transparent !important;
+  color-scheme: light !important;
+}
+
+/* Remove ALL transitions from landing page elements */
+.landing-page *,
+.landing-page *::before,
+.landing-page *::after {
+  transition: none !important;
+}
+
+/* Re-enable specific transitions we want */
+.landing-page .landing-btn {
+  transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease !important;
+}
+
+.landing-page .l4-link {
+  transition: color 0.2s ease !important;
+}
+
+/* Ensure iframes are not affected by parent styles */
+.landing-page iframe {
+  transition: none !important;
+  border: none !important;
+  background: transparent !important;
+}
+
+/* Override global input/button styles for landing pages */
+.landing-page input,
+.landing-page textarea,
+.landing-page select {
+  background: revert !important;
+  border: revert !important;
+  border-radius: revert !important;
+  color: revert !important;
+  font-size: revert !important;
+  transition: none !important;
+}
+
+.landing-page button {
+  cursor: pointer;
+  font-weight: revert !important;
+  transition: none !important;
+}
+
+/* Override global focus styles for landing pages */
+.landing-page *:focus-visible {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+.landing-page *:focus {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+.landing-page input:focus,
+.landing-page textarea:focus,
+.landing-page select:focus {
+  border-color: revert !important;
+  box-shadow: none !important;
+  outline: none !important;
+}
+
+/* Force light mode globally when landing page is active */
+body.landing-page-active,
+body.landing-page-active * {
+  color-scheme: light !important;
+}
+
+/* Ensure root element variables are light mode */
+html:has(.landing-page) {
+  --color-bg-primary: #ffffff !important;
+  --color-bg-secondary: #fafafa !important;
+  --color-text-primary: #18181b !important;
+  color-scheme: light !important;
+}
+
+/* Override dark class effects when landing page is active */
+html.dark body.landing-page-active {
+  --color-bg-primary: #ffffff !important;
+  --color-bg-secondary: #fafafa !important;
+  --color-text-primary: #18181b !important;
+}
+
+/* Completely isolate iframe from any parent styling */
+.jotform-container {
+  isolation: isolate;
+  contain: content;
+  background: #ffffff !important;
+}
+
+.jotform-container iframe {
+  color-scheme: light !important;
+  background: #ffffff !important;
+}
+
+/* Force the entire page to use light color scheme */
+html:has(.landing-page),
+html:has(.landing-page) body {
+  color-scheme: light only !important;
+}
+
+/* Prevent any dark mode media query from affecting landing pages */
+@media (prefers-color-scheme: dark) {
+  .landing-page,
+  .landing-page * {
+    color-scheme: light only !important;
+  }
+
+  .jotform-container,
+  .jotform-container iframe {
+    filter: none !important;
+    background: #ffffff !important;
+  }
+}

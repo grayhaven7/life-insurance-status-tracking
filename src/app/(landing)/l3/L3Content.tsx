@@ -1,17 +1,52 @@
 "use client";
 
-import Link from "next/link";
+import { useEffect } from "react";
+import Script from "next/script";
 
 export default function L3Content() {
+  useEffect(() => {
+    // Initialize Calendly widget when script loads
+    const initCalendly = () => {
+      if (typeof window !== "undefined" && (window as { Calendly?: { initInlineWidget: (options: { url: string; parentElement: Element | null }) => void } }).Calendly) {
+        (window as { Calendly: { initInlineWidget: (options: { url: string; parentElement: Element | null }) => void } }).Calendly.initInlineWidget({
+          url: "https://calendly.com/d/cmd8-9f4-5jf/tax-free-pension-tfp?hide_event_type_details=1&hide_gdpr_banner=1&primary_color=73c789",
+          parentElement: document.getElementById("calendly-inline-widget"),
+        });
+      }
+    };
+
+    // Try to init immediately if Calendly is already loaded
+    initCalendly();
+
+    // Also listen for script load
+    window.addEventListener("calendly-ready", initCalendly);
+    return () => window.removeEventListener("calendly-ready", initCalendly);
+  }, []);
+
   return (
     <div className="landing-page">
-      <main className="landing-hero" style={{ minHeight: "100vh" }}>
-        <div className="relative z-10 w-full max-w-3xl mx-auto px-4 text-center">
+      {/* Calendly CSS */}
+      <link
+        href="https://assets.calendly.com/assets/external/widget.css"
+        rel="stylesheet"
+      />
+
+      {/* Calendly Script */}
+      <Script
+        src="https://assets.calendly.com/assets/external/widget.js"
+        strategy="afterInteractive"
+        onLoad={() => {
+          window.dispatchEvent(new Event("calendly-ready"));
+        }}
+      />
+
+      <main className="landing-hero" style={{ minHeight: "100vh", paddingTop: "2rem", paddingBottom: "2rem" }}>
+        <div className="relative z-10 w-full max-w-4xl mx-auto px-4 text-center">
           {/* Thank You Message */}
           <div className="animate-fadeIn">
-            <div className="mb-8">
+            <div className="mb-4">
               <svg
-                className="mx-auto w-24 h-24"
+                className="mx-auto w-16 h-16"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="#123375"
@@ -26,56 +61,43 @@ export default function L3Content() {
             </div>
 
             <h1
-              className="text-4xl md:text-5xl mb-4"
+              className="text-3xl md:text-4xl mb-2"
               style={{ color: "#123375" }}
             >
               Thank You!
             </h1>
 
             <p
-              className="subhead text-xl md:text-2xl mb-8"
+              className="subhead text-lg md:text-xl mb-6"
               style={{ color: "#333" }}
             >
-              Your information has been received.
+              Your information has been received. Please schedule your call below.
             </p>
           </div>
 
-          {/* Next Step */}
+          {/* Calendly Inline Widget */}
           <div
-            className="bg-white rounded-xl p-8 shadow-lg animate-fadeIn animate-delay-1"
+            className="bg-white rounded-xl shadow-lg animate-fadeIn animate-delay-1 overflow-hidden"
             style={{ boxShadow: "0 10px 40px rgba(0, 0, 0, 0.1)" }}
           >
-            <h2
-              className="text-2xl md:text-3xl mb-4"
-              style={{ color: "#123375" }}
+            <div
+              id="calendly-inline-widget"
+              style={{ minWidth: "320px", height: "700px" }}
             >
-              One More Step!
-            </h2>
-
-            <p className="text-lg mb-6" style={{ color: "#333" }}>
-              Please schedule a time for us to call you. Click the button below
-              to choose a convenient day and time.
-            </p>
-
-            {/* Calendly Link */}
-            <div className="mb-8">
-              <Link
-                href="https://calendly.com/emeraldtidefinancial"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="landing-btn inline-block"
-              >
-                📅 Schedule Your Call Now
-              </Link>
+              {/* Calendly widget loads here */}
+              <iframe
+                src="https://calendly.com/d/cmd8-9f4-5jf/tax-free-pension-tfp?hide_event_type_details=1&hide_gdpr_banner=1&primary_color=73c789&embed_domain=localhost&embed_type=Inline"
+                width="100%"
+                height="100%"
+                frameBorder="0"
+                title="Schedule a call"
+                style={{ border: "none", minHeight: "700px" }}
+              />
             </div>
-
-            <p className="text-sm text-gray-500 mt-4">
-              After scheduling, you&apos;ll receive a calendar invite via email.
-            </p>
           </div>
 
           {/* Support Info */}
-          <div className="mt-8 animate-fadeIn animate-delay-2">
+          <div className="mt-6 animate-fadeIn animate-delay-2">
             <p className="text-sm" style={{ color: "#666" }}>
               Questions? Contact us at{" "}
               <a

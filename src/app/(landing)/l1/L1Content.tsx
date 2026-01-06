@@ -89,7 +89,7 @@ export default function L1Content() {
           {/* Subheadline */}
           <p
             className="subhead text-xl md:text-2xl lg:text-3xl mb-8 animate-fadeIn animate-delay-1"
-            style={{ color: "#333" }}
+            style={{ color: "#123375" }}
           >
             Create Up to a 6- or 7-Figure Annual Tax-Free Pension For Life!
           </p>

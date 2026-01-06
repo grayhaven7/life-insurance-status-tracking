@@ -120,7 +120,7 @@ export default function G4Content() {
                 className="text-2xl md:text-3xl mb-4 font-codec"
                 style={{
                   fontFamily: "Codec, Ubuntu, sans-serif",
-                  color: "#000000",
+                  color: "#123375",
                 }}
               >
                 Thanks for booking your call!
@@ -129,7 +129,7 @@ export default function G4Content() {
                 className="text-base md:text-lg font-codec"
                 style={{
                   fontFamily: "Codec, Ubuntu, sans-serif",
-                  color: "#463F3A",
+                  color: "#123375",
                   lineHeight: 1.6,
                 }}
               >
@@ -145,7 +145,7 @@ export default function G4Content() {
                 className="text-2xl md:text-3xl mb-4 font-codec"
                 style={{
                   fontFamily: "Codec, Ubuntu, sans-serif",
-                  color: "#000000",
+                  color: "#123375",
                 }}
               >
                 In the meantime:

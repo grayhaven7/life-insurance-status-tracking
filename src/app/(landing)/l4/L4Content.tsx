@@ -100,7 +100,7 @@ export default function L4Content() {
 
               <p
                 className="subhead text-lg md:text-xl"
-                style={{ color: "#333", fontFamily: "var(--font-alegreya), 'Alegreya Sans', sans-serif" }}
+                style={{ color: "#123375", fontFamily: "var(--font-alegreya), 'Alegreya Sans', sans-serif" }}
               >
                 You should receive our calendar invite shortly. Please check your
                 inbox, junk, and spam folders!

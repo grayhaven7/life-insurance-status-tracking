@@ -103,7 +103,7 @@ export default function L2Content() {
           {/* Bottom Text */}
           <p
             className="mt-6 text-lg animate-fadeIn animate-delay-3"
-            style={{ color: "#333" }}
+            style={{ color: "#123375" }}
           >
             On the next page, please choose a day and time you&apos;d like us to call you.
           </p>

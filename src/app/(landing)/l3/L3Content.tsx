@@ -69,7 +69,7 @@ export default function L3Content() {
 
             <p
               className="subhead text-lg md:text-xl mb-6"
-              style={{ color: "#333" }}
+              style={{ color: "#123375" }}
             >
               Your information has been received. Please schedule your call below.
             </p>
@@ -98,7 +98,7 @@ export default function L3Content() {
 
           {/* Support Info */}
           <div className="mt-6 animate-fadeIn animate-delay-2">
-            <p className="text-sm" style={{ color: "#666" }}>
+            <p className="text-sm" style={{ color: "#123375" }}>
               Questions? Contact us at{" "}
               <a
                 href="mailto:support@emeraldtidefinancial.com"

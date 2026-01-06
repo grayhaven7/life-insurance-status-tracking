@@ -76,7 +76,7 @@ export default function G3Content() {
             style={{
               fontFamily: "var(--font-poppins), Poppins, sans-serif",
               fontWeight: 700,
-              color: "#000000",
+              color: "#123375",
               lineHeight: 1.3,
             }}
           >
@@ -88,7 +88,7 @@ export default function G3Content() {
             className="text-lg md:text-xl mb-6"
             style={{
               fontFamily: "var(--font-poppins), Poppins, sans-serif",
-              color: "#000000",
+              color: "#123375",
             }}
           >
             👇 Please choose a time below for a 9-minute call: 👇

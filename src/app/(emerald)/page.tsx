@@ -1,12 +1,18 @@
-import { Metadata } from "next";
-import EmeraldHome from "./EmeraldHome";
+import type { Metadata } from "next";
+import L1Content from "../(landing)/l1/L1Content";
 
 export const metadata: Metadata = {
-  title: "Emerald Tide Financial | Home of the Tax-Free Pension",
+  title: "Unlimited Tax-Free Wealth Strategy | Emerald Tide Financial",
   description:
-    "Create a robust, 6- or 7-figure, tax-free pension for life. Emerald Tide Financial helps you build lasting wealth with tax-free growth and income.",
+    "Create up to a 6- or 7-figure annual tax-free pension for life. Learn the unlimited tax-free wealth strategy from Emerald Tide Financial.",
+  openGraph: {
+    title: "Unlimited Tax-Free Wealth Strategy",
+    description:
+      "Create up to a 6- or 7-figure annual tax-free pension for life!",
+    type: "website",
+  },
 };
 
 export default function HomePage() {
-  return <EmeraldHome />;
+  return <L1Content />;
 }

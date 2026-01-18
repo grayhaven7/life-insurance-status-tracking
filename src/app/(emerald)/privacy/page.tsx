@@ -12,7 +12,8 @@ export default function PrivacyPage() {
       <div className="max-w-3xl mx-auto px-4 py-8">
         <Link
           href="/l1"
-          className="inline-flex items-center gap-2 mb-8 px-6 py-3 bg-[#123375] text-white font-bold rounded-lg shadow-lg hover:bg-[#0A1D42] hover:shadow-xl transition-all"
+          className="inline-flex items-center gap-2 mb-8 px-6 py-3 bg-[#123375] rounded-lg shadow-lg hover:bg-[#0A1D42] hover:shadow-xl transition-all"
+          style={{ color: "#ffffff", fontWeight: 700 }}
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -173,7 +174,7 @@ export default function PrivacyPage() {
               </p>
               <div className="bg-gray-50 p-4 rounded-lg">
                 <p>
-                  <strong>Emerald Tide Financial</strong>
+                  <strong>Tax Free Pensions</strong>
                 </p>
                 <p>500 West Putnam Avenue, Suite 400</p>
                 <p>Greenwich, CT 06830</p>
@@ -202,6 +203,10 @@ export default function PrivacyPage() {
             </section>
           </div>
         </div>
+
+        <footer className="text-center py-6 text-gray-600 text-sm">
+          <p>&copy; 2026 Tax Free Pensions. All rights reserved.</p>
+        </footer>
       </div>
     </div>
   );

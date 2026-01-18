@@ -21,7 +21,7 @@ export default function SiteFooter() {
     <footer className="border-t border-border-primary">
       <div className="px-4 py-4 sm:p-6 max-w-7xl mx-auto flex flex-col sm:flex-row gap-2 sm:gap-4 items-center justify-between text-xs text-text-muted">
         <p>
-          &copy; {new Date().getFullYear()} Emerald Tide Financial. All rights reserved.
+          &copy; {new Date().getFullYear()} Tax Free Pensions. All rights reserved.
         </p>
         <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-1">
           <Link href="/privacy" className="hover:text-text-secondary transition-colors">

@@ -114,7 +114,7 @@ export default function L3Content() {
 
       {/* Footer */}
       <footer className="landing-footer" style={{ backgroundColor: "#CBE4F6" }}>
-        <p>&copy;2026 US Tax-Free Retirement Center</p>
+        <p>&copy; 2026 Tax Free Pensions. All rights reserved.</p>
       </footer>
     </div>
   );

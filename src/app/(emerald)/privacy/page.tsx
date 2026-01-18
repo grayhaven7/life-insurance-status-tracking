@@ -12,7 +12,7 @@ export default function PrivacyPage() {
       <div className="max-w-3xl mx-auto px-4 py-8">
         <Link
           href="/l1"
-          className="inline-flex items-center gap-2 mb-8 px-6 py-3 bg-[#123375] text-white font-semibold rounded-lg hover:bg-[#0A1D42] transition-colors"
+          className="inline-flex items-center gap-2 mb-8 px-6 py-3 bg-[#123375] text-white font-bold rounded-lg shadow-lg hover:bg-[#0A1D42] hover:shadow-xl transition-all"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"

@@ -1,4 +1,5 @@
 import { Metadata } from "next";
+import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "Privacy Policy",
@@ -7,20 +8,41 @@ export const metadata: Metadata = {
 
 export default function PrivacyPage() {
   return (
-    <div className="emerald-section bg-white">
-      <div className="emerald-container">
-        <div className="max-w-3xl mx-auto">
-          <h1 className="text-4xl font-bold text-[var(--emerald-text-dark)] mb-8">
+    <div className="min-h-screen bg-[#CBE4F6]">
+      <div className="max-w-3xl mx-auto px-4 py-8">
+        <Link
+          href="/l1"
+          className="inline-flex items-center gap-2 mb-8 px-6 py-3 bg-[#123375] text-white font-semibold rounded-lg hover:bg-[#0A1D42] transition-colors"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <path d="m12 19-7-7 7-7" />
+            <path d="M19 12H5" />
+          </svg>
+          Back to Homepage
+        </Link>
+
+        <div className="bg-white rounded-xl shadow-lg p-8">
+          <h1 className="text-4xl font-bold text-[#123375] mb-8">
             Privacy Policy
           </h1>
 
-          <div className="prose prose-lg max-w-none text-[var(--emerald-text-body)]">
-            <p className="text-[var(--emerald-text-muted)] mb-8">
+          <div className="prose prose-lg max-w-none text-gray-700">
+            <p className="text-gray-500 mb-8">
               Last updated: January 2026
             </p>
 
             <section className="mb-8">
-              <h2 className="text-2xl font-semibold text-[var(--emerald-text-dark)] mb-4">
+              <h2 className="text-2xl font-semibold text-[#123375] mb-4">
                 Introduction
               </h2>
               <p>
@@ -33,7 +55,7 @@ export default function PrivacyPage() {
             </section>
 
             <section className="mb-8">
-              <h2 className="text-2xl font-semibold text-[var(--emerald-text-dark)] mb-4">
+              <h2 className="text-2xl font-semibold text-[#123375] mb-4">
                 Information We Collect
               </h2>
               <p className="mb-4">
@@ -55,7 +77,7 @@ export default function PrivacyPage() {
             </section>
 
             <section className="mb-8">
-              <h2 className="text-2xl font-semibold text-[var(--emerald-text-dark)] mb-4">
+              <h2 className="text-2xl font-semibold text-[#123375] mb-4">
                 How We Use Your Information
               </h2>
               <p className="mb-4">We use your information to:</p>
@@ -69,7 +91,7 @@ export default function PrivacyPage() {
             </section>
 
             <section className="mb-8">
-              <h2 className="text-2xl font-semibold text-[var(--emerald-text-dark)] mb-4">
+              <h2 className="text-2xl font-semibold text-[#123375] mb-4">
                 SMS Communications
               </h2>
               <p className="mb-4">
@@ -91,7 +113,7 @@ export default function PrivacyPage() {
             </section>
 
             <section className="mb-8">
-              <h2 className="text-2xl font-semibold text-[var(--emerald-text-dark)] mb-4">
+              <h2 className="text-2xl font-semibold text-[#123375] mb-4">
                 Information Sharing
               </h2>
               <p className="mb-4">
@@ -113,7 +135,7 @@ export default function PrivacyPage() {
             </section>
 
             <section className="mb-8">
-              <h2 className="text-2xl font-semibold text-[var(--emerald-text-dark)] mb-4">
+              <h2 className="text-2xl font-semibold text-[#123375] mb-4">
                 Data Security
               </h2>
               <p>
@@ -126,7 +148,7 @@ export default function PrivacyPage() {
             </section>
 
             <section className="mb-8">
-              <h2 className="text-2xl font-semibold text-[var(--emerald-text-dark)] mb-4">
+              <h2 className="text-2xl font-semibold text-[#123375] mb-4">
                 Your Rights
               </h2>
               <p className="mb-4">
@@ -142,14 +164,14 @@ export default function PrivacyPage() {
             </section>
 
             <section className="mb-8">
-              <h2 className="text-2xl font-semibold text-[var(--emerald-text-dark)] mb-4">
+              <h2 className="text-2xl font-semibold text-[#123375] mb-4">
                 Contact Us
               </h2>
               <p className="mb-4">
                 If you have questions about this Privacy Policy or our privacy
                 practices, please contact us:
               </p>
-              <div className="bg-[var(--emerald-bg-off-white)] p-4 rounded-lg">
+              <div className="bg-gray-50 p-4 rounded-lg">
                 <p>
                   <strong>Emerald Tide Financial</strong>
                 </p>
@@ -159,7 +181,7 @@ export default function PrivacyPage() {
                   Email:{" "}
                   <a
                     href="mailto:neil@emeraldtidefinancial.com"
-                    className="text-[var(--emerald-primary)]"
+                    className="text-[#123375] hover:underline"
                   >
                     neil@emeraldtidefinancial.com
                   </a>
@@ -169,7 +191,7 @@ export default function PrivacyPage() {
             </section>
 
             <section>
-              <h2 className="text-2xl font-semibold text-[var(--emerald-text-dark)] mb-4">
+              <h2 className="text-2xl font-semibold text-[#123375] mb-4">
                 Changes to This Policy
               </h2>
               <p>

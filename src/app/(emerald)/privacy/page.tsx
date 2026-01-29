@@ -96,9 +96,10 @@ export default function PrivacyPage() {
                 SMS Communications &amp; Terms
               </h2>
               <p className="mb-4">
-                By providing your phone number to Emerald Tide Financial, you
-                consent to receive transactional SMS messages related to your
-                inquiry, appointment reminders, and service updates.
+                By providing your phone number to Tax Free Pensions and/or
+                Emerald Tide Financial, you consent to receive transactional
+                SMS messages related to your inquiry, appointment reminders,
+                and service updates.
               </p>
               <ul className="list-disc pl-6 space-y-2">
                 <li>

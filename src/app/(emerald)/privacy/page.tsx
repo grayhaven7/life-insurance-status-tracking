@@ -93,24 +93,51 @@ export default function PrivacyPage() {
 
             <section className="mb-8">
               <h2 className="text-2xl font-semibold text-[#123375] mb-4">
-                SMS Communications
+                SMS Communications &amp; Terms
               </h2>
               <p className="mb-4">
-                If you opt-in to receive SMS text messages from us:
+                By providing your phone number to Emerald Tide Financial, you
+                consent to receive transactional SMS messages related to your
+                inquiry, appointment reminders, and service updates.
               </p>
               <ul className="list-disc pl-6 space-y-2">
                 <li>
-                  We will send you text messages related to your inquiry or our
-                  services
+                  <strong>Message frequency varies</strong> — You may receive
+                  SMS messages related to your inquiry, scheduled consultations,
+                  and service-related updates. The number of messages depends on
+                  your interactions with us.
                 </li>
-                <li>Message frequency varies based on your interactions</li>
-                <li>Message and data rates may apply</li>
-                <li>You can opt-out at any time by replying STOP to any message</li>
                 <li>
-                  For help, reply HELP or contact us at
-                  neil@emeraldtidefinancial.com
+                  <strong>Message and data rates may apply</strong> — Standard
+                  messaging rates from your wireless carrier may apply to SMS
+                  messages sent and received.
+                </li>
+                <li>
+                  <strong>Reply STOP to opt out</strong> — You may opt out of
+                  receiving SMS messages at any time by replying STOP to any
+                  message you receive from us. After opting out, you will
+                  receive a confirmation message and will no longer receive SMS
+                  communications from us.
+                </li>
+                <li>
+                  <strong>Reply HELP for assistance</strong> — If you need help
+                  or have questions about our SMS communications, reply HELP to
+                  any message or contact us at{" "}
+                  <a
+                    href="mailto:neil@emeraldtidefinancial.com"
+                    className="text-[#123375] hover:underline"
+                  >
+                    neil@emeraldtidefinancial.com
+                  </a>{" "}
+                  or call (575) 363-7253.
                 </li>
               </ul>
+              <p className="mt-4">
+                We do not share your phone number or SMS opt-in data with third
+                parties for marketing purposes. Your consent to receive SMS
+                messages is not a condition of purchasing any goods or services
+                from Emerald Tide Financial.
+              </p>
             </section>
 
             <section className="mb-8">
